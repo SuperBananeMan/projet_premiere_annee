@@ -16,6 +16,17 @@
 </head>
 <body>
     
+    <?php
+
+        session_start();
+        
+
+    
+    
+    
+    
+    
+    ?>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar_color">
@@ -34,7 +45,7 @@
         
 
             <!-- Toggle button -->
-             <button
+            <button
                 class="navbar-toggler"
                 type="button"
                     data-mdb-toggle="collapse"
@@ -44,7 +55,7 @@
                     aria-label="Toggle navigation"
                 >
                 <i class="fas fa-bars"></i>
-                </button>
+            </button>
       
           <!-- Collapsible wrapper -->
           <div class="collapse navbar-collapse " id="navbarButtonsExample">
@@ -103,7 +114,6 @@
     
     
     </div>
-
 
 
 
