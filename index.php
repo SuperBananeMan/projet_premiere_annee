@@ -23,7 +23,7 @@
       <!-- Navbar brand -->
             <a class="navbar-brand me-2" href="">
             <img
-          src=""
+          src="src/assets/ico.png"
           height="16"
           
           loading="lazy"
