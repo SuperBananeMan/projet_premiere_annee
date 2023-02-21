@@ -36,7 +36,7 @@
             <a class="navbar-brand" href="">
             <img
           src="src/assets/ico_x2.png"
-          height="16"
+          height="40"
           
           loading="lazy"
           style="margin-top: -1px;"
