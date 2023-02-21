@@ -1,11 +1,25 @@
 .navbar_color{
 
-    background-color: #E8E8E8;
+    background-color: hsl(38, 70%, 93%);
 
 }
 
 .font_color{
 
     color: black;
+
+}
+
+.text_deco{
+
+    text-decoration: none;
+
+
+}
+
+.button_color{
+
+    background-color: hsl(208, 62%, 45%);
+
 
 }

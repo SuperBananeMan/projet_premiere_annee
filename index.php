@@ -62,17 +62,17 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link " href="#">Dashboard</a>
+                <a class="nav-link text-dark " href="#">Dashboard</a>
               </li>
             </ul>
             <!-- Left links -->
         
             <div class="d-flex align-items-center ">
               <button type="button" class="btn   me-2">
-                <a href="login.php">Login</a>
+                <a class="text-dark text_deco" href="login.php">Login</a>
               </button>
-              <button type="button" class="btn  me-3">
-                <a href="register.php">Sign Up</a> 
+              <button type="button" class="btn button_color  me-3">
+                <a  class="text-light text_deco" href="register.php">Sign Up</a> 
               </button>
 
             </div>
