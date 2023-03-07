@@ -241,7 +241,8 @@
         <p class="h2 text-center">Ajouter un User</p>
 
 
-        <div class="row te">
+
+        <div class="row mt-4">
           <div class="col-md-3"></div>
           <div class="col-md-6">
             <div class="row">
