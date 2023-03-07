@@ -241,41 +241,30 @@
         <p class="h2 text-center">Ajouter un User</p>
 
 
-          <div class="row">
-              
+        <div class="row te">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text" class="form-control">
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mt-2">
+                <input type="text" class="form-control">
+              </div>
+              <div class="col-md-6 mt-2">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+           </div>
+          </div>
+
           
 
-              <form action="" method="POST">
-                <div class="form-group mt-3 ">
-                    
-                    <label for="select-user">Prenom</label>
-                    <input class="" id="select-user" name="select-user">
-
-                    <label for="select-user">Nom</label>
-                    <input class="" id="select-user" name="select-user">
-
-                    <label for="select-user">Mail</label>
-                    <input class="" id="select-user" name="select-user">
-
-                    <label for="select-user">Role</label>
-                    <input class="" id="select-user" name="select-user">
               
-
-                    
-
-
-
-
-
-              
-
-
-
-
-              </div>
-
-
-          <div>
 
 
 
