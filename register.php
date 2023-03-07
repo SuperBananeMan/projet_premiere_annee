@@ -13,17 +13,17 @@
 
 </head>
 <body>
-    <div class="row">
-		<div class="col-md-6">
-			<h1>Inscription</h1>
-			<form action="index.php" method="post">
-				<h3>Identifiant :</h3>
+    <div class="row d-flex justify-content-center">
+		<div class="col-md-3">
+			<h1 class="d-flex justify-content-center">Inscription</h1>
+			<form action="register.php" method="post">
+				<h3 class="var">Identifiant :</h3>
 					<input type="text" id="user" name="user" class="inp"><br>
-				<h3>Mot de passe :</h3>
+				<h3 class="var">Mot de passe :</h3>
 					<input type="password" id="passwrd" name="passwrd" class="inp"><br>
-				<h3>Vérification mot de passe :</h3>
+				<h3 class="var">Vérification mot de passe :</h3>
 					<input type="password" id="verif-pass-word" name="verif-pass-word" class="inp"><br>
-				<h3>Email :</h3>
+				<h3 class="var">Email :</h3>
 					<input type="email" id="email" name="email" class="inp"><br>
 				<input type="submit" value="S'inscrire" id="enregistrer"><br>
 				<input type="reset" value="Effacer"><br>

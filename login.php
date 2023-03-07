@@ -12,16 +12,17 @@
     <title>Connexion</title>
 
 </head>
-<body class="col-md-12 d-flex justify-content-center">
-    <div class="">
-			<h1>Connexion</h1>
+<body>
+    <div class="row d-flex justify-content-center">
+		<div class="col-md-3">
+			<h1 class="d-flex justify-content-center">Connexion</h1>
 			
-		<form action="index.php" method="post">
-				<h3>Identifiant :</h3>
+		<form action="login.php" method="post">
+				<h3 class="var">Identifiant :</h3>
 					<input type="text" id="co_username" name="co_username" class="inp"><br>
-				<h3>Mot de passe :</h3>
+				<h3 class="var">Mot de passe :</h3>
 					<input type="password" id="co_passwrd" name="co_passwrd" class="inp"><br>
-				<h3>Email :</h3>
+				<h3 class="var">Email :</h3>
 					<input type="email" id="co_email" name="co_email" class="inp"><br>
 				<!--<h3>Code d'activation :</h3>
 					<input type="text" id="code-activation" name="code-activation"><br>-->
@@ -56,6 +57,7 @@
 				?>
 			</form>
 		</div>
+	</div>
 
 
 
