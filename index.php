@@ -249,16 +249,16 @@
                 <div class="form-group mt-3 ">
                     
                     <label for="select-user">Prenom</label>
-                    <select class="form-control" id="select-user" name="select-user">
+                    <input class="" id="select-user" name="select-user">
 
                     <label for="select-user">Nom</label>
-                    <select class="form-control" id="select-user" name="select-user">
+                    <input class="" id="select-user" name="select-user">
 
                     <label for="select-user">Mail</label>
-                    <select class="form-control" id="select-user" name="select-user">
+                    <input class="" id="select-user" name="select-user">
 
                     <label for="select-user">Role</label>
-                    <select class="form-control" id="select-user" name="select-user">
+                    <input class="" id="select-user" name="select-user">
               
 
                     
