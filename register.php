@@ -18,29 +18,46 @@
 		<div class="col-md-3">
 			<h1 class="d-flex justify-content-center">Inscription</h1>
 			<form action="register.php" method="post">
-				<h3 class="var">Identifiant :</h3>
+				<h3 class="var">Nom :</h3>
 					<input type="text" id="user" name="user" class="inp"><br>
+				<h3 class="var">Prénom :</h3>
+					<input type="text" id="user2" name="user2" class="inp"><br>
 				<h3 class="var">Mot de passe :</h3>
 					<input type="password" id="passwrd" name="passwrd" class="inp"><br>
 				<h3 class="var">Vérification mot de passe :</h3>
 					<input type="password" id="verif-pass-word" name="verif-pass-word" class="inp"><br>
 				<h3 class="var">Email :</h3>
 					<input type="email" id="email" name="email" class="inp"><br>
+				<h3 class="var">Role</h3>
+				<div class="">
+					<input type="radio" id="Id_role" name="Id_role" value="1" checked>
+					<label for="Id_role">Admin</label><br>
+					<input type="radio" id="Id_role" name="Id_role" value="2">
+					<label for="Id_role">Comptable</label><br>
+					<input type="radio" id="Id_role" name="Id_role" value="3">
+					<label for="Id_role">Commercial</label><br>
+				</div>
+
+
 				<input type="submit" value="S'inscrire" id="enregistrer"><br>
 				<input type="reset" value="Effacer"><br>
 				
 				<?php
-					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user'])){
+					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user']) && isset($_POST['user2']) && isset($_POST['verif-pass-word']) && $_POST['passwrd'] == $_POST['verif-pass-word']){
 						$email = $_POST['email'];
 						$username = $_POST['user'];
+						$username2 = $_POST['user2'];
 						$passwrd = $_POST['passwrd'];
+						$Id_role = $_POST['Id_role'];
 		 
 						$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
 		 
-						$stmt = $db->prepare("INSERT INTO users (username, passwrd, email) VALUES (:username, :passwrd, :email)");
+						$stmt = $db->prepare("INSERT INTO users (Nom, Prenom, Mail, Passwrd, Id_role) VALUES (:username, :username2, :email, :passwrd, :Id_role)");
 						$stmt->bindParam(':username', $username);
+						$stmt->bindParam(':username2', $username2);
 						$stmt->bindParam(':passwrd', $passwrd);
 						$stmt->bindParam(':email', $email);
+						$stmt->bindParam(':Id_role', $Id_role);
 		 
 						$stmt->execute();
 		 

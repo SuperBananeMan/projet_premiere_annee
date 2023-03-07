@@ -30,7 +30,7 @@
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
         }
-
+        //en tant qu'exemple
         if ($_USER_INIT != NULL) {
             switch ($_USER_ROLE) {
                 case 'Admin':
@@ -133,6 +133,7 @@
                   <th>Nom</th>
                   <th>Prénom</th>
                   <th>Mail</th>
+                  <th>Role</th>
                 </tr>
               </thead>
               <tbody>
@@ -141,6 +142,8 @@
                 $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM users");  
+                //role
+                $role_name =[1 => "Admin", 2 => "Comptable", 3 => "Commercial"];
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
                   echo "<tr>";
@@ -148,6 +151,7 @@
                   echo "<td>" . $row['Prenom'] . "</td>";
                   echo "<td>" . $row['Nom'] . "</td>";
                   echo "<td>" . $row['Mail'] . "</td>";
+                  echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
                   echo "</tr>";
                 }
                 ?>
