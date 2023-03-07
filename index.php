@@ -68,12 +68,10 @@
             <!-- Left links -->
         
             <div class="d-flex align-items-center ">
-              <button type="button" class="btn   me-2">
-                <a class="text-dark text_deco" href="login.php">Login</a>
+              <button type="button" class="btn button_color  me-2">
+                <a class="text-light text_deco" href="login.php">Login</a>
               </button>
-              <button type="button" class="btn button_color  me-3">
-                <a  class="text-light text_deco" href="register.php">Sign Up</a> 
-              </button>
+              
 
             </div>
           </div>
