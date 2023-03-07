@@ -7,8 +7,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    
+    <!-- Inclure les bibliothèques jQuery et DataTables -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="src/styleheet.css">
@@ -86,59 +87,83 @@
     <!-- Navbar -->
 
 
-    <!-- Main Content For Admin-->
-   
+          <!-- Main Content For Admin-->
 
-      <div class="m-5">
 
-      
-        <script>let table = new DataTable('#myTable');</script>
+    <div class="m-5">
+
+
+      <script>let table = new DataTable('#myTable');</script>
 
         <p class="h1 text-center">Tableau de Gestion Admin</p>
 
-            <div class="row">
+        <div class="row">
+          <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Mail</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                // Connexion à votre base de données
+                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
+                // Exécuter une requête pour récupérer les données
+                $resultat = $pdo->query("SELECT * FROM users");  
+                // Boucle pour afficher les résultats de la requête
+                foreach ($resultat as $row) {
+                  echo "<tr>";
+                  echo "<td>" . $row['Id_Users'] . "</td>";
+                  echo "<td>" . $row['Prenom'] . "</td>";
+                  echo "<td>" . $row['Nom'] . "</td>";
+                  echo "<td>" . $row['Mail'] . "</td>";
+                  echo "</tr>";
+                }
+                ?>
+              </tbody>
+            </table>
+              
+            <script>
 
-              <div class=" col-md-6 mt-5 pt-5">                                     <!-- Partie gauche avec le tableau-->
+              
+              $(document).ready(function() {
+                $('#myTable').DataTable( {
+                  "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                  }
+              } );
+              } );
+            
+            
+            </script>
+        </div>
+      </div>
 
 
-                <table id="myTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nom</th>
-                            <th>Prenom</th>
-                            <th>Mail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Connexion à votre base de données
-                        $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
-                        // Exécuter une requête pour récupérer les données
-                        $resultat = $pdo->query("SELECT * FROM users");  
-                        // Boucle pour afficher les résultats de la requête
-                        foreach ($resultat as $row) {
-                            echo "<tr>";
-                            echo "<td>" . $row['Id_Users'] . "</td>";
-                            echo "<td>" . $row['Prenom'] . "</td>";
-                            echo "<td>" . $row['Nom'] . "</td>";
-                            echo "<td>" . $row['Mail'] . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                      </tbody>
-                </table>
-                      
-                <script>
-                    $(document).ready(function() {
-                        $('#myTable').dataTable();
-                    });
-                </script>
 
-                  
-              <div>
-            </div>    
-        </div>    
+      <div class=" col-md-6 mt-5 pt-5">                                     <!-- Partie droite avec les boutons-->
+
+
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </div>    
+    </div>    
 
 
 
