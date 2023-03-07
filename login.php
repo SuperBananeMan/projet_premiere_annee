@@ -85,10 +85,13 @@
 				
 				<?php
 				session_start();
+				$_SESSION['user']=NULL;
+				$_SESSION['role_u']=NULL;
 				if (isset($_POST['co_passwrd']) && isset($_POST['co_email'])) {
 					$co_email = $_POST['co_email'];
 					$co_passwrd = $_POST['co_passwrd'];
 					$success = false;
+					$Role0=NULL;
 					
 					print_r($co_email,$co_passwrd);
 					
@@ -99,16 +102,28 @@
 					foreach ($data as $row){
 						if ($row['Mail'] == $co_email && $row['Passwrd'] == $co_passwrd){
 							$success = true;
+							$Role0=$row['Id_Role'];
+							$_SESSION['user']=$row['Nom'];
 							echo"reussite !!!!!!";
 							break;
 						}
 					}
+
+					$data_role = $db->query("SELECT * FROM role")->fetchAll();
+					foreach ($data_role as $row){
+						if ($row['Id_Role'] == $Role0){
+							$_SESSION['role_u']=$row['Nom_role'];
+							break;
+						}
+					}
+
 					if ($success){
+						echo "Identifiants corrects : ".$_SESSION['user']." ".$_SESSION['role_u'];
 						header("Location: index.php");
 					}
-					/*else{
-						header("Location: erreur.php");
-					}*/
+					else{
+						echo "Identifiants incorrects";
+					}
 				}
 				?>
 			</form>
