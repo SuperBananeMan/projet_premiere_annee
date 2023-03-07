@@ -33,9 +33,9 @@
     ?>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar_color ">
+    <nav class="navbar navbar-expand-lg navbar_color">
         <!-- Container wrapper -->
-        <div class="container">
+        <div class="container ">
       <!-- Navbar brand -->
             <a class="navbar-brand" href="">
             <img
@@ -89,46 +89,56 @@
     <!-- Main Content For Admin-->
    
 
-    <div class="container margin_nav">
+      <div class="m-5">
+
       
-    <script>let table = new DataTable('#myTable');</script>
+        <script>let table = new DataTable('#myTable');</script>
+
+        <p class="h1 text-center">Tableau de Gestion Admin</p>
+
+            <div class="row">
+
+              <div class=" col-md-6 mt-5 pt-5">                                     <!-- Partie gauche avec le tableau-->
 
 
-        <table id="myTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Prenom</th>
-                    <th>Mail</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Connexion à votre base de données
-                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
-                // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM users");  
-                // Boucle pour afficher les résultats de la requête
-                foreach ($resultat as $row) {
-                    echo "<tr>";
-                    echo "<td>" . $row['Id_Users'] . "</td>";
-                    echo "<td>" . $row['Prenom'] . "</td>";
-                    echo "<td>" . $row['Nom'] . "</td>";
-                    echo "<td>" . $row['Mail'] . "</td>";
-                    echo "</tr>";
-                }
-                ?>
-              </tbody>
-          </table>
-              
-        <script>
-            $(document).ready(function() {
-                $('#myTable').dataTable();
-            });
-        </script>
+                <table id="myTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Mail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Connexion à votre base de données
+                        $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
+                        // Exécuter une requête pour récupérer les données
+                        $resultat = $pdo->query("SELECT * FROM users");  
+                        // Boucle pour afficher les résultats de la requête
+                        foreach ($resultat as $row) {
+                            echo "<tr>";
+                            echo "<td>" . $row['Id_Users'] . "</td>";
+                            echo "<td>" . $row['Prenom'] . "</td>";
+                            echo "<td>" . $row['Nom'] . "</td>";
+                            echo "<td>" . $row['Mail'] . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                      </tbody>
+                </table>
+                      
+                <script>
+                    $(document).ready(function() {
+                        $('#myTable').dataTable();
+                    });
+                </script>
 
-    </div>
+                  
+              <div>
+            </div>    
+        </div>    
 
 
 
