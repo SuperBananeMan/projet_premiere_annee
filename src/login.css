@@ -25,9 +25,13 @@
 
 /*-------------------------------------------------------------------------------CORPS-------------------------------------------------------------------------------------*/
 .content_body{
+	background-attachment: fixed;
+	background-position: center;
 	
 	background: conic-gradient(from 180deg at 50% 50%, rgba(255, 255, 255, 0.1) 0deg, rgba(255, 141, 141, 0.1) 45deg, rgba(255, 141, 196, 0.1) 91.88deg, rgba(225, 141, 255, 0.1) 140.63deg, rgba(141, 145, 255, 0.1) 181.87deg, rgba(141, 255, 255, 0.1) 225deg, rgba(141, 255, 152, 0.1) 271.87deg, rgba(253, 255, 141, 0.1) 313.12deg, rgba(255, 182, 141, 0.1) 352.5deg, rgba(255, 255, 255, 0.1) 360deg);
-	background-size: 100% 136%
+	background-size: 100% 500%;
+	background-repeat: no-repeat;
+
 }
 
 .co{
