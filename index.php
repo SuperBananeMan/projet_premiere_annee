@@ -24,7 +24,34 @@
     <?php
 
         session_start();
-        
+        $_USER_INIT= NULL;
+        $_USER_ROLE= NULL;
+        if (isset($_SESSION['user'])) {
+            $_USER_INIT = $_SESSION['user'];
+            $_USER_ROLE = $_SESSION['role_u'];
+        }
+
+        if ($_USER_INIT != NULL) {
+            switch ($_USER_ROLE) {
+                case 'Admin':
+                    //code...
+                    echo "Admin ". $_USER_INIT;
+                    break;
+                case 'Comptable':
+                    //code...
+                    echo "Comptable ". $_USER_INIT;
+                    break;
+                case 'Commercial':
+                    //code...
+                    echo "Commercial ". $_USER_INIT;
+                    break;
+                default:
+                    echo "Error user role 01";
+                    break;
+            }
+        } else {
+            echo "Vous n'êtes pas connecté";
+        }
 
     
     
