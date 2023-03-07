@@ -30,7 +30,7 @@
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
         }
-
+        //en tant qu'exemple
         if ($_USER_INIT != NULL) {
             switch ($_USER_ROLE) {
                 case 'Admin':
