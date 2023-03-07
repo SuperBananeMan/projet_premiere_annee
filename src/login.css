@@ -1,20 +1,40 @@
-.inp {
-	width: 375px;
-	height: 50px;
-	margin-top: -8px;
-
-	background: #E8E8E8;
-	box-shadow: 0px -5px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 0px 50px 50px 50px;
-}
-
 .var {
 	width: 150px;
 	height: 50px;
 	left: 68.5px;
 	top: 192px;
+	padding-top:10px;
 
 	background: #E8E8E8;
 	box-shadow: 0px -5px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 50px 50px 0px 0px;
+	
+	font-size:18px;
+	text-align:center;
+}
+
+.inp {
+	width: 100%;
+	height: 50px;
+	margin-top: -8px;
+	margin-bottom:10px;
+
+	background: #E8E8E8;
+	box-shadow: 0px -5px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 0px 50px 50px 50px;
+	
+	font-size:20px;
+	text-align:center;
+}
+
+
+
+.content_box{
+	margin-top:9%;
+}
+
+.connexion_box {
+	background: #E8E8E8;
+	box-shadow: 0px -5px 4px rgba(0, 0, 0, 0.25);
+	border-radius:50px;
 }
