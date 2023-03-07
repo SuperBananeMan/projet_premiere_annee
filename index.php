@@ -240,6 +240,7 @@
           
         <p class="h2 text-center">Ajouter un User</p>
 
+        <form action="" method="POST">
 
 
         <div class="row mt-4">
@@ -247,25 +248,59 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="email">
               </div>
               <div class="col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="user">
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mt-2">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="user2">
               </div>
               <div class="col-md-6 mt-2">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="passwrd">
               </div>
             </div>
            </div>
           </div>
 
-          
 
+          <p class="text-center m-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+
+
+        </form>
+
+          
+        <?php
+					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user']) && isset($_POST['user2'])){
+						$email = $_POST['email'];
+						$username = $_POST['user'];
+						$username2 = $_POST['user2'];
+						$passwrd = $_POST['passwrd'];
+						$Id_role = $_POST['Id_role'];
+		 
+						$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
+		 
+						$stmt = $db->prepare("INSERT INTO users (Nom, Prenom, Mail, Passwrd, Id_role) VALUES (:username, :username2, :email, :passwrd, :Id_role)");
+						$stmt->bindParam(':username', $username);
+						$stmt->bindParam(':username2', $username2);
+						$stmt->bindParam(':passwrd', $passwrd);
+						$stmt->bindParam(':email', $email);
+						$stmt->bindParam(':Id_role', $Id_role);
+		 
+						$stmt->execute();
+		 
+						echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+					  <strong>C est nickel</strong> l ajout est OK.
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>';
+					
+					}
+
+
+				
+				?>
               
 
 
