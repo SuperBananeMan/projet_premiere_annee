@@ -168,29 +168,91 @@
             
             </script>
         </div>
-      </div>
 
 
 
       <div class=" col-md-6 mt-5 pt-5">                                     <!-- Partie droite avec les boutons-->
 
 
-
-                    
-
-
-
-
-
-
-
-
-
-
-
+          <form action="" method="POST">
+            <div class="form-group">
+              <label for="select-user">Sélectionnez un utilisateur :</label>
+              <select class="form-control" id="select-user" name="select-user">
+                <?php
+                // Connexion à la base de données
+                $conn = mysqli_connect("localhost", "root", "", "projet_1erannee");
+                if (!$conn) {
+                  die("Connexion échouée : " . mysqli_connect_error());
+                }
+              
+                // Récupération de la liste des utilisateurs
+                $sql = "SELECT * FROM Users";
+                $result = mysqli_query($conn, $sql);
+              
+                // Création des options du menu déroulant
+                while ($row = mysqli_fetch_assoc($result)) {
+                  echo '<option value="' . $row['Id_Users'] . '">' . $row['Nom'] . ' ' . $row['Prenom'] . '</option>';
+                }
+              
+                // Fermeture de la connexion à la base de données
+                mysqli_close($conn);
+                ?>
+              </select>
+            </div>
+            <p class="text-center m-5"><button type="submit" class="btn btn-danger" name="delete-user">Supprimer</button></p>
+          </form>
+          <?php
+          // Traitement de la suppression d'un utilisateur
+          if (isset($_POST['delete-user'])) {
+            // Récupération de l'id de l'utilisateur sélectionné dans le menu déroulant
+            $selected_user = $_POST['select-user'];
+          
+            // Connexion à la base de données
+            $conn = mysqli_connect("localhost", "root", "", "projet_1erannee");
+            if (!$conn) {
+              die("Connexion échouée : " . mysqli_connect_error());
+            }
+          
+            // Suppression de l'utilisateur sélectionné
+            $sql = "DELETE FROM Users WHERE Id_Users = '$selected_user'";
+            if (mysqli_query($conn, $sql)) {
+              echo '<div class="alert alert-success">Utilisateur supprimé avec succès.</div>';
+            } else {
+              echo '<div class="alert alert-danger">Erreur lors de la suppression de l\'utilisateur : ' . mysqli_error($conn) . '</div>';
+            }
+          
+            // Fermeture de la connexion à la base de données
+            mysqli_close($conn);
+          }
+          ?>
         </div>
-      </div>    
+      </div>
+    
+      
+      <!--Ajouter Users-->
+
+      <div class="m-5">
+
+          
+
+
+
+
+
+
+
+
+      </div>
+
+      
+    
+    
+    
+    
+    
     </div>    
+  </div>    
+</div>
 
 
 
