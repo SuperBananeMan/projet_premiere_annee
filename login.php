@@ -79,8 +79,10 @@
 				<h3 class="var">Mot de passe :</h3>
 					<input type="password" id="co_passwrd" name="co_passwrd" class="inp"><br>
 					
-				<div class="d-flex justify-content-center bouton">
+				<div class="bouton">
+				<div class="d-flex justify-content-center">
 				<input type="submit" value="Se connecter" class="bouton_co"><br>
+				</div>
 				</div>
 				
 				<?php
