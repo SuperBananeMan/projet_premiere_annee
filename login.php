@@ -13,46 +13,102 @@
     <title>Connexion</title>
 
 </head>
-<body>
+<body class="content_body">
+<!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar_color ">
+        <!-- Container wrapper -->
+        <div class="container">
+      <!-- Navbar brand -->
+            <a class="navbar-brand" href="">
+            <img
+          src="src/assets/ico_x2.png"
+          height="40"
+          
+          loading="lazy"
+          style="margin-top: -1px;"
+            />
+            </a>
+        
+
+            <!-- Toggle button -->
+            <button
+                class="navbar-toggler"
+                type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarButtonsExample"
+                    aria-controls="navbarButtonsExample"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                <i class="fas fa-bars"></i>
+            </button>
+      
+          <!-- Collapsible wrapper -->
+          <div class="collapse navbar-collapse " id="navbarButtonsExample">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-dark " href="#">Dashboard</a>
+              </li>
+            </ul>
+            <!-- Left links -->
+        
+            <div class="d-flex align-items-center ">
+              <button type="button" class="btn button_color  me-2">
+                <a class="text-light text_deco" href="login.php">Login</a>
+              </button>
+              
+
+            </div>
+          </div>
+          <!-- Collapsible wrapper -->
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+	
+	
 	<div class="content_box">
     <div class="row d-flex justify-content-center">
 		<div class="col-md-3 connexion_box">
-			<h1 class="d-flex justify-content-center">Connexion</h1>
+			<h1 class="d-flex justify-content-center co">Connexion</h1>
 			
 		<form action="login.php" method="post">
-				<h3 class="var">Identifiant :</h3>
-					<input type="text" id="co_username" name="co_username" class="inp"><br>
 				<h3 class="var">Email :</h3>
 					<input type="email" id="co_email" name="co_email" class="inp"><br>
 				<h3 class="var">Mot de passe :</h3>
 					<input type="password" id="co_passwrd" name="co_passwrd" class="inp"><br>
-				<input type="submit" value="Se connecter"><br>
-				<input type="reset" value="Effacer"><br>
+					
+				<div class="d-flex justify-content-center bouton">
+				<input type="submit" value="Se connecter" class="bouton_co"><br>
+				</div>
 				
 				<?php
 				session_start();
-				if (isset($_POST['co_username']) && isset($_POST['co_passwrd']) && isset($_POST['co_email'])) {
-					$co_username = $_POST['co_username'];
-					$co_passwrd = $_POST['co_passwrd'];
+				if (isset($_POST['co_passwrd']) && isset($_POST['co_email'])) {
 					$co_email = $_POST['co_email'];
+					$co_passwrd = $_POST['co_passwrd'];
 					$success = false;
+					
+					print_r($co_email,$co_passwrd);
 					
 					$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
 	 
 					$data = $db->query("SELECT * FROM users")->fetchAll();
 
 					foreach ($data as $row){
-						if ($row['username'] == $co_username && $row['passwrd'] == $co_passwrd && $row['email'] == $co_email){
+						if ($row['Mail'] == $co_email && $row['Passwrd'] == $co_passwrd){
 							$success = true;
+							echo"reussite !!!!!!";
 							break;
 						}
 					}
 					if ($success){
-						header("Location: reussite.php");
+						header("Location: index.php");
 					}
-					else{
+					/*else{
 						header("Location: erreur.php");
-					}
+					}*/
 				}
 				?>
 			</form>
