@@ -2,6 +2,6 @@
 
 
 ## Créer Par:
-## Robin Chaussy
-## Damien Decoeur
-## Pierre Sularec
+- Robin Chaussy
+- Damien Decoeur
+- Pierre Sularec
