@@ -120,13 +120,104 @@
     <!-- Navbar -->
 
 
-          <!-- Main Content For Admin-->
+          <!-- Main Content For Commercial-->
+
+          <!--Description-->
+          <!-- 
+            un utilisateur commercial peut créer des factures (fraie) et les envoyer à la base de données pour les faire valider par un comptable
+          -->
+
+          <script>let table = new DataTable('#myTable');</script>
+
+        <p class="h1 text-center">Tableau de Gestion Admin</p>
+
+
+    <div class="row">
+          <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Intitulé</th>
+                  <th>PJ</th>
+                  <th>Date</th>
+                  <th>ID_pay</th>
+                  <th>Id usr</th>
+                  <th>Id Etat</th>
+            
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                // Connexion à votre base de données
+                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
+                // Exécuter une requête pour récupérer les données
+                $resultat = $pdo->query("SELECT * FROM fraie");
+                $res2 = $pdo->query("SELECT * FROM etat");
+                //Array
+                $myarray = array();
+                foreach ($res2 as $row2) {
+                  //push the data in the array
+                  array_push($myarray, $row2);
+                  
+                }
+                $ijk =0;
+                
+                  
+                // Boucle pour afficher les résultats de la requête
+
+                
+                
+                foreach ($resultat as $row) {
+                  
+                  echo "<tr>";
+                  echo "<td>" . $row['Id_Fraie'] . "</td>";
+                 
+                  echo "<td>" . $row['Intitulé'] . "</td>";
+                  echo "<td>" . $row['Piece_jointe'] . "</td>";
+                  echo "<td>" . $row['date_frais'] . "</td>";
+                  echo "<td>" . $row['id_paiement'] . "</td>";
+                  echo "<td>" . $row['Id_Users'] . "</td>";
+                 echo "<td>" . $myarray[$ijk]['etat_paiement'] . "</td>";
+                 $ijk++;
+
+                  echo "</tr>";
+                }
+                ?>
+              </tbody>
+            </table>
+              
+            <script>
 
 
    
 
 
 
+
+              
+              $(document).ready(function() {
+                $('#myTable').DataTable( {
+                  "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                  }
+              } );
+              } );
+            
+            
+            </script>
+        </div>
+        </div>
+
+
+<?php
+//affichage des données de myarray
+/*
+foreach ($myarray as $row2) {
+   $row2['etat_paiement'];
+}
+*/
+?>
 
 
 

@@ -1,3 +1,10 @@
+:root{
+    --primary-color: hsl(38, 70%, 93%);
+    --secondary-color: hsl(208, 62%, 45%);
+    --font-color: black;
+    --text-decoration: none;
+}
+
 .navbar_color{
 
     background-color: hsl(38, 70%, 93%);
