@@ -116,15 +116,6 @@
 
 
           <!-- Main Content For Admin-->
-		  
-	<?php
-	if (isset($_SESSION['wrong_page'])) {
-		if ($_SESSION['wrong_page']==true){
-				echo "Vous avez essayé d'aller sur une page dont vous n'avez pas l'autorisation d'aller.";
-				$_SESSION['wrong_page'] = false;
-		}
-	}
-	?>
 
 
     <div class="m-5 container">
@@ -238,6 +229,7 @@
 
           
         <?php
+
 					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user'])){
 						$email = $_POST['email'];
 						$username = $_POST['user'];
@@ -245,7 +237,7 @@
 						$Id_role = $_POST['dropdown'];
 
             
-            
+
 						$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
 		 
 						$stmt = $db->prepare("INSERT INTO users (Nom, Mail, Passwrd, Id_role) VALUES (:username, :email, :passwrd, :Id_role)");
@@ -291,13 +283,11 @@
                 <input type="text" placeholder="Intitulé" class="form-control" name="intitulé">
               </div>
               <div class="col-md-6">
-                <input type="text" placeholder="14/03/2023" class="form-control" name="date">
+                <input type="text" placeholder="14/03/2023" class="form-control" name="dateF">
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 mt-2">
-                <input type="file" class="form-control-file" id="file" name="file">
-              </div>
+             
               <div class="form-group col-md-6 mt-2">
                 
                 <select class="form-control" name="type" id="type">
@@ -318,47 +308,28 @@
 
           <?php
 
-            if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_FILES['file'])){
-            
-              // Connexion à la base de données
-              $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee', 'root', '');
-            
-              $intitulé = $_POST['intitulé'];
-              $dateF = $_POST['date'];
-              $Id_type = $_POST['type'];
-            
-              // Récupération de la pièce jointe
-              $file = $_FILES['file'];
-              $filename = $file['name'];
-              $error = $file['error'];
-              $tmp_name = $file['tmp_name'];
-
-              echo "Frais ajouté avec succès.";
-
-            
-              // Vérification s'il n'y a pas eu d'erreur lors du téléchargement
-              if ($error === UPLOAD_ERR_OK) {
-
-                // Déplacement du fichier téléchargé vers le répertoire souhaité
-                $upload_dir = 'uploads/';
-                $upload_path = $upload_dir . $filename;
-                move_uploaded_file($tmp_name, $upload_path);
+              if (isset($_POST['intitulé']) && isset($_POST['dateF'])){
               
-                // Insertion du chemin d'accès au fichier dans la base de données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, Piece_jointe, id_paiement, Id_Type, Id_Users) VALUES (:intitul, :dateF, :upload_path, 0 , :Id_type, "Mourad" )');
-                $stmt->execute([
-                  'intitule' => $intitulé,
-                  'dateF' => $dateF,
-                  'upload_path' => $upload_path,
-                  'Id_type' => $Id_type
-                ]);
+                  // Connexion à la base de données
+                  $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee', 'root', '');
               
-                echo "Frais ajouté avec succès.";
-              } else {
-                echo "Une erreur est survenue.";
+                  $intitule = $_POST['intitulé'];
+                  $dateF = $_POST['dateF'];
+                  $Id_type = $_POST['type'];
+              
+                  // Insertion dans la base de données
+                  $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateF, :etat , :Id_type, :user )');
+                  $stmt->bindValue(':intitule', $intitule);
+                  $stmt->bindValue(':dateF', $dateF);
+                  $stmt->bindValue(':etat', 0);
+                  $stmt->bindValue(':Id_type', $Id_type);
+                  $stmt->bindValue(':user', "Pierre");
+                  $stmt->execute();
+
+           
               }
-            }
             ?>
+
 
 
 
