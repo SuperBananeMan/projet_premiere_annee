@@ -129,7 +129,7 @@
         <p class="h1 text-center">Tableau de Gestion Admin</p>
 
         <div class="row">
-          <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
+          <div class=" mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
             <table id="myTable">
               <thead>
                 <tr>
@@ -183,7 +183,7 @@
       
       <!--Ajouter Users-->
 
-      <div class="m-5">
+      <div class="mt-5">
 
           
         <p class="h2 text-center">Ajouter un User</p>
@@ -262,7 +262,9 @@
               
 
 
+          <p class="h2 text-center">Ajouter un Fraie</p>
 
+          <form action="index.php" method="POST">
 
 
           <div class="row mt-4">
@@ -273,16 +275,14 @@
                 <input type="text" placeholder="Intitulé" class="form-control" name="intitulé">
               </div>
               <div class="col-md-6">
-                <input type="text" placeholder="14/03/2023" class="form-control" name="date">
+                <input type="date" placeholder="14/03/2023" class="form-control" name="date">
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 mt-2">
-                <input type="file" class="form-control-file" id="file" name="file">
-              </div>
-              <div class="form-group col-md-6 mt-2">
+              
+              <div class="form-group col-md-12 mt-2">
                 
-                <select class="form-control" name="type" id="type">
+                <select class="form-control text-center" name="type" id="type">
                   
                   <option name="abc" value="1" selected>Repas</option>
                   <option name="abc" value="2">Transport</option>
@@ -293,54 +293,42 @@
              
 
             </div>
-            <p class="text-center m-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+        </form>
            </div>
           </div>
           </form>
 
           <?php
-
-            if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_FILES['file'])){
+            if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
             
-              // Connexion à la base de données
-              $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee', 'root', '');
+                // Connexion à la base de données
+                $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
             
-              $intitulé = $_POST['intitulé'];
-              $dateF = $_POST['date'];
-              $Id_type = $_POST['type'];
+                // Récupération des données du formulaire
+                $intitule = $_POST['intitulé'];
+                $date = $_POST['date'];
+                $type = $_POST['type'];
             
-              // Récupération de la pièce jointe
-              $file = $_FILES['file'];
-              $filename = $file['name'];
-              $error = $file['error'];
-              $tmp_name = $file['tmp_name'];
+                // Préparation et exécution de la requête SQL pour l'insertion des données
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "1", :typeok, "1")');
+                
+                $stmt->bindParam(':intitule', $intitule);
+					
+						    $stmt->bindParam(':dateok', $date);
+						    $stmt->bindParam(':typeok', $type);
 
-              echo "Frais ajouté avec succès.";
-
-            
-              // Vérification s'il n'y a pas eu d'erreur lors du téléchargement
-              if ($error === UPLOAD_ERR_OK) {
-
-                // Déplacement du fichier téléchargé vers le répertoire souhaité
-                $upload_dir = 'uploads/';
-                $upload_path = $upload_dir . $filename;
-                move_uploaded_file($tmp_name, $upload_path);
+						    $stmt->execute();
               
-                // Insertion du chemin d'accès au fichier dans la base de données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, Piece_jointe, id_paiement, Id_Type, Id_Users) VALUES (:intitul, :dateF, :upload_path, 0 , :Id_type, "Mourad" )');
-                $stmt->execute([
-                  'intitule' => $intitulé,
-                  'dateF' => $dateF,
-                  'upload_path' => $upload_path,
-                  'Id_type' => $Id_type
-                ]);
+                // Affichage d'un message de succès
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+					  <strong>C est nickel</strong> l ajout est OK.
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>';
               
-                echo "Frais ajouté avec succès.";
-              } else {
-                echo "Une erreur est survenue.";
-              }
             }
             ?>
+
 
 
 
