@@ -50,15 +50,7 @@
                     break;
             }
 			if ($_USER_ROLE != "Comptable"){
-				$_USER_WRONG_PAGE = true;
-				sleep(5);
-				$_SESSION['wrong_page'] = $_USER_WRONG_PAGE;
-				if ($_USER_ROLE == "Admin"){
-					header("Location: index.php");
-				}
-				if ($_USER_ROLE == "Commercial"){
-					header("Location: commercial.php");
-				}
+				header("location:403.html");
 			}
         } else {
             echo "Vous n'êtes pas connecté";
@@ -137,6 +129,56 @@
 		}
 	}
 	?>
+	
+	
+	<div class="row">
+		<div class="col-md-6 mt-5 pt-5 a_droite">
+			<table id="myTable">
+              <thead>
+                <tr>
+                  <th>Intitulé</th>
+                  <th>Date fraie</th>
+                  <th>Pièce jointe</th>
+				  <th>Paiement</th>
+				  <th>Type</th>
+				  <th>Utilisateur</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+				// Connexion à votre base de données
+                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
+                // Exécuter une requête pour récupérer les données
+                $resultat = $pdo->query("SELECT * FROM fraie");  
+                // Boucle pour afficher les résultats de la requête
+                foreach ($resultat as $row) {
+                  echo "<tr>";
+				  echo "<td>" . $row['Intitulé'] . "</td>";
+                  echo "<td>" . $row['date_frais'] . "</td>";
+                  echo "<td>" . $row['Piece_jointe'] . "</td>";
+                  echo "<td>" . $row['id_paiement'] . "</td>";
+				  echo "<td>" . $row['Id_Type'] . "</td>";
+				  echo "<td>" . $row['Id_Users'] . "</td>";
+				  echo "<td><button type='button'>Accepter</button></td>";
+                  echo "</tr>";
+                }
+                ?>
+              </tbody>
+            </table>
+			<script>
+              $(document).ready(function() {
+                $('#myTable').DataTable( {
+                  "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                  }
+              } );
+              } );
+            
+            
+            </script>
+			<style>.a_droite{margin-left:50px;}</style>
+		</div>
+	</div>
 
 
 </body>

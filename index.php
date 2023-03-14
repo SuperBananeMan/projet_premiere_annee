@@ -51,15 +51,7 @@
                     break;
             }
 			if ($_USER_ROLE != "Admin"){
-				$_USER_WRONG_PAGE = true;
-				sleep(5);
-				$_SESSION['wrong_page'] = $_USER_WRONG_PAGE;
-				if ($_USER_ROLE == "Comptable"){
-					header("Location: comptable.php");
-				}
-				if ($_USER_ROLE == "Commercial"){
-					header("Location: commercial.php");
-				}
+				header("location:403.html");
 			}
         } else {
             echo "Vous n'êtes pas connecté";
