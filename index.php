@@ -27,7 +27,6 @@
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
 		$_USER_WRONG_PAGE= false;
-		$_SESSION['wrong_page']= false;
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
