@@ -121,7 +121,15 @@
 
 					if ($success){
 						echo "Identifiants corrects : ".$_SESSION['user']." ".$_SESSION['role_u'];
-						header("Location: index.php");
+						if ($_SESSION['role_u'] == "Admin"){
+							header("Location: index.php");
+						}
+						if ($_SESSION['role_u'] == "Commercial"){
+							header("Location: commercial.php");
+						}
+						if ($_SESSION['role_u'] == "Comptable"){
+							header("Location: comptable.php");
+						}
 					}
 					else{
 						echo "Identifiants incorrects";
