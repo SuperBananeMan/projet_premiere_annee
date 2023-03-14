@@ -137,6 +137,7 @@
                   <th>Nom</th>
                   <th>Mail</th>
                   <th>Role</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -155,6 +156,7 @@
                   echo "<td>" . $row['Nom'] . "</td>";
                   echo "<td>" . $row['Mail'] . "</td>";
                   echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
+                  echo '<td> <button type="submit" class="btn btn-danger">Supprimer</button> </td>';
                   echo "</tr>";
                 }
                 ?>
