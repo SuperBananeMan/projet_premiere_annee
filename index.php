@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="pragma" content="no-cache" />
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -27,6 +26,7 @@
         session_start();
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
+		$_USER_WRONG_PAGE= false;
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
@@ -50,6 +50,9 @@
                     echo "Error user role 01";
                     break;
             }
+			if ($_USER_ROLE != "Admin"){
+				header("location:403.html");
+			}
         } else {
             echo "Vous n'êtes pas connecté";
         }
@@ -118,7 +121,7 @@
           <!-- Main Content For Admin-->
 
 
-    <div class="m-5 container">
+    <div class="m-5">
 
 
       <script>let table = new DataTable('#myTable');</script>
@@ -126,7 +129,7 @@
         <p class="h1 text-center">Tableau de Gestion Admin</p>
 
         <div class="row">
-          <div class=" mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
+          <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
             <table id="myTable">
               <thead>
                 <tr>
@@ -134,7 +137,6 @@
                   <th>Nom</th>
                   <th>Mail</th>
                   <th>Role</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -153,7 +155,6 @@
                   echo "<td>" . $row['Nom'] . "</td>";
                   echo "<td>" . $row['Mail'] . "</td>";
                   echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
-                  echo '<td> <button class="btn btn-danger btn-sm delete-btn">Supprimer</button></td>';
                   echo "</tr>";
                 }
                 ?>
@@ -174,7 +175,6 @@
             
             </script>
         </div>
-        </div>    
 
 
 
@@ -183,7 +183,7 @@
       
       <!--Ajouter Users-->
 
-    <div class="mt-5 container">
+      <div class="m-5">
 
           
         <p class="h2 text-center">Ajouter un User</p>
@@ -249,7 +249,6 @@
 		 
 						$stmt->execute();
 		 
-           
 						echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
 					  <strong>C est nickel</strong> l ajout est OK.
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -260,19 +259,10 @@
           
 				
 				?>
-      </div>
-
-      
-          <!-- Ajouter Frais  -->
+              
 
 
-      <div class="mt-5 container">
 
-          
-          <p class="h2 text-center">Ajouter des Frais</p>
-
-
-          <form action="index.php" method="POST">
 
 
           <div class="row mt-4">
@@ -283,11 +273,13 @@
                 <input type="text" placeholder="Intitulé" class="form-control" name="intitulé">
               </div>
               <div class="col-md-6">
-                <input type="text" placeholder="14/03/2023" class="form-control" name="dateF">
+                <input type="text" placeholder="14/03/2023" class="form-control" name="date">
               </div>
             </div>
             <div class="row">
-             
+              <div class="col-md-6 mt-2">
+                <input type="file" class="form-control-file" id="file" name="file">
+              </div>
               <div class="form-group col-md-6 mt-2">
                 
                 <select class="form-control" name="type" id="type">
@@ -308,28 +300,47 @@
 
           <?php
 
-              if (isset($_POST['intitulé']) && isset($_POST['dateF'])){
-              
-                  // Connexion à la base de données
-                  $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee', 'root', '');
-              
-                  $intitule = $_POST['intitulé'];
-                  $dateF = $_POST['dateF'];
-                  $Id_type = $_POST['type'];
-              
-                  // Insertion dans la base de données
-                  $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateF, :etat , :Id_type, :user )');
-                  $stmt->bindValue(':intitule', $intitule);
-                  $stmt->bindValue(':dateF', $dateF);
-                  $stmt->bindValue(':etat', 0);
-                  $stmt->bindValue(':Id_type', $Id_type);
-                  $stmt->bindValue(':user', "Pierre");
-                  $stmt->execute();
+            if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_FILES['file'])){
+            
+              // Connexion à la base de données
+              $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee', 'root', '');
+            
+              $intitulé = $_POST['intitulé'];
+              $dateF = $_POST['date'];
+              $Id_type = $_POST['type'];
+            
+              // Récupération de la pièce jointe
+              $file = $_FILES['file'];
+              $filename = $file['name'];
+              $error = $file['error'];
+              $tmp_name = $file['tmp_name'];
 
-           
+              echo "Frais ajouté avec succès.";
+
+            
+              // Vérification s'il n'y a pas eu d'erreur lors du téléchargement
+              if ($error === UPLOAD_ERR_OK) {
+
+                // Déplacement du fichier téléchargé vers le répertoire souhaité
+                $upload_dir = 'uploads/';
+                $upload_path = $upload_dir . $filename;
+                move_uploaded_file($tmp_name, $upload_path);
+              
+                // Insertion du chemin d'accès au fichier dans la base de données
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, Piece_jointe, id_paiement, Id_Type, Id_Users) VALUES (:intitul, :dateF, :upload_path, 0 , :Id_type, "Mourad" )');
+                $stmt->execute([
+                  'intitule' => $intitulé,
+                  'dateF' => $dateF,
+                  'upload_path' => $upload_path,
+                  'Id_type' => $Id_type
+                ]);
+              
+                echo "Frais ajouté avec succès.";
+              } else {
+                echo "Une erreur est survenue.";
               }
+            }
             ?>
-
 
 
 
@@ -339,10 +350,6 @@
     
     
  
-
-
-
-
 
 
 

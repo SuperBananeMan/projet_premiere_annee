@@ -50,15 +50,7 @@
                     break;
             }
 			if ($_USER_ROLE != "Commercial"){
-				$_USER_WRONG_PAGE = true;
-				sleep(5);
-				$_SESSION['wrong_page'] = $_USER_WRONG_PAGE;
-				if ($_USER_ROLE == "Comptable"){
-					header("Location: comptable.php");
-				}
-				if ($_USER_ROLE == "Admin"){
-					header("Location: index.php");
-				}
+				header("location:403.html");
 			}
         } else {
             echo "Vous n'êtes pas connecté";
@@ -129,16 +121,6 @@
 
 
           <!-- Main Content For Admin-->
-
-
-    <?php
-	if (isset($_SESSION['wrong_page'])) {
-		if ($_SESSION['wrong_page']==true){
-			echo "Vous avez essayé d'aller sur une page dont vous n'avez pas l'autorisation d'aller.";
-			$_SESSION['wrong_page'] = false;
-		}
-	}
-	?>
 
 
    
