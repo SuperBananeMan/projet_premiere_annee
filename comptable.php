@@ -120,15 +120,6 @@
     <!-- Main Content -->
 
 
-
-	<?php
-	if (isset($_SESSION['wrong_page'])) {
-		if ($_SESSION['wrong_page']==true){
-				echo "Vous avez essayé d'aller sur une page dont vous n'avez pas l'autorisation d'aller.";
-				$_SESSION['wrong_page'] = false;
-		}
-	}
-	?>
 	
 	
 	<div class="row">
@@ -141,7 +132,10 @@
                   <th>Pièce jointe</th>
 				  <th>Paiement</th>
 				  <th>Type</th>
-				  <th>Utilisateur</th>
+				  <th>Nom Utilisateur</th>
+				  <th>Prénom Utilisateur</th>
+				  <th></th>
+				  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -150,19 +144,38 @@
                 $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM fraie");  
+				$data = $pdo->query("SELECT * FROM users"); 
+				//identifier l'utilisateur
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
-                  echo "<tr>";
-				  echo "<td>" . $row['Intitulé'] . "</td>";
-                  echo "<td>" . $row['date_frais'] . "</td>";
-                  echo "<td>" . $row['Piece_jointe'] . "</td>";
-                  echo "<td>" . $row['id_paiement'] . "</td>";
-				  echo "<td>" . $row['Id_Type'] . "</td>";
-				  echo "<td>" . $row['Id_Users'] . "</td>";
-				  echo "<td><button type='button'>Accepter</button></td>";
+					echo "<tr>";
+					echo "<td>" . $row['Intitulé'] . "</td>";
+					echo "<td>" . $row['date_frais'] . "</td>";
+					echo "<td>" . $row['Piece_jointe'] . "</td>";
+					echo "<td>" . $row['id_paiement'] . "</td>";
+					echo "<td>" . $row['Id_Type'] . "</td>";
+					foreach ($data as $nom){
+						if ($row['Id_Users'] == $nom['Id_Users']){
+							$le_nom = $nom['Nom'];
+							$le_prenom = $nom['Prenom'];
+							break;
+						}
+					}
+					echo "<td>" . $le_nom . "</td>";
+					echo "<td>" . $le_prenom . "</td>";
+					echo "<td><input type='submit' value='Accepter' class='bouton_acc'></td>";
+					echo "<td><input type='submit' value='Refuser' class='bouton_ref'></td>";
                   echo "</tr>";
                 }
                 ?>
+				<?php     
+					if(isset($_POST['button_acc'])) {
+						echo "This is Button1 that is selected";
+					}
+					if(isset($_POST['button_ref'])) {
+						echo "This is Button2 that is selected";
+					}
+				?>
               </tbody>
             </table>
 			<script>
