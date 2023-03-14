@@ -131,7 +131,6 @@
                 <tr>
                   <th>ID</th>
                   <th>Nom</th>
-                  <th>Prénom</th>
                   <th>Mail</th>
                   <th>Role</th>
                 </tr>
@@ -148,7 +147,7 @@
                 foreach ($resultat as $row) {
                   echo "<tr>";
                   echo "<td>" . $row['Id_Users'] . "</td>";
-                  echo "<td>" . $row['Prenom'] . "</td>";
+                 
                   echo "<td>" . $row['Nom'] . "</td>";
                   echo "<td>" . $row['Mail'] . "</td>";
                   echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
@@ -175,62 +174,7 @@
 
 
 
-      <div class=" col-md-6 mt-5 pt-5">                                     <!-- Partie droite avec les boutons-->
-
-
-          <form action="" method="POST">
-            <div class="form-group">
-              <label for="select-user">Sélectionnez un utilisateur :</label>
-              <select class="form-control" id="select-user" name="select-user">
-                <?php
-                // Connexion à la base de données
-                $conn = mysqli_connect("localhost", "root", "", "projet_1erannee");
-                if (!$conn) {
-                  die("Connexion échouée : " . mysqli_connect_error());
-                }
-              
-                // Récupération de la liste des utilisateurs
-                $sql = "SELECT * FROM Users";
-                $result = mysqli_query($conn, $sql);
-              
-                // Création des options du menu déroulant
-                while ($row = mysqli_fetch_assoc($result)) {
-                  echo '<option value="' . $row['Id_Users'] . '">' . $row['Nom'] . ' ' . $row['Prenom'] . '</option>';
-                }
-              
-                // Fermeture de la connexion à la base de données
-                mysqli_close($conn);
-                ?>
-              </select>
-            </div>
-            <p class="text-center m-5"><button type="submit" class="btn btn-danger" name="delete-user">Supprimer</button></p>
-          </form>
-          <?php
-          // Traitement de la suppression d'un utilisateur
-          if (isset($_POST['delete-user'])) {
-            // Récupération de l'id de l'utilisateur sélectionné dans le menu déroulant
-            $selected_user = $_POST['select-user'];
-          
-            // Connexion à la base de données
-            $conn = mysqli_connect("localhost", "root", "", "projet_1erannee");
-            if (!$conn) {
-              die("Connexion échouée : " . mysqli_connect_error());
-            }
-          
-            // Suppression de l'utilisateur sélectionné
-            $sql = "DELETE FROM Users WHERE Id_Users = '$selected_user'";
-            if (mysqli_query($conn, $sql)) {
-              echo '<div class="alert alert-success">Utilisateur supprimé avec succès.</div>';
-            } else {
-              echo '<div class="alert alert-danger">Erreur lors de la suppression de l\'utilisateur : ' . mysqli_error($conn) . '</div>';
-            }
-          
-            // Fermeture de la connexion à la base de données
-            mysqli_close($conn);
-          }
-          ?>
-        </div>
-      </div>
+      
     
       
       <!--Ajouter Users-->
@@ -240,7 +184,7 @@
           
         <p class="h2 text-center">Ajouter un User</p>
 
-        <form action="" method="POST">
+        <form action="index.php" method="POST">
 
 
         <div class="row mt-4">
@@ -248,19 +192,27 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <input type="text" class="form-control" name="email">
+                <input type="text" placeholder="E-Mail" class="form-control" name="email">
               </div>
               <div class="col-md-6">
-                <input type="text" class="form-control" name="user">
+                <input type="text" placeholder="Username" class="form-control" name="user">
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mt-2">
-                <input type="text" class="form-control" name="user2">
+                <input type="text" placeholder="Password" class="form-control" name="passwrd">
               </div>
-              <div class="col-md-6 mt-2">
-                <input type="text" class="form-control" name="passwrd">
+              <div class="form-group col-md-6 mt-2">
+                
+                <select class="form-control" name="dropdown" id="dropdown">
+                  
+                  <option name="abc" value="1" selected>Admin</option>
+                  <option name="abc" value="2">Comptable</option>
+                  <option name="abc" value="3">Commercial</option>
+                
+                </select>
               </div>
+
             </div>
            </div>
           </div>
@@ -273,18 +225,19 @@
 
           
         <?php
-					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user']) && isset($_POST['user2'])){
+					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user'])){
 						$email = $_POST['email'];
 						$username = $_POST['user'];
-						$username2 = $_POST['user2'];
 						$passwrd = $_POST['passwrd'];
-						$Id_role = $_POST['Id_role'];
-		 
+						$Id_role = $_POST['dropdown'];
+
+            
+            
 						$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
 		 
-						$stmt = $db->prepare("INSERT INTO users (Nom, Prenom, Mail, Passwrd, Id_role) VALUES (:username, :username2, :email, :passwrd, :Id_role)");
+						$stmt = $db->prepare("INSERT INTO users (Nom, Mail, Passwrd, Id_role) VALUES (:username, :email, :passwrd, :Id_role)");
 						$stmt->bindParam(':username', $username);
-						$stmt->bindParam(':username2', $username2);
+					
 						$stmt->bindParam(':passwrd', $passwrd);
 						$stmt->bindParam(':email', $email);
 						$stmt->bindParam(':Id_role', $Id_role);
@@ -298,7 +251,7 @@
 					
 					}
 
-
+          
 				
 				?>
               
@@ -322,15 +275,6 @@
 </div>
 
 
-
-    <!-- Main Content For Comptable-->
-
-
-
-
-
-
-    <!-- Main Content For Commerciale-->
 
 
 
