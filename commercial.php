@@ -117,65 +117,7 @@
           <!-- Main Content For Admin-->
 
 
-    <div class="m-5">
-
-
-      <script>let table = new DataTable('#myTable');</script>
-
-        <p class="h1 text-center">Tableau de Gestion Admin</p>
-
-        <div class="row">
-          <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
-            <table id="myTable">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Mail</th>
-                  <th>Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                // Connexion à votre base de données
-                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
-                // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM users");  
-                //role
-                $role_name =[1 => "Admin", 2 => "Comptable", 3 => "Commercial"];
-                // Boucle pour afficher les résultats de la requête
-                foreach ($resultat as $row) {
-                  echo "<tr>";
-                  echo "<td>" . $row['Id_Users'] . "</td>";
-                  echo "<td>" . $row['Prenom'] . "</td>";
-                  echo "<td>" . $row['Nom'] . "</td>";
-                  echo "<td>" . $row['Mail'] . "</td>";
-                  echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
-                  echo "</tr>";
-                }
-                ?>
-              </tbody>
-            </table>
-              
-            
-
-
-
-
-
-
-
-
-      
-    
-    
-    
-    
-    
-    </div>    
-  </div>    
-</div>
+   
 
 
 
