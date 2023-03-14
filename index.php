@@ -26,6 +26,8 @@
         session_start();
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
+		$_USER_WRONG_PAGE= false;
+		$_SESSION['wrong_page']= false;
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
@@ -49,6 +51,17 @@
                     echo "Error user role 01";
                     break;
             }
+			if ($_USER_ROLE != "Admin"){
+				$_USER_WRONG_PAGE = true;
+				sleep(5);
+				$_SESSION['wrong_page'] = $_USER_WRONG_PAGE;
+				if ($_USER_ROLE == "Comptable"){
+					header("Location: comptable.php");
+				}
+				if ($_USER_ROLE == "Commercial"){
+					header("Location: commercial.php");
+				}
+			}
         } else {
             echo "Vous n'êtes pas connecté";
         }
