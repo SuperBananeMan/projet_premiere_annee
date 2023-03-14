@@ -133,6 +133,7 @@
 	if (isset($_SESSION['wrong_page'])) {
 		if ($_SESSION['wrong_page']==true){
 				echo "Vous avez essayé d'aller sur une page dont vous n'avez pas l'autorisation d'aller.";
+				$_SESSION['wrong_page'] = false;
 		}
 	}
 	?>
