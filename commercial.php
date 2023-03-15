@@ -34,23 +34,26 @@
         if ($_USER_INIT != NULL) {
             switch ($_USER_ROLE) {
                 case 'Admin':
-                    //code...
-                    echo "Admin ". $_USER_INIT;
+                    
                     break;
                 case 'Comptable':
-                    //code...
-                    echo "Comptable ". $_USER_INIT;
+                    
                     break;
                 case 'Commercial':
-                    //code...
-                    echo "Commercial ". $_USER_INIT;
+                    
                     break;
                 default:
                     echo "Error user role 01";
                     break;
             }
-			if ($_USER_ROLE != "Commercial"){
-				header("location:403.html");
+			if ($_USER_ROLE != "Commercial")
+      {
+        if ($_USER_ROLE == "Admin"){
+        }
+        else{
+          header("location:403.html");
+        }
+				
 			}
         } else {
             echo "Vous n'êtes pas connecté";
@@ -129,8 +132,13 @@
 
           <script>let table = new DataTable('#myTable');</script>
 
-        <p class="h1 text-center">Tableau de Gestion Admin</p>
-
+        <?php 
+        
+        echo "<h1 class='mt-3 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
+        
+        
+        
+        ?>
 
     <div class="row">
           <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->

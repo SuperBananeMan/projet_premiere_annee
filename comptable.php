@@ -35,22 +35,23 @@
             switch ($_USER_ROLE) {
                 case 'Admin':
                     //code...
-                    echo "Admin ". $_USER_INIT;
                     break;
                 case 'Comptable':
                     //code...
-                    echo "Comptable ". $_USER_INIT;
                     break;
                 case 'Commercial':
                     //code...
-                    echo "Commercial ". $_USER_INIT;
                     break;
                 default:
                     echo "Error user role 01";
                     break;
             }
-			if ($_USER_ROLE != "Comptable"){
-				header("location:403.html");
+			if ($_USER_ROLE != "Comptable" ){
+				if ($_USER_ROLE == "Admin"){
+        }
+        else{
+          header("location:403.html");
+        }
 			}
         } else {
             echo "Vous n'êtes pas connecté";
@@ -120,7 +121,13 @@
     <!-- Main Content -->
 
 
-	
+    <?php 
+        
+        echo "<h1 class='mt-3 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
+        
+        
+        
+    ?>
 	
 	<div class="row">
 		<div class="col-md-6 mt-5 pt-5 a_droite">

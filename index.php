@@ -22,7 +22,7 @@
 <body>
     
     <?php
-
+        
         session_start();
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
@@ -35,16 +35,13 @@
         if ($_USER_INIT != NULL) {
             switch ($_USER_ROLE) {
                 case 'Admin':
-                    //code...
-                    echo "Admin ". $_USER_INIT;
-                    break;
+                    
+                    break; 
                 case 'Comptable':
-                    //code...
-                    echo "Comptable ". $_USER_INIT;
+                    
                     break;
                 case 'Commercial':
-                    //code...
-                    echo "Commercial ". $_USER_INIT;
+                    
                     break;
                 default:
                     echo "Error user role 01";
@@ -120,13 +117,24 @@
 
           <!-- Main Content For Admin-->
 
+        <?php 
+        
+        echo "<h1 class='mt-3 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
+        
+        
+        
+        ?>
 
     <div class="m-5">
 
 
       <script>let table = new DataTable('#myTable');</script>
 
-        <p class="h1 text-center">Tableau de Gestion Admin</p>
+
+        
+
+
+        <p class="mt-4 h2 text-center">Tableau de Gestion Admin</p>
 
         <div class="row">
           <div class=" mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
