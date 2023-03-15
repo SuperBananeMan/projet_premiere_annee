@@ -158,30 +158,32 @@
 					echo "<tr>";
 					echo "<td>" . $row['Intitulé'] . "</td>";
 					echo "<td>" . $row['date_frais'] . "</td>";
-					echo "<td>" . $row['Piece_jointe'] . "</td>";
 					echo "<td>" . $row['id_paiement'] . "</td>";
 					echo "<td>" . $row['Id_Type'] . "</td>";
 					foreach ($data as $nom){
 						if ($row['Id_Users'] == $nom['Id_Users']){
 							$le_nom = $nom['Nom'];
-							$le_prenom = $nom['Prenom'];
+							//$le_prenom = $nom['Prenom'];
 							break;
 						}
 					}
 					echo "<td>" . $le_nom . "</td>";
-					echo "<td>" . $le_prenom . "</td>";
+					//echo "<td>" . $le_prenom . "</td>";
+					echo '<form action="login.php" method="post">';
 					echo "<td><input type='submit' value='Accepter' class='bouton_acc'></td>";
 					echo "<td><input type='submit' value='Refuser' class='bouton_ref'></td>";
+					if(isset($_GET['button_acc'])) {
+						echo "This is Button1 that is selected";
+					}
+					if(isset($_GET['button_ref'])) {
+						echo "This is Button2 that is selected";
+					}
+					echo '</form>';
                   echo "</tr>";
                 }
                 ?>
 				<?php     
-					if(isset($_POST['button_acc'])) {
-						echo "This is Button1 that is selected";
-					}
-					if(isset($_POST['button_ref'])) {
-						echo "This is Button2 that is selected";
-					}
+					
 				?>
               </tbody>
             </table>

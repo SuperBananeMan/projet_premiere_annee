@@ -147,7 +147,6 @@
                 <tr>
                   <th>ID</th>
                   <th>Intitulé</th>
-                  <th>PJ</th>
                   <th>Date</th>
                   <th>ID_pay</th>
                   <th>Id usr</th>
@@ -169,7 +168,6 @@
                   array_push($myarray, $row2);
                   
                 }
-                $ijk =0;
                 
                   
                 // Boucle pour afficher les résultats de la requête
@@ -182,12 +180,10 @@
                   echo "<td>" . $row['Id_Fraie'] . "</td>";
                  
                   echo "<td>" . $row['Intitulé'] . "</td>";
-                  echo "<td>" . $row['Piece_jointe'] . "</td>";
                   echo "<td>" . $row['date_frais'] . "</td>";
                   echo "<td>" . $row['id_paiement'] . "</td>";
                   echo "<td>" . $row['Id_Users'] . "</td>";
-                 echo "<td>" . $myarray[$ijk]['etat_paiement'] . "</td>";
-                 $ijk++;
+                 
 
                   echo "</tr>";
                 }
