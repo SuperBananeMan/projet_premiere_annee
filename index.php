@@ -35,21 +35,24 @@
         if ($_USER_INIT != NULL) {
             switch ($_USER_ROLE) {
                 case 'Admin':
-                    
+                    //code...
                     break; 
                 case 'Comptable':
-                    
+                    //code...
                     break;
                 case 'Commercial':
-                    
+                    //code...
                     break;
                 default:
                     echo "Error user role 01";
                     break;
             }
 			if ($_USER_ROLE != "Admin"){
-				header("location:403.html");
-			}
+        if ($_USER_ROLE == "Admin"){
+        }
+        else{
+          header("location:403.html");
+        }			}
         } else {
             echo "Vous n'êtes pas connecté";
         }
@@ -119,7 +122,7 @@
 
         <?php 
         
-        echo "<h1 class='mt-3 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
+        echo "<h1 class='mt-5 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
         
         
         
@@ -149,25 +152,50 @@
                 </tr>
               </thead>
               <tbody>
-                <?php
+              <?php
                 // Connexion à votre base de données
                 $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
-                // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM users");  
+
                 //role
                 $role_name =[1 => "Admin", 2 => "Comptable", 3 => "Commercial"];
+
+                // Vérifier si le formulaire a été soumis
+                if(isset($_POST['delete_user'])) {
+                    $id = $_POST['delete_user'];
+
+                    // Préparer et exécuter une requête de suppression
+                    $stmt = $pdo->prepare("DELETE FROM users WHERE Id_Users = ?");
+                    $stmt->execute([$id]);
+
+                    // Rediriger vers la page d'affichage
+                    header("Location: index.php");
+                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>C est nickel</strong> le user a bien été supprimé
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>';
+                    exit();
+                }
+
+                // Exécuter une requête pour récupérer les données
+                $resultat = $pdo->query("SELECT * FROM users");  
+
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
-                  echo "<tr>";
-                  echo "<td>" . $row['Id_Users'] . "</td>";
-                 
-                  echo "<td>" . $row['Nom'] . "</td>";
-                  echo "<td>" . $row['Mail'] . "</td>";
-                  echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
-                  echo '<td> <button type="submit" class="btn btn-danger">Supprimer</button> </td>';
-                  echo "</tr>";
+                    echo "<tr>";
+                    echo "<td>" . $row['Id_Users'] . "</td>";
+                    echo "<td>" . $row['Nom'] . "</td>";
+                    echo "<td>" . $row['Mail'] . "</td>";
+                    echo "<td>" . $role_name[$row['Id_Role']] . "</td>";
+                    echo '<td> 
+                            <form method="post" action="index.php">
+                              <input type="hidden" name="delete_user" value="'.$row['Id_Users'].'">
+                              <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                          </td>';
+                    echo "</tr>";
                 }
                 ?>
+
               </tbody>
             </table>
               
