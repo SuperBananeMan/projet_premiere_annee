@@ -48,13 +48,12 @@
                     break;
             }
 			if ($_USER_ROLE != "Admin"){
-        if ($_USER_ROLE == "Admin"){
-        }
-        else{
+        
+        
           header("location:403.html");
-        }			}
+        			}
         } else {
-            echo "Vous n'êtes pas connecté";
+           
         }
 
     
@@ -102,12 +101,15 @@
               </li>
             </ul>
             <!-- Left links -->
-        
-            <div class="d-flex align-items-center ">
-              <button type="button" class="btn button_color  me-2">
-                <a class="text-light text_deco" href="login.php">Login</a>
-              </button>
+            <?php
+
+              echo '<div class="d-flex align-items-center ">
               
+              '. $_USER_INIT . ' - ' . $_USER_ROLE .''
+            
+            
+            
+            ?>
 
             </div>
           </div>
@@ -120,14 +122,7 @@
 
           <!-- Main Content For Admin-->
 
-        <?php 
         
-        echo "<h1 class='mt-5 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
-        
-        
-        
-        ?>
-
     <div class="m-5">
 
 

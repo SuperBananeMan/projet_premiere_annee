@@ -108,10 +108,15 @@
             </ul>
             <!-- Left links -->
         
-            <div class="d-flex align-items-center ">
-              <button type="button" class="btn button_color  me-2">
-                <a class="text-light text_deco" href="login.php">Login</a>
-              </button>
+            <?php
+
+              echo '<div class="d-flex align-items-center ">
+              
+              '. $_USER_INIT . ' - ' . $_USER_ROLE .''
+            
+            
+            
+            ?>
               
 
             </div>
@@ -132,13 +137,7 @@
 
           <script>let table = new DataTable('#myTable');</script>
 
-        <?php 
         
-        echo "<h1 class='mt-3 text-center'> Bienvenue "  . $_USER_INIT . "</h1>"
-        
-        
-        
-        ?>
 
     <div class="row">
           <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
