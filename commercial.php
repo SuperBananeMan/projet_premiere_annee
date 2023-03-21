@@ -163,7 +163,7 @@
                 
                 
                 // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM fraie where Id_Users = ''");
+                $resultat = $pdo->query("SELECT * FROM fraie");
                 $res2 = $pdo->query("SELECT * FROM etat");
                 //Array
                 $myarray_res = array();
@@ -190,12 +190,11 @@
                   
                   echo "<tr>";
                   echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
-                 
-                  echo "<td>" . $row['Intitulé'] . "</td>";
-                  echo "<td>" . $row['date_frais'] . "</td>";
-                  echo "<td>" . $row['id_paiement'] . "</td>";
-                  echo "<td>" . $row['Id_Users'] . "</td>";
-                 
+                  echo "<td>" . $myarray_res[$i]['Intitulé'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
+                  echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
 
                   echo "</tr>";
                 }
@@ -228,7 +227,7 @@
 
 <?php
 //affichage des données de myarray
-
+/*
 foreach ($myarray_res2 as $row2) {
    
    //echo $row2['etat_paiement'];
@@ -236,7 +235,7 @@ foreach ($myarray_res2 as $row2) {
 
 for ($i = 0; $i < count($myarray_res); $i++) {
   echo $myarray_res2[$i]['type_paiement'];
-}
+}*/
 
 ?>
 
