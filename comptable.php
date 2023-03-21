@@ -141,11 +141,12 @@
                 <tr>
                   <th>Intitulé</th>
                   <th>Date fraie</th>
-                  <th>Pièce jointe</th>
+                  <!--<th>Pièce jointe</th>-->
+				  <th>Id Paiement</th>
 				  <th>Paiement</th>
 				  <th>Type</th>
-				  <th>Nom Utilisateur</th>
-				  <th>Prénom Utilisateur</th>
+				  <!--<th>Nom Utilisateur</th>
+				  <th>Prénom Utilisateur</th>-->
 				  <th></th>
 				  <th></th>
                 </tr>
@@ -157,14 +158,30 @@
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM fraie");  
 				$data = $pdo->query("SELECT * FROM users"); 
+				$etat = $pdo->query("SELECT * FROM etat");
 				//identifier l'utilisateur
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
 					echo "<tr>";
 					echo "<td>" . $row['Intitulé'] . "</td>";
 					echo "<td>" . $row['date_frais'] . "</td>";
+					foreach ($etat as $etat_data){
+						if ($row['id_paiement'] == $etat_data['id_paiement']){
+							print_r($row['id_paiement']);
+							echo '<br/>';
+							print_r($etat_data['id_paiement']);
+							echo '<br/>';
+							$etat_nom = $etat_data['etat_paiement'];
+							break;
+						}
+					}
+					unset($etat_data);
 					echo "<td>" . $row['id_paiement'] . "</td>";
+					echo "<td>" . $etat_nom . "</td>";
+					print_r($etat_nom);
+					echo '<br/>';
 					echo "<td>" . $row['Id_Type'] . "</td>";
+					
 					foreach ($data as $nom){
 						if ($row['Id_Users'] == $nom['Id_Users']){
 							$le_nom = $nom['Nom'];
@@ -172,24 +189,34 @@
 							break;
 						}
 					}
-					echo "<td>" . $le_nom . "</td>";
+					
+					//echo "<td>" . $le_nom . "</td>";
 					//echo "<td>" . $le_prenom . "</td>";
-					echo '<form action="login.php" method="post">';
-					echo "<td><input type='submit' value='Accepter' class='bouton_acc'></td>";
-					echo "<td><input type='submit' value='Refuser' class='bouton_ref'></td>";
+					
+					echo '<form action="comptable.php" method="post">';
+					echo "<td><input type='submit' value='Accepter' class='bouton_acc' onclick='AddConfirm'></td>";
+					echo "<td><input type='submit' value='Refuser' class='bouton_ref' onclick='DelConfirm'></td>";
+					
 					if(isset($_GET['button_acc'])) {
-						echo "This is Button1 that is selected";
+						$row['id_paiement'] = 2;
 					}
 					if(isset($_GET['button_ref'])) {
-						echo "This is Button2 that is selected";
+						$row['id_paiement'] = 3;
 					}
+					
 					echo '</form>';
                   echo "</tr>";
                 }
                 ?>
-				<?php     
-					
-				?>
+				<script>
+					function DelConfirm() {
+					  confirm("Êtes vous sure de refuser ce fraie ?");
+					}
+					function AddConfirm() {
+					  confirm("Êtes vous sure d'accepter ce fraie ?");
+					}
+				</script>
+				
               </tbody>
             </table>
 			<script>
