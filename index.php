@@ -229,15 +229,15 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <input type="text" placeholder="E-Mail" class="form-control" name="email">
+                <input type="text" placeholder="E-Mail" class="form-control" name="email" required>
               </div>
               <div class="col-md-6">
-                <input type="text" placeholder="Username" class="form-control" name="user">
+                <input type="text" placeholder="Username" class="form-control" name="user" required>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mt-2">
-                <input type="text" placeholder="Password" class="form-control" name="passwrd">
+                <input type="text" placeholder="Password" class="form-control" name="passwrd" required>
               </div>
               <div class="form-group col-md-6 mt-2">
                 
@@ -310,10 +310,10 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé">
+                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" required>
               </div>
               <div class="col-md-6">
-                <input type="date" placeholder="14/03/2023" class="form-control" name="date">
+                <input type="date" placeholder="14/03/2023" class="form-control" name="date" required>
               </div>
             </div>
             <div class="row">

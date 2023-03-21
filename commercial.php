@@ -12,7 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="src/styleheet.css">
+    <link rel="stylesheet" href="src/styleheet">
+
     <link rel="icon" type="image/x-icon" href="./src/assets/ico.png">
 
     
@@ -286,10 +287,10 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-6">
-                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé">
+                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" required>
               </div>
               <div class="col-md-6">
-                <input type="date" placeholder="14/03/2023" class="form-control" name="date">
+                <input type="date" placeholder="14/03/2023" class="form-control" name="date" required>
               </div>
             </div>
             <div class="row">
