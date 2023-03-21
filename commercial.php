@@ -282,19 +282,19 @@
 
     <p class="h2 text-center mt-2">Ajouter un Fraie</p>
 
-          <form action="commercial.php" method="POST">
+          <form action="commercial.php" class="container" method="POST">
 
 
-          <div class="row mt-4">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-            <div class="row">
+          <div class="row mt-2 container">
+            <div class="col-md-3"></div>
               <div class="col-md-6">
-                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" required>
-              </div>
-              <div class="col-md-6">
-                <input type="date" placeholder="14/03/2023" class="form-control" name="date" required>
-              </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" require>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" placeholder="14/03/2023" class="form-control" name="date" require>
+                  </div>
             </div>
             <div class="row">
 
@@ -321,7 +321,7 @@
         </form>
            </div>
           </div>
-          </form>
+
 
           <?php
             if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {

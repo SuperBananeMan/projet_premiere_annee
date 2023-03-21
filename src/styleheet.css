@@ -1,13 +1,21 @@
 :root{
-    --primary-color: hsl(34, 59%, 72%);
+    --primary-color: hsl(34, 61%, 77%);
     --secondary-color: hsl(208, 62%, 45%);
     --font-color: black;
     --text-decoration: none;
+    --background-color: hsl(34, 8%, 96%);
 }
 
 .navbar_color{
 
     background-color: var(--primary-color);
+    margin: 12px;
+
+}
+
+body{
+
+    background-color: var(--background-color);
 
 }
 
