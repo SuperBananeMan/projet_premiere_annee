@@ -145,7 +145,6 @@
                   <th>ID</th>
                   <th>Intitulé</th>
                   <th>Date</th>
-                  <th>ID_pay</th>
                   <th>Id usr</th>
                   <th>Id Etat</th>
             
@@ -190,9 +189,8 @@
                   
                   echo "<tr>";
                   echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
-                  echo "<td>" . $myarray_res[$i]['Intitulé'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['Intitule'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
-                  echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
                   echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
 
