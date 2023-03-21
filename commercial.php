@@ -165,6 +165,7 @@
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM fraie");
                 $res2 = $pdo->query("SELECT * FROM etat ");
+                $name = $pdo->query("SELECT * FROM users"); 
                 //Array
                 $myarray_res = array();
                 $myarray_res2 = array();
@@ -193,7 +194,16 @@
                   echo "<td>" . $myarray_res[$i]['Intitule'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
                   //echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
-                  echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
+
+                  foreach ($name as $nom){
+                    if ($row['Id_Users'] == $nom['Id_Users']){
+                      
+                      echo "<td>" . $nom['Nom'] . "</td>";
+                      break;
+                    }
+                  }
+
+
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
                   if ($myarray_res[$i]['id_paiement'] == 1) {
                     echo "<td>" . $myarray_res2[0]['type_paiement'] . "</td>";

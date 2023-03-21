@@ -171,7 +171,7 @@
 							echo '<br/>';
 							print_r($etat_data['id_paiement']);
 							echo '<br/>';
-							$etat_nom = $etat_data['etat_paiement'];
+							$etat_nom = $etat_data['type_paiement'];
 							break;
 						}
 					}
