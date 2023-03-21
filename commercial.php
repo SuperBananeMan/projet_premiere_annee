@@ -147,6 +147,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Intitulé</th>
+                  <th>Type</th>
                   <th>Date</th>
                   <th>User</th>
                   <th>Etat</th>
@@ -174,11 +175,12 @@
                 $resultat = $pdo->query($select_opt);
                 $res2 = $pdo->query("SELECT * FROM etat ");
                 $name = $pdo->query("SELECT * FROM users"); 
+                $types = $pdo->query("SELECT * FROM type"); 
                 //Array
                 $myarray_res = array();
                 $myarray_res2 = array();
                 $myarray_name = array();
-
+                $myarray_type = array();
                 foreach ($resultat as $row) {
                   //push the data in the array
                   array_push($myarray_res, $row);
@@ -200,16 +202,35 @@
 
 
                 }
+
+
+                foreach ($types as $type){
+                
+                  array_push($myarray_type, $type);
+
+
+                }
                 
                 for ($i=0; $i < count($myarray_res); $i++) {
                   
                   echo "<tr>";
                   echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['Intitule'] . "</td>";
+                  
+                  
+                  foreach ($myarray_type as $type) {
+                    if ($myarray_res[$i]['Id_Type'] == $type['Id_Type']){
+                      echo "<td>" . $type['Nom'] . "</td>";
+                    }
+                  }
+                  
+                  
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
-                  //echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
 
                   
+
+
+
                   foreach ($myarray_name as $nom) {
                     if ($myarray_res[$i]['Id_Users'] == $nom['Id_Users']){
                       echo "<td>" . $nom['Nom'] . "</td>";
