@@ -48,13 +48,10 @@
                     break;
             }
 			if ($_USER_ROLE != "Admin"){
-        
-        
-          header("location:403.html");
-        			}
+				header("location:403.html");
+        	}
         } else {
           header("location:login.php");
-
         }
 
     

@@ -46,18 +46,17 @@
                     echo "Error user role 01";
                     break;
             }
-			if ($_USER_ROLE != "Commercial")
-      {
-        if ($_USER_ROLE == "Admin"){
-        }
-        else{
-          header("location:403.html");
-        }
+			if ($_USER_ROLE != "Commercial"){
+					if ($_USER_ROLE == "Admin"){
+					
+					}
+					else{
+						header("location:403.html");
+					}
 				
-			}
+				}
         } else {
             header("location:login.php");
-
         }
 	
 

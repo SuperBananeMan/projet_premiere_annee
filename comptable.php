@@ -47,19 +47,18 @@
                     break;
             }
             
-          	if ($_USER_ROLE != "Comptable")
-              {
+          	if ($_USER_ROLE != "Comptable"){
                 if ($_USER_ROLE == "Admin"){
+					
                 }
                 else{
                   header("location:403.html");
                 }
-              
-			        }
-                } else {
-                    header("location:login.php");
-                
-                }
+			}
+		} else {
+			header("location:login.php");
+		
+		}
               
     
         
