@@ -65,7 +65,6 @@
     
     
     
-    
     ?>
 
     <!-- Navbar -->
@@ -156,8 +155,15 @@
                 <?php
                 // Connexion à votre base de données
                 $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
+                
+                // Recupere l'id du Users
+
+               
+
+                
+                
                 // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM fraie");
+                $resultat = $pdo->query("SELECT * FROM fraie where Id_Users = ''");
                 $res2 = $pdo->query("SELECT * FROM etat");
                 //Array
                 $myarray = array();
@@ -177,7 +183,7 @@
                   echo "<tr>";
                   echo "<td>" . $row['Id_Fraie'] . "</td>";
                  
-                  echo "<td>" . $row['Intitulé'] . "</td>";
+                  echo "<td>" . $row['Intitule'] . "</td>";
                   echo "<td>" . $row['date_frais'] . "</td>";
                   echo "<td>" . $row['id_paiement'] . "</td>";
                   echo "<td>" . $row['Id_Users'] . "</td>";
