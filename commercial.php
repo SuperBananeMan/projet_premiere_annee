@@ -177,6 +177,7 @@
                 //Array
                 $myarray_res = array();
                 $myarray_res2 = array();
+                $myarray_name = array();
 
                 foreach ($resultat as $row) {
                   //push the data in the array
@@ -187,6 +188,12 @@
                 foreach ($res2 as $row2) {
                   //push the data in the array
                   array_push($myarray_res2, $row2);
+                  
+                }
+
+                foreach ($name as $nom) {
+                  //push the data in the array
+                  array_push($myarray_name, $nom);
                   
                 }
                 
@@ -203,11 +210,10 @@
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
                   //echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
 
-                  foreach ($name as $nom){
-                    if ($row['Id_Users'] == $nom['Id_Users']){
-                      
+                  //echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
+                  foreach ($myarray_name as $nom) {
+                    if ($myarray_res[$i]['Id_Users'] == $nom['Id_Users']){
                       echo "<td>" . $nom['Nom'] . "</td>";
-                      break;
                     }
                   }
 
