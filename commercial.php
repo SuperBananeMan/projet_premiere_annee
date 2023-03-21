@@ -190,17 +190,16 @@
                   array_push($myarray_res2, $row2);
                   
                 }
-
-                foreach ($name as $nom) {
-                  //push the data in the array
-                  array_push($myarray_name, $nom);
-                  
-                }
                 
                   
                 // Boucle pour afficher les résultats de la requête
 
+                foreach ($name as $nom){
                 
+                  array_push($myarray_name, $nom);
+
+
+                }
                 
                 for ($i=0; $i < count($myarray_res); $i++) {
                   
@@ -210,13 +209,13 @@
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
                   //echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
 
-                  //echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
+                  
                   foreach ($myarray_name as $nom) {
                     if ($myarray_res[$i]['Id_Users'] == $nom['Id_Users']){
                       echo "<td>" . $nom['Nom'] . "</td>";
                     }
                   }
-
+                 
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
                   if ($myarray_res[$i]['id_paiement'] == 1) {
