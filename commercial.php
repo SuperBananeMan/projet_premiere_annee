@@ -192,23 +192,23 @@
                   array_push($myarray_res2, $row2);
                   
                 }
-                
+
                   
                 // Boucle pour afficher les résultats de la requête
 
                 foreach ($name as $nom){
                 
                   array_push($myarray_name, $nom);
-
+                  
 
                 }
-
-
-                foreach ($types as $type){
                 
+                  
+                foreach ($types as $type){
+
                   array_push($myarray_type, $type);
-
-
+                
+                
                 }
                 
                 for ($i=0; $i < count($myarray_res); $i++) {
@@ -233,10 +233,10 @@
 
                   foreach ($myarray_name as $nom) {
                     if ($myarray_res[$i]['Id_Users'] == $nom['Id_Users']){
-                      echo "<td>" . $nom['Nom'] . "</td>";
+                      echo "<td>" . $nom['Nom'] . "</td>"; 
                     }
                   }
-                 
+
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
                   if ($myarray_res[$i]['id_paiement'] == 1) {
@@ -343,6 +343,11 @@
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>';
               
+              //refresh la page js
+              echo '<script type="text/javascript">
+              setTimeout(function(){window.location = "commercial.php"}, 2000);
+              </script>';
+
             }
             ?>
 

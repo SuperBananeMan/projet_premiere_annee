@@ -286,6 +286,11 @@
 					  <strong>C est nickel</strong> l ajout est OK.
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>';
+
+          //refresh la page js
+          echo '<script type="text/javascript">
+          setTimeout(function(){window.location = "index.php"}, 2000);
+          </script>';
 					
 					}
 
@@ -350,6 +355,7 @@
 					
 						    $stmt->bindParam(':dateok', $date);
 						    $stmt->bindParam(':typeok', $type);
+                $stmt->bindParam(':iduser', $_USER_ID);
 
 						    $stmt->execute();
               
@@ -358,6 +364,11 @@
 					  <strong>C est nickel</strong> l ajout est OK.
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>';
+
+          //refresh la page js
+          echo '<script type="text/javascript">
+          setTimeout(function(){window.location = "index.php"}, 2000);
+          </script>';
               
             }
             ?>
