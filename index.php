@@ -53,7 +53,8 @@
           header("location:403.html");
         			}
         } else {
-           
+          header("location:login.php");
+
         }
 
     

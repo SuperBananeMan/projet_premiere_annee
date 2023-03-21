@@ -46,16 +46,23 @@
                     echo "Error user role 01";
                     break;
             }
-			if ($_USER_ROLE != "Comptable"){
-				if ($_USER_ROLE == "Admin"){
-        }
-        else{
-          header("location:403.html");
-        }
-			}
-        } else {
-            echo "Vous n'êtes pas connecté";
-        }
+            
+          	if ($_USER_ROLE != "Comptable")
+              {
+                if ($_USER_ROLE == "Admin"){
+                }
+                else{
+                  header("location:403.html");
+                }
+              
+			        }
+                } else {
+                    header("location:login.php");
+                
+                }
+              
+    
+        
 
     
     
