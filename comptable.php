@@ -142,10 +142,11 @@
               <thead>
                 <tr>
                   <th>Intitulé</th>
+                  <th>Prix</th>
+
                   <th>Date fraie</th>
-                  <!--<th>Pièce jointe</th>-->
 				  <th>Paiement</th>
-				  <th>Type</th>
+          <th>Type</th>
 				  <th>Accepter</th>
 				  <th>Refuser</th>
 				  
@@ -202,6 +203,8 @@
                     foreach ($resultat as $row) {
 				    	echo "<tr>";
 				    	echo "<td>" . $row['Intitule'] . "</td>";
+              echo "<td>" . $row['prix'] . "</td>";
+
 				    	echo "<td>" . $row['date_frais'] . "</td>";
                     
                     

@@ -145,8 +145,8 @@
             <table id="myTable">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Intitulé</th>
+                  <th>Prix</th>
                   <th>Type</th>
                   <th>Date</th>
                   <th>User</th>
@@ -214,8 +214,8 @@
                 for ($i=0; $i < count($myarray_res); $i++) {
                   
                   echo "<tr>";
-                  echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['Intitule'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['prix'] . "</td>";
                   
                   
                   foreach ($myarray_type as $type) {
@@ -243,6 +243,9 @@
                     echo "<td>" . $myarray_res2[0]['type_paiement'] . "</td>";
                   } else if ($myarray_res[$i]['id_paiement'] == 2){
                     echo "<td>" . $myarray_res2[1]['type_paiement'] . "</td>";
+                  }
+                  else if ($myarray_res[$i]['id_paiement'] == 3){
+                    echo "<td>" . $myarray_res2[2]['type_paiement'] . "</td>";
                   }
 
 
@@ -294,10 +297,14 @@
               </div>
             </div>
             <div class="row">
+
+              <div class="col-md-6 mt-2">
+                <input type="number" placeholder="Prix" class="form-control" name="prix" required>
+              </div>
               
-              <div class="form-group col-md-12 mt-2">
+              <div class="form-group col-md-6 mt-2">
                 
-                <select class="form-control text-center" name="type" id="type">
+                <select class="form-control " name="type" id="type">
                   
                   <option name="abc" value="1" selected>Repas</option>
                   <option name="abc" value="2">Transport</option>
@@ -305,6 +312,8 @@
                 
                 </select>
               </div>
+
+              
              
 
             </div>
@@ -324,12 +333,13 @@
                 $intitule = $_POST['intitulé'];
                 $date = $_POST['date'];
                 $type = $_POST['type'];
-            
+                $prix = $_POST['prix'];
+
                 // Préparation et exécution de la requête SQL pour l'insertion des données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "3", :typeok, :iduser)');
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, prix, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :prix, :dateok, "3", :typeok, :iduser)');
                 
                 $stmt->bindParam(':intitule', $intitule);
-					
+                $stmt->bindParam(':prix', $prix);
 						    $stmt->bindParam(':dateok', $date);
 						    $stmt->bindParam(':typeok', $type);
                 $stmt->bindParam(':iduser', $_USER_ID);
