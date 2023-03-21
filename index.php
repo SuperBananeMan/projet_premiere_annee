@@ -286,6 +286,11 @@
 					  <strong>C est nickel</strong> l ajout est OK.
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>';
+
+          //refresh la page js
+          echo '<script type="text/javascript">
+          setTimeout(function(){window.location = "index.php"}, 2000);
+          </script>';
 					
 					}
 
@@ -344,12 +349,13 @@
                 $type = $_POST['type'];
             
                 // Préparation et exécution de la requête SQL pour l'insertion des données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "1", :typeok, "1")');
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "1", :typeok, :iduser)');
                 
                 $stmt->bindParam(':intitule', $intitule);
 					
 						    $stmt->bindParam(':dateok', $date);
 						    $stmt->bindParam(':typeok', $type);
+                $stmt->bindParam(':iduser', $_USER_ID);
 
 						    $stmt->execute();
               
@@ -358,6 +364,11 @@
 					  <strong>C est nickel</strong> l ajout est OK.
 					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>';
+
+          //refresh la page js
+          echo '<script type="text/javascript">
+          setTimeout(function(){window.location = "index.php"}, 2000);
+          </script>';
               
             }
             ?>
