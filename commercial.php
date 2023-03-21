@@ -145,7 +145,6 @@
                   <th>ID</th>
                   <th>Intitulé</th>
                   <th>Date</th>
-                  <th>ID_pay</th>
                   <th>Id usr</th>
                   <th>Id Etat</th>
             
@@ -164,7 +163,7 @@
                 
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM fraie");
-                $res2 = $pdo->query("SELECT * FROM etat");
+                $res2 = $pdo->query("SELECT * FROM etat ");
                 //Array
                 $myarray_res = array();
                 $myarray_res2 = array();
@@ -192,9 +191,15 @@
                   echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['Intitulé'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
-                  echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
+                  //echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
-                  echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
+                  //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
+                  if ($myarray_res[$i]['id_paiement'] == 1) {
+                    echo "<td>" . $myarray_res2[0]['type_paiement'] . "</td>";
+                  } else if ($myarray_res[$i]['id_paiement'] == 2){
+                    echo "<td>" . $myarray_res2[1]['type_paiement'] . "</td>";
+                  }
+
 
                   echo "</tr>";
                 }
@@ -231,10 +236,19 @@
 foreach ($myarray_res2 as $row2) {
    
    //echo $row2['etat_paiement'];
-}
+}*/
+
+/*
 
 for ($i = 0; $i < count($myarray_res); $i++) {
-  echo $myarray_res2[$i]['type_paiement'];
+  echo $myarray_res[$i]['id_paiement'];
+  if ($myarray_res[$i]['id_paiement'] == 1) {
+    echo $myarray_res2[0]['type_paiement'];
+  } else if ($myarray_res[$i]['id_paiement'] == 2){
+    echo $myarray_res2[1]['type_paiement'];
+  }
+  echo "<br>";
+
 }*/
 
 ?>
