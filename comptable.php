@@ -161,7 +161,7 @@
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
 					echo "<tr>";
-					echo "<td>" . $row['Intitulé'] . "</td>";
+					echo "<td>" . $row['Intitule'] . "</td>";
 					echo "<td>" . $row['date_frais'] . "</td>";
 					echo "<td>" . $row['id_paiement'] . "</td>";
 					echo "<td>" . $row['Id_Type'] . "</td>";

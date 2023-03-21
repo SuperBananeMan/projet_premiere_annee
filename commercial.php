@@ -136,17 +136,18 @@
           <script>let table = new DataTable('#myTable');</script>
 
         
+    <h1 class="text-center mt-4">Mes Fraies</h1>      
 
-    <div class="row">
-          <div class="col-md-6 mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
+    <div class="container">
+          <div class="mt-2 pt-5"> <!-- Partie gauche avec le tableau-->
             <table id="myTable">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Intitulé</th>
                   <th>Date</th>
-                  <th>Id usr</th>
-                  <th>Id Etat</th>
+                  <th>User</th>
+                  <th>Etat</th>
             
                 </tr>
               </thead>
@@ -227,31 +228,79 @@
             
             </script>
         </div>
-        </div>
+    </div>
+
+    <!-- Ajouter Fraies -->
 
 
-<?php
-//affichage des données de myarray
-/*
-foreach ($myarray_res2 as $row2) {
-   
-   //echo $row2['etat_paiement'];
-}*/
+    <p class="h2 text-center">Ajouter un Fraie</p>
 
-/*
+          <form action="commercial.php" method="POST">
 
-for ($i = 0; $i < count($myarray_res); $i++) {
-  echo $myarray_res[$i]['id_paiement'];
-  if ($myarray_res[$i]['id_paiement'] == 1) {
-    echo $myarray_res2[0]['type_paiement'];
-  } else if ($myarray_res[$i]['id_paiement'] == 2){
-    echo $myarray_res2[1]['type_paiement'];
-  }
-  echo "<br>";
 
-}*/
+          <div class="row mt-4">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé">
+              </div>
+              <div class="col-md-6">
+                <input type="date" placeholder="14/03/2023" class="form-control" name="date">
+              </div>
+            </div>
+            <div class="row">
+              
+              <div class="form-group col-md-12 mt-2">
+                
+                <select class="form-control text-center" name="type" id="type">
+                  
+                  <option name="abc" value="1" selected>Repas</option>
+                  <option name="abc" value="2">Transport</option>
+                  <option name="abc" value="3">Essence</option>
+                
+                </select>
+              </div>
+             
 
-?>
+            </div>
+            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+        </form>
+           </div>
+          </div>
+          </form>
+
+          <?php
+            if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
+            
+                // Connexion à la base de données
+                $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
+            
+                // Récupération des données du formulaire
+                $intitule = $_POST['intitulé'];
+                $date = $_POST['date'];
+                $type = $_POST['type'];
+            
+                // Préparation et exécution de la requête SQL pour l'insertion des données
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "1", :typeok, "1")');
+                
+                $stmt->bindParam(':intitule', $intitule);
+					
+						    $stmt->bindParam(':dateok', $date);
+						    $stmt->bindParam(':typeok', $type);
+
+						    $stmt->execute();
+              
+                // Affichage d'un message de succès
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+					  <strong>C est nickel</strong> l ajout est OK.
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>';
+              
+            }
+            ?>
+
+
 
 
 
