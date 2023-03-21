@@ -144,7 +144,6 @@
                   <th>Intitulé</th>
                   <th>Date fraie</th>
                   <!--<th>Pièce jointe</th>-->
-				  <th>Id Paiement</th>
 				  <th>Paiement</th>
 				  <th>Type</th>
 				  <!--<th>Nom Utilisateur</th>
@@ -158,29 +157,38 @@
 				// Connexion à votre base de données
                 $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
                 // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM fraie");  
-				$data = $pdo->query("SELECT * FROM users"); 
+                $resultat = $pdo->query("SELECT * FROM fraie");
+				$data = $pdo->query("SELECT * FROM users");
 				$etat = $pdo->query("SELECT * FROM etat");
+				
+				function acc_line() {
+					print_r("Bonjour");
+				}
+				function del_line() {
+					/*$sql = "DELETE FROM MyGuests WHERE id=3";
+					$refFraie = $pdo->query("DELETE FROM fraie WHERE id_paiement = 3;");
+					$refFraie->execute();*/
+					print_r("Bonsoir");
+				}
 				//identifier l'utilisateur
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
 					echo "<tr>";
-					echo "<td>" . $row['Intitule'] . "</td>";
+					echo "<td>" . $row['Intitulé'] . "</td>";
 					echo "<td>" . $row['date_frais'] . "</td>";
-					foreach ($etat as $etat_data){
-						if ($row['id_paiement'] == $etat_data['id_paiement']){
-							print_r($row['id_paiement']);
-							echo '<br/>';
-							print_r($etat_data['id_paiement']);
-							echo '<br/>';
-							$etat_nom = $etat_data['type_paiement'];
-							break;
-						}
+
+					
+					if ($row['id_paiement'] == 1){
+						$etat_nom = "Pas vérifié";
 					}
-					unset($etat_data);
-					echo "<td>" . $row['id_paiement'] . "</td>";
+					elseif ($row['id_paiement'] == 2){
+						$etat_nom = "Vérifié";
+					}
+					else{
+						$etat_nom = "Refusé";
+					}
+					
 					echo "<td>" . $etat_nom . "</td>";
-					print_r($etat_nom);
 					echo '<br/>';
 					echo "<td>" . $row['Id_Type'] . "</td>";
 					
@@ -196,15 +204,8 @@
 					//echo "<td>" . $le_prenom . "</td>";
 					
 					echo '<form action="comptable.php" method="post">';
-					echo "<td><input type='submit' value='Accepter' class='bouton_acc' onclick='AddConfirm'></td>";
-					echo "<td><input type='submit' value='Refuser' class='bouton_ref' onclick='DelConfirm'></td>";
-					
-					if(isset($_GET['button_acc'])) {
-						$row['id_paiement'] = 2;
-					}
-					if(isset($_GET['button_ref'])) {
-						$row['id_paiement'] = 3;
-					}
+					echo "<td><input type='submit' value='Accepter' class='bouton_acc' onclick='AddConfirm();";acc_line();echo"'></td>";
+					echo "<td><input type='submit' value='Refuser' class='bouton_ref' onclick='DelConfirm();";del_line();echo"'></td>";
 					
 					echo '</form>';
                   echo "</tr>";
@@ -213,6 +214,7 @@
 				<script>
 					function DelConfirm() {
 					  confirm("Êtes vous sure de refuser ce fraie ?");
+					  
 					}
 					function AddConfirm() {
 					  confirm("Êtes vous sure d'accepter ce fraie ?");
