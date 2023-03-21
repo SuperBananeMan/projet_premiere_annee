@@ -189,7 +189,7 @@
                   
                   echo "<tr>";
                   echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
-                  echo "<td>" . $myarray_res[$i]['Intitulé'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['Intitule'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
                   //echo "<td>" . $myarray_res[$i]['id_paiement'] . "</td>";
                   echo "<td>" . $myarray_res[$i]['Id_Users'] . "</td>";
