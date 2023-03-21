@@ -349,7 +349,7 @@
                 $type = $_POST['type'];
             
                 // Préparation et exécution de la requête SQL pour l'insertion des données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "3", :typeok, "1")');
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "3", :typeok, :iduser)');
                 
                 $stmt->bindParam(':intitule', $intitule);
 					

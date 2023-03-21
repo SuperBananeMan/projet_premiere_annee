@@ -72,15 +72,14 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar_color">
         <!-- Container wrapper -->
-        <div class="container ">
+        <div class="container">
       <!-- Navbar brand -->
             <a class="navbar-brand" href="">
             <img
           src="src/assets/ico_x2.png"
-          height="40"
           
           loading="lazy"
-          style="margin-top: -1px;"
+          class="mylogo"
             />
             </a>
         
@@ -277,7 +276,7 @@
     <!-- Ajouter Fraies -->
 
 
-    <p class="h2 text-center">Ajouter un Fraie</p>
+    <p class="h2 text-center mt-2">Ajouter un Fraie</p>
 
           <form action="commercial.php" method="POST">
 
