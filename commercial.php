@@ -26,9 +26,11 @@
         session_start();
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
+        $_USER_ID= NULL;
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
+            $_USER_ID = $_SESSION['id_u'];
         }
         //en tant qu'exemple
         if ($_USER_INIT != NULL) {
@@ -159,11 +161,17 @@
                 // Recupere l'id du Users
 
                
-
+                $select_opt= NULL;
+                if ($_USER_ROLE == "Admin"){
+                  $select_opt = "SELECT * FROM fraie";
+                }
+                else{
+                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . ";";
+                }
                 
                 
                 // Exécuter une requête pour récupérer les données
-                $resultat = $pdo->query("SELECT * FROM fraie");
+                $resultat = $pdo->query($select_opt);
                 $res2 = $pdo->query("SELECT * FROM etat ");
                 $name = $pdo->query("SELECT * FROM users"); 
                 //Array
@@ -292,12 +300,14 @@
                 $type = $_POST['type'];
             
                 // Préparation et exécution de la requête SQL pour l'insertion des données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitulé, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "1", :typeok, "1")');
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :dateok, "1", :typeok, :iduser)');
                 
                 $stmt->bindParam(':intitule', $intitule);
 					
 						    $stmt->bindParam(':dateok', $date);
 						    $stmt->bindParam(':typeok', $type);
+                $stmt->bindParam(':iduser', $_USER_ID);
+                
 
 						    $stmt->execute();
               

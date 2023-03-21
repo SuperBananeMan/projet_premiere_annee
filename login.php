@@ -89,6 +89,7 @@
 				session_start();
 				$_SESSION['user']=NULL;
 				$_SESSION['role_u']=NULL;
+				$_SESSION['id_u']=NULL;
 				if (isset($_POST['co_passwrd']) && isset($_POST['co_email'])) {
 					$co_email = $_POST['co_email'];
 					$co_passwrd = $_POST['co_passwrd'];
@@ -106,6 +107,7 @@
 							$success = true;
 							$Role0=$row['Id_Role'];
 							$_SESSION['user']=$row['Nom'];
+							$_SESSION['id_u']=$row['Id_Users'];
 							echo"reussite !!!!!!";
 							break;
 						}
