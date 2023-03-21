@@ -46,21 +46,21 @@
                     echo "Error user role 01";
                     break;
             }
-			if ($_USER_ROLE != "Commercial")
-      {
-        if ($_USER_ROLE == "Admin"){
-        }
-        else{
-          header("location:403.html");
-        }
-				
-			}
+			      if ($_USER_ROLE != "Commercial")
+            {
+              if ($_USER_ROLE == "Admin"){
+              }
+              else{
+                header("location:403.html");
+              }
+            
+			      }
         } else {
             header("location:login.php");
-
         }
 	
 
+    
     
     
     
@@ -166,10 +166,18 @@
                 $resultat = $pdo->query("SELECT * FROM fraie where Id_Users = ''");
                 $res2 = $pdo->query("SELECT * FROM etat");
                 //Array
-                $myarray = array();
+                $myarray_res = array();
+                $myarray_res2 = array();
+
+                foreach ($resultat as $row) {
+                  //push the data in the array
+                  array_push($myarray_res, $row);
+                  
+                }
+
                 foreach ($res2 as $row2) {
                   //push the data in the array
-                  array_push($myarray, $row2);
+                  array_push($myarray_res2, $row2);
                   
                 }
                 
@@ -178,12 +186,12 @@
 
                 
                 
-                foreach ($resultat as $row) {
+                for ($i=0; $i < count($myarray_res); $i++) {
                   
                   echo "<tr>";
-                  echo "<td>" . $row['Id_Fraie'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['Id_Fraie'] . "</td>";
                  
-                  echo "<td>" . $row['Intitule'] . "</td>";
+                  echo "<td>" . $row['Intitulé'] . "</td>";
                   echo "<td>" . $row['date_frais'] . "</td>";
                   echo "<td>" . $row['id_paiement'] . "</td>";
                   echo "<td>" . $row['Id_Users'] . "</td>";
@@ -220,11 +228,16 @@
 
 <?php
 //affichage des données de myarray
-/*
-foreach ($myarray as $row2) {
-   $row2['etat_paiement'];
+
+foreach ($myarray_res2 as $row2) {
+   
+   //echo $row2['etat_paiement'];
 }
-*/
+
+for ($i = 0; $i < count($myarray_res); $i++) {
+  echo $myarray_res2[$i]['type_paiement'];
+}
+
 ?>
 
 
