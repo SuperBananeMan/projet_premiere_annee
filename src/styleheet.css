@@ -1,6 +1,7 @@
 :root{
     --primary-color: hsl(34, 61%, 77%);
-    --secondary-color: hsl(208, 62%, 45%);
+    --secondary-color: hsl(202, 62%, 70%);
+    --secondary-color-light: hsl(202, 32%, 80%);
     --font-color: black;
     --text-decoration: none;
     --background-color: hsl(34, 8%, 96%);
@@ -9,7 +10,32 @@
 .navbar_color{
 
     background-color: var(--primary-color);
-    margin: 12px;
+    box-shadow: rgb(18, 19, 19) 0px 0px 8px;
+
+}
+
+.myTitreDiv{
+
+    padding: 0% 25% 0% 25%;
+    margin-top: 2em;
+
+}
+
+.myTitre{
+
+    color: var(--background-color);
+    text-decoration: none;
+    text-shadow: var(--primary-color) 0px 0px 2px;
+    background-color: var(--font-color);
+    padding: 5px;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0px;
+    box-shadow: var(--primary-color) 0px 0px 2px;
+    width: 100%;
+    border-radius: 5px;
+
 
 }
 
@@ -50,5 +76,71 @@ body{
     width: 50px;
     margin: -4px;
     padding: -4px;
+
+}
+
+.all_center{
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+#myTable{
+
+    width: 100%;
+
+    padding: 8px;
+    border-collapse: collapse;
+    color: var(--font-color);
+    font-size: 1.02rem;
+    border-color: rgba(0, 0, 0, 0.12);
+
+    background-color: var(--secondary-color);
+
+}
+
+
+#myTable td{
+
+    text-align: center;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: var(--font-color);
+
+}
+
+#myTable th{
+
+    text-align: center;
+    padding: 8px;
+
+}
+
+
+
+
+#myTable tr:nth-child(even){
+
+    background-color: var(--background-color);
+
+}
+
+#myTable tr:nth-child(odd){
+
+    background-color: hsl(34, 8%, 90%)
+
+}
+
+#myTable tr:hover{
+
+    background-color: var(--secondary-color-light);
+
+}
+
+#myTable_filter, #myTable_paginate, #myTable_info, #myTable_length{
+
+    margin: 8px;
 
 }

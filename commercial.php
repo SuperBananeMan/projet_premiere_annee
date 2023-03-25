@@ -71,13 +71,13 @@
     ?>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar_color">
+    <nav class="navbar navbar-expand-lg navbar_color sticky-top">
         <!-- Container wrapper -->
         <div class="container">
       <!-- Navbar brand -->
             <a class="navbar-brand" href="">
             <img
-          src="src/assets/ico_x2.png"
+          src="src/assets/logo-v2.png"
           
           loading="lazy"
           class="mylogo"
@@ -137,8 +137,9 @@
 
           <script>let table = new DataTable('#myTable');</script>
 
-        
-    <h1 class="text-center mt-4">Mes Fraies</h1>      
+        <div class="all_center container myTitreDiv">
+          <h1 class="text-center mt-4 myTitre all_center">Mes Fraies</h1>     
+        </div> 
 
     <div class="container">
           <div class="mt-2 pt-5"> <!-- Partie gauche avec le tableau-->
