@@ -14,7 +14,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="src/styleheet">
 
-    <link rel="icon" type="image/x-icon" href="./src/assets/ico.png">
+    <link rel="icon" type="image/x-icon" href="./src/assets/logo-v2.png">
 
     
     <title>ISA Compta</title>
