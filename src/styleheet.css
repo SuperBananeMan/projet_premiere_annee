@@ -60,7 +60,14 @@ body{
 
 .button_color{
 
-    background-color: var(--secondary-color);
+    background-color: /*var(--secondary-color);*/hsl(208, 62%, 45%);
+
+
+}
+
+.button_color:hover{
+
+    background-color: /*var(--secondary-color-light);*/hsl(208, 64%, 48%);
 
 
 }
@@ -143,4 +150,17 @@ body{
 
     margin: 8px;
 
+}
+
+
+.my_mid_lnk{
+    text-decoration: underline;
+}
+
+.nav--item-elt-mid{
+    margin: 0px 10px 0px 10px;
+    /*flex: 1;
+margin: auto !important;
+display: flex;
+justify-content: space-between;*/
 }
