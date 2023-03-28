@@ -152,6 +152,8 @@
                   <th>Date</th>
                   <th>User</th>
                   <th>Etat</th>
+                  <th>Modifier</th>
+                  <th>Supprimer</th>
             
                 </tr>
               </thead>
@@ -250,7 +252,47 @@
                   }
 
 
+                    // Vérifier si le formulaire a été soumis, supprime le fraie
+                  if(isset($_POST['delete_fraie'])) {
+                    $id = $_POST['delete_fraie'];
+                  
+                    // Préparer et exécuter une requête de suppression
+                    $stmt = $pdo->prepare("DELETE FROM fraie WHERE Id_Fraie = ?");
+                    
+                    $stmt->execute([$id]);
+                
+                    // Rediriger vers la page d'affichage
+                    header("Location: commercial.php");
+                    exit();
+                  
+                    
+                    
+                    
+                  }
+
+                  // Vérifier si le formulaire a été soumis, Modifie le fraie
+
+                 
+
+                  echo '<td> 
+                      <form method="post" action="commercial.php">
+                        <input type="hidden" name="modify_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                      </form>
+                    </td>';
+                  
+                  // Modale de confirmation de suppression
+                  echo '<td> 
+                  <form method="post" action="commercial.php">
+                    <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </form>
+                </td>';
+
                   echo "</tr>";
+
+
+
                 }
                 ?>
               </tbody>
@@ -303,16 +345,42 @@
                 <input type="number" placeholder="Prix" class="form-control" name="prix" required>
               </div>
               
-              <div class="form-group col-md-6 mt-2">
+              <?php
+                  // Connexion à la base de données
+                  $mysqli = mysqli_connect("localhost", "root", "", "projet_1erannee");
+            
+                  // Vérifier la connexion
+                  if (mysqli_connect_errno()) {
+                      echo "Échec de la connexion à la base de données: " . mysqli_connect_error();
+                      exit();
+                  }
                 
-                <select class="form-control " name="type" id="type">
-                  
-                  <option name="abc" value="1" selected>Repas</option>
-                  <option name="abc" value="2">Transport</option>
-                  <option name="abc" value="3">Essence</option>
+                  // Exécuter une requête pour récupérer les types de dépenses
+                  $result = mysqli_query($mysqli, "SELECT Id_Type, Nom FROM type");
                 
-                </select>
-              </div>
+                  // Vérifier si la requête a réussi
+                  if (!$result) {
+                      echo "Échec de la requête: " . mysqli_error($mysqli);
+                      exit();
+                  }
+                
+                  // Parcourir les résultats et afficher les options dans le formulaire
+                  $options = "";
+                  while ($row = mysqli_fetch_assoc($result)) {
+                      $options .= "<option value='" . $row['Id_Type'] . "'>" . $row['Nom'] . "</option>";
+                  }
+                
+                  // Fermer la connexion à la base de données
+                  mysqli_close($mysqli);
+                  ?>
+
+                <!-- Afficher le formulaire HTML avec les options dynamiques -->
+                <div class="form-group col-md-6 mt-2">
+                    <select class="form-control" name="type" id="type">
+                        <?php echo $options; ?>
+                    </select>
+                </div>
+
 
               
              
