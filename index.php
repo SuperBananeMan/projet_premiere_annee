@@ -64,17 +64,16 @@
     ?>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar_color">
+    <nav class="navbar navbar-expand-lg navbar_color sticky-top">
         <!-- Container wrapper -->
-        <div class="container ">
+        <div class="container">
       <!-- Navbar brand -->
             <a class="navbar-brand" href="">
             <img
-          src="src/assets/ico_x2.png"
-          height="40"
+          src="src/assets/logo-v2.png"
           
           loading="lazy"
-          style="margin-top: -1px;"
+          class="mylogo"
             />
             </a>
         
@@ -97,21 +96,62 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link text-dark " href="#">Dashboard</a>
+                <a class="nav-link text-dark " href="#">ISA Comptable</a>
               </li>
             </ul>
-            <!-- Left links -->
+            
+
+            <!-- mid links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav--item-elt-mid justify-content-between">
+              <?php
+                if ($_USER_ROLE == "Admin"){
+                  echo '<li class="nav--item-elt-mid">
+                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="index.php">Admin</a>
+                </li>';
+                }
+
+                if ($_USER_ROLE == "Commercial" || $_USER_ROLE == "Admin"){
+                  echo '<li class="nav--item-elt-mid">
+                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="commercial.php">Frais</a>
+                </li>';
+                }
+
+                if ($_USER_ROLE == "Comptable" || $_USER_ROLE == "Admin"){
+                  echo '<li class="nav--item-elt-mid">
+                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="comptable.php">Comptable</a>
+                </li>';
+                }
+
+              ?>
+              
+            </ul>
+            
+            <!-- Right links -->
+        
             <?php
 
               echo '<div class="d-flex align-items-center ">
               
               '. $_USER_INIT . ' - ' . $_USER_ROLE .''
+              .'</div>';
             
-            
+             
             
             ?>
+              
 
-            </div>
+            
+          </div>
+                
+          <div class="d-flex align-items-center mb-2 mb-lg-0 nav--item-elt-mid">
+                <?php
+                  $log = "Se déconnecter";
+                  if ($_USER_INIT == NULL) {
+                    $log = "Se connecter";
+                  }
+                echo '<button type="button" class="btn button_color  me-2"><a class="text-light text_deco" href="login.php">'.$log.'</a></button>';
+                ?>
+
           </div>
           <!-- Collapsible wrapper -->
         </div>
