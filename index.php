@@ -322,16 +322,42 @@
                 <input type="number" placeholder="Prix" class="form-control" name="prix" required>
               </div>
               
-              <div class="form-group col-md-6 mt-2">
+                  <?php
+                  // Connexion à la base de données
+                  $mysqli = mysqli_connect("localhost", "root", "", "projet_1erannee");
+            
+                  // Vérifier la connexion
+                  if (mysqli_connect_errno()) {
+                      echo "Échec de la connexion à la base de données: " . mysqli_connect_error();
+                      exit();
+                  }
                 
-                <select class="form-control " name="type" id="type">
-                  
-                  <option name="abc" value="1" selected>Repas</option>
-                  <option name="abc" value="2">Transport</option>
-                  <option name="abc" value="3">Essence</option>
+                  // Exécuter une requête pour récupérer les types de dépenses
+                  $result = mysqli_query($mysqli, "SELECT Id_Type, Nom FROM type");
                 
-                </select>
-              </div>
+                  // Vérifier si la requête a réussi
+                  if (!$result) {
+                      echo "Échec de la requête: " . mysqli_error($mysqli);
+                      exit();
+                  }
+                
+                  // Parcourir les résultats et afficher les options dans le formulaire
+                  $options = "";
+                  while ($row = mysqli_fetch_assoc($result)) {
+                      $options .= "<option value='" . $row['Id_Type'] . "'>" . $row['Nom'] . "</option>";
+                  }
+                
+                  // Fermer la connexion à la base de données
+                  mysqli_close($mysqli);
+                  ?>
+
+                <!-- Afficher le formulaire HTML avec les options dynamiques -->
+                <div class="form-group col-md-6 mt-2">
+                    <select class="form-control" name="type" id="type">
+                        <?php echo $options; ?>
+                    </select>
+                </div>
+
              
 
             </div>
@@ -382,7 +408,62 @@
 
 
 
-        </div>    
+        </div>   
+        
+        <p class="h2 text-center mt-5">Ajouter un Type de Frais</p>
+
+          <form action="index.php" method="POST">
+
+
+          <div class="row mt-4">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <input type="text" placeholder="Intitulé" class="form-control text-center" name="intituléF" required>
+              </div>
+              
+            </div>
+             
+
+            </div>
+            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+        </form>
+           </div>
+          </div>
+          </form>
+
+          <?php
+            if (isset($_POST['intituléF'])) {
+            
+                // Connexion à la base de données
+                $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
+            
+                // Récupération des données du formulaire
+                $intituleF = $_POST['intituléF'];
+                
+            
+                // Préparation et exécution de la requête SQL pour l'insertion des données
+                $stmt = $pdo->prepare('INSERT INTO type (Nom) VALUES (:intituleF)');
+                
+                $stmt->bindParam(':intituleF', $intituleF);
+                
+
+						    $stmt->execute();
+              
+                // Affichage d'un message de succès
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+					  <strong>C est nickel</strong> l ajout est OK.
+					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>';
+
+          //refresh la page js
+          echo '<script type="text/javascript">
+          setTimeout(function(){window.location = "index.php"}, 2000);
+          </script>';
+              
+            }
+            ?>
     
     
     
