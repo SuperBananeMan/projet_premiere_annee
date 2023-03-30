@@ -295,8 +295,26 @@
           </div>
 
 
-          <p class="text-center m-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+          <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmUModal">Ajouter</button></p>
 
+                <!-- Popup de confirmation de l'ajout du frais -->
+                <div class="modal fade" id="confirmUModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        Êtes-vous sûr de vouloir ajouter cet utilisateur ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="confirmAddU">Ajouter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
         </form>
 
@@ -342,7 +360,7 @@
 
           <p class="h2 text-center">Ajouter un Fraie</p>
 
-          <form action="index.php" method="POST">
+        <form action="index.php" method="POST">
 
 
           <div class="row mt-4">
@@ -401,11 +419,30 @@
              
 
             </div>
-            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+            <!-- Bouton "Ajouter" -->
+                <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmFModal">Ajouter</button></p>
+
+                <!-- Popup de confirmation de l'ajout du frais -->
+                <div class="modal fade" id="confirmFModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Êtes-vous sûr de vouloir ajouter ce frais ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="confirmAddF">Ajouter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </form>
-           </div>
-          </div>
-          </form>
 
           <?php
             if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
@@ -432,17 +469,17 @@
               
                 // Affichage d'un message de succès
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-					  <strong>C est nickel</strong> l ajout est OK.
-					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>';
+					        <strong>C est nickel</strong> l ajout est OK.
+					        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					        </div>';
 
-          //refresh la page js
-          echo '<script type="text/javascript">
-          setTimeout(function(){window.location = "index.php"}, 2000);
-          </script>';
-              
-            }
-            ?>
+              //refresh la page js
+              echo '<script type="text/javascript">
+              setTimeout(function(){window.location = "index.php"}, 4000);
+              </script>';
+
+                }
+                ?>
 
 
 
@@ -456,22 +493,39 @@
 
 
           <div class="row mt-4">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <input type="text" placeholder="Intitulé" class="form-control text-center" name="intituléF" required>
-              </div>
-              
-            </div>
-             
+            <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <input type="text" placeholder="Intitulé" class="form-control text-center" name="intituléF" required>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmTModal">Ajouter</button></p>
 
+                <!-- Popup de confirmation de l'ajout du frais -->
+                <div class="modal fade" id="confirmTModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        Êtes-vous sûr de vouloir ajouter ce type de fraie ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="confirmAddT">Ajouter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
-        </form>
-           </div>
           </div>
+          
           </form>
+           
 
           <?php
             if (isset($_POST['intituléF'])) {
