@@ -22,12 +22,13 @@
 <body>
     
     <?php
-        
+
         session_start();
+        require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID= NULL;
-		$_USER_WRONG_PAGE= false;
+		    $_USER_WRONG_PAGE= false;
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
@@ -197,22 +198,45 @@
                 // Vérifier si le formulaire a été soumis
                 if(isset($_POST['delete_user'])) {
                     $id = $_POST['delete_user'];
+                    //verif si l'id est bien un int (pour eviter les injections sql)
+                    if (filter_var($id, FILTER_VALIDATE_INT) === false) {
+                      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Erreur</strong> l id n est pas un int
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                      //refresh la page js
+                      echo '<script type="text/javascript">
+                      setTimeout(function(){window.location = "index.php"}, 1800);
+                      </script>';
+                      exit();
+                    }
+                    if (is_numeric($id) == true){
 
-                    // Préparer et exécuter une requête de suppression
-                    $stmt = $pdo->prepare("DELETE FROM users WHERE Id_Users = ?");
-                    $stmt->execute([$id]);
+                        // Préparer et exécuter une requête de suppression
+                        $stmt = $pdo->prepare("DELETE FROM users WHERE Id_Users = ?");
+                        $stmt->execute([$id]);
 
-                    // Rediriger vers la page d'affichage
-                    header("Location: index.php");
-                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>C est nickel</strong> le user a bien été supprimé
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>';
-                    exit();
+
+                        // Rediriger vers la page d'affichage
+                        //header("Location: index.php");
+                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>C est nickel</strong> le user a bien été supprimé
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
+                    }
+                    //exit();
+                    //refresh la page js
+                    echo '<script type="text/javascript">
+                    setTimeout(function(){window.location = "index.php"}, 1800);
+                    </script>';
+
+                
                 }
 
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM users");  
+
+                $_FILE_NAME = "'index.php'";
 
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
@@ -224,7 +248,7 @@
                     echo '<td> 
                             <form method="post" action="index.php">
                               <input type="hidden" name="delete_user" value="'.$row['Id_Users'].'">
-                              <button type="submit" class="btn btn-danger">Supprimer</button>
+                              <button id="del_user_btn" type="button" onclick="deleteUser('. $row['Id_Users'] .','. $_FILE_NAME . ','. text2quote($row['Mail']) .')" class="btn btn-danger">Supprimer</button>
                             </form>
                           </td>';
                     echo "</tr>";
@@ -567,6 +591,6 @@
 
 
 
-
+<script src="./utils.js"></script>
 </body>
 </html>
