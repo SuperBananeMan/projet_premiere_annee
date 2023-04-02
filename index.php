@@ -236,7 +236,6 @@
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM users");  
 
-                $_FILE_NAME = "'index.php'";
 
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
@@ -248,7 +247,7 @@
                     echo '<td> 
                             <form method="post" action="index.php">
                               <input type="hidden" name="delete_user" value="'.$row['Id_Users'].'">
-                              <button id="del_user_btn" type="button" onclick="deleteUser('. $row['Id_Users'] .','. $_FILE_NAME . ','. text2quote($row['Mail']) .')" class="btn btn-danger">Supprimer</button>
+                              <button id="del_user_btn" type="button" onclick="deleteUser('. $row['Id_Users'] .','. text2quote("index.php") . ','. text2quote($row['Mail']) .')" class="btn btn-danger">Supprimer</button>
                             </form>
                           </td>';
                     echo "</tr>";
