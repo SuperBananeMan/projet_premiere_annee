@@ -300,9 +300,7 @@
                     
                     $stmt->execute([$id]);
                 
-                    // Rediriger vers la page d'affichage
-                    header("Location: commercial.php");
-                    exit();
+                    
                   
                     
                     
