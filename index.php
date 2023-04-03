@@ -22,12 +22,13 @@
 <body>
     
     <?php
-        
+
         session_start();
+        require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID= NULL;
-		$_USER_WRONG_PAGE= false;
+		    $_USER_WRONG_PAGE= false;
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
@@ -197,22 +198,44 @@
                 // Vérifier si le formulaire a été soumis
                 if(isset($_POST['delete_user'])) {
                     $id = $_POST['delete_user'];
+                    //verif si l'id est bien un int (pour eviter les injections sql)
+                    if (filter_var($id, FILTER_VALIDATE_INT) === false) {
+                      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Erreur</strong> l id n est pas un int
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                      //refresh la page js
+                      echo '<script type="text/javascript">
+                      setTimeout(function(){window.location = "index.php"}, 1800);
+                      </script>';
+                      exit();
+                    }
+                    if (is_numeric($id) == true){
 
-                    // Préparer et exécuter une requête de suppression
-                    $stmt = $pdo->prepare("DELETE FROM users WHERE Id_Users = ?");
-                    $stmt->execute([$id]);
+                        // Préparer et exécuter une requête de suppression
+                        $stmt = $pdo->prepare("DELETE FROM users WHERE Id_Users = ?");
+                        $stmt->execute([$id]);
 
-                    // Rediriger vers la page d'affichage
-                    header("Location: index.php");
-                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>C est nickel</strong> le user a bien été supprimé
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>';
-                    exit();
+
+                        // Rediriger vers la page d'affichage
+                        //header("Location: index.php");
+                        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>C est nickel</strong> le user a bien été supprimé
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
+                    }
+                    //exit();
+                    //refresh la page js
+                    echo '<script type="text/javascript">
+                    setTimeout(function(){window.location = "index.php"}, 1800);
+                    </script>';
+
+                
                 }
 
                 // Exécuter une requête pour récupérer les données
                 $resultat = $pdo->query("SELECT * FROM users");  
+
 
                 // Boucle pour afficher les résultats de la requête
                 foreach ($resultat as $row) {
@@ -224,7 +247,7 @@
                     echo '<td> 
                             <form method="post" action="index.php">
                               <input type="hidden" name="delete_user" value="'.$row['Id_Users'].'">
-                              <button type="submit" class="btn btn-danger">Supprimer</button>
+                              <button id="del_user_btn" type="button" onclick="deleteUser('. $row['Id_Users'] .','. text2quote("index.php") . ','. text2quote($row['Mail']) .')" class="btn btn-danger">Supprimer</button>
                             </form>
                           </td>';
                     echo "</tr>";
@@ -295,8 +318,26 @@
           </div>
 
 
-          <p class="text-center m-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+          <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmUModal">Ajouter</button></p>
 
+                <!-- Popup de confirmation de l'ajout du frais -->
+                <div class="modal fade" id="confirmUModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        Êtes-vous sûr de vouloir ajouter cet utilisateur ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="confirmAddU">Ajouter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
         </form>
 
@@ -342,7 +383,7 @@
 
           <p class="h2 text-center">Ajouter un Fraie</p>
 
-          <form action="index.php" method="POST">
+        <form action="index.php" method="POST">
 
 
           <div class="row mt-4">
@@ -401,11 +442,30 @@
              
 
             </div>
-            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
+            <!-- Bouton "Ajouter" -->
+                <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmFModal">Ajouter</button></p>
+
+                <!-- Popup de confirmation de l'ajout du frais -->
+                <div class="modal fade" id="confirmFModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Êtes-vous sûr de vouloir ajouter ce frais ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="confirmAddF">Ajouter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </form>
-           </div>
-          </div>
-          </form>
 
           <?php
             if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
@@ -432,17 +492,17 @@
               
                 // Affichage d'un message de succès
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-					  <strong>C est nickel</strong> l ajout est OK.
-					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>';
+					        <strong>C est nickel</strong> l ajout est OK.
+					        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					        </div>';
 
-          //refresh la page js
-          echo '<script type="text/javascript">
-          setTimeout(function(){window.location = "index.php"}, 2000);
-          </script>';
-              
-            }
-            ?>
+              //refresh la page js
+              echo '<script type="text/javascript">
+              setTimeout(function(){window.location = "index.php"}, 4000);
+              </script>';
+
+                }
+                ?>
 
 
 
@@ -456,22 +516,39 @@
 
 
           <div class="row mt-4">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <input type="text" placeholder="Intitulé" class="form-control text-center" name="intituléF" required>
-              </div>
-              
-            </div>
-             
+            <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <input type="text" placeholder="Intitulé" class="form-control text-center" name="intituléF" required>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmTModal">Ajouter</button></p>
 
+                <!-- Popup de confirmation de l'ajout du frais -->
+                <div class="modal fade" id="confirmTModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        Êtes-vous sûr de vouloir ajouter ce type de fraie ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="confirmAddT">Ajouter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>
-        </form>
-           </div>
           </div>
+          
           </form>
+           
 
           <?php
             if (isset($_POST['intituléF'])) {
@@ -513,6 +590,6 @@
 
 
 
-
+<script src="./utils.js"></script>
 </body>
 </html>

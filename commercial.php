@@ -25,6 +25,7 @@
     <?php
 
         session_start();
+        require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID= NULL;
@@ -314,7 +315,10 @@
                   echo '<td> 
                       <form method="post" action="commercial.php">
                         <input type="hidden" name="modify_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
-                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        
+                        <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) .')" >
+                          Modifier
+                        </button>
                       </form>
                     </td>';
                   
@@ -471,6 +475,6 @@
 
 
 
-
+<script src="./utils.js"></script>
 </body>
 </html>
