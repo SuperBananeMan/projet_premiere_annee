@@ -177,143 +177,142 @@
 	<div class="container">
 		<div class="mt-5 pt-5 a_droite">
 			<table id="myTable">
-              <thead>
-                <tr>
-                  <th>Intitulé</th>
-                  <th>Prix</th>
-
-                  <th>Date fraie</th>
-				  <th>Paiement</th>
-          <th>Type</th>
-				  <th>Accepter</th>
-				  <th>Refuser</th>
-				  
-                </tr>
-              </thead>
-              <tbody>
-          <?php
-				    // Connexion à votre base de données
+				<thead>
+					<tr>
+						<th>Intitulé</th>
+						<th>Prix</th>
+						<th>Date fraie</th>
+						<th>Paiement</th>
+						<th>Type</th>
+						<th>Accepter</th>
+						<th>Refuser</th>
+					</tr>
+				</thead>
+				<tbody>
+        <?php
+			function popup_verif(){
+				echo '<script type="text/javascript">
+					window.confirm("Êtes-vous sur de vouloir refuser ce fraie ?")
+					</script>';
+			}
+			
+			// Connexion à votre base de données
             $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
             // Exécuter une requête pour récupérer les données
             $resultat = $pdo->query("SELECT * FROM fraie");
-				    $data = $pdo->query("SELECT * FROM users");
-				    $etat = $pdo->query("SELECT * FROM etat");
+			$data = $pdo->query("SELECT * FROM users");
+			$etat = $pdo->query("SELECT * FROM etat");
 
             
             // Accepter le fraie
             if(isset($_POST['accept'])) {
-              $accept = $_POST['accept'];
-              // Préparer et exécuter une requête de suppression
-              $stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='2' WHERE Id_Fraie = ?");
-              $stmt->execute([$accept]);
-              // Rediriger vers la page d'affichage
-              header("Location: comptable.php");
-             
-              exit();
+				
+				popup_verif();
+				
+				sleep(5);
+				
+				$accept = $_POST['accept'];
+				// Préparer et exécuter une requête de suppression
+				$stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='2' WHERE Id_Fraie = ?");
+				$stmt->execute([$accept]);
+				// Rediriger vers la page d'affichage
+				header("Location: comptable.php");
+
+				exit();
             }
 
             // Refuser le fraie
             if(isset($_POST['refuse'])) {
-              $refuse = $_POST['refuse'];
-              // Préparer et exécuter une requête de suppression
-              $stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='1' WHERE Id_Fraie = ?");
-              $stmt->execute([$refuse]);
-              // Rediriger vers la page d'affichage
-              header("Location: comptable.php");
-             
-              exit();
+				
+				popup_verif();
+				
+				$refuse = $_POST['refuse'];
+				// Préparer et exécuter une requête de suppression
+				$stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='1' WHERE Id_Fraie = ?");
+				$stmt->execute([$refuse]);
+				// Rediriger vers la page d'affichage
+				header("Location: comptable.php");
+
+				exit();
             }
 
-
-
-
-				    function acc_line() {
-				    	print_r("Bonjour");
-				    }
-				    function del_line() {
-				    	/*$sql = "DELETE FROM MyGuests WHERE id=3";
-				    	$refFraie = $pdo->query("DELETE FROM fraie WHERE id_paiement = 3;");
-				    	$refFraie->execute();*/
-				    	print_r("Bonsoir");
-				    }
 				    //identifier l'utilisateur
                     // Boucle pour afficher les résultats de la requête
                     foreach ($resultat as $row) {
-				    	echo "<tr>";
-				    	echo "<td>" . $row['Intitule'] . "</td>";
-              echo "<td>" . $row['prix'] . "</td>";
+						echo "<tr>";
+						echo "<td>" . $row['Intitule'] . "</td>";
+						echo "<td>" . $row['prix'] . "</td>";
 
-				    	echo "<td>" . $row['date_frais'] . "</td>";
-                    
-                    
-				    	if ($row['id_paiement'] == 1){
-				    		$etat_nom = "Non Accepte";
-				    	}
-				    	elseif ($row['id_paiement'] == 2){
-				    		$etat_nom = "Accepte";
-				    	}
-              elseif ($row['id_paiement'] == 3){
-				    		$etat_nom = "En Cours";
-				    	}
-				    	
-              
-            
-				    	echo "<td>" . $etat_nom . "</td>";
-				    	echo '<br/>';
+						echo "<td>" . $row['date_frais'] . "</td>";
+							
+							
+						if ($row['id_paiement'] == 1){
+							$etat_nom = "Non Accepte";
+						}
+						elseif ($row['id_paiement'] == 2){
+							$etat_nom = "Accepte";
+						}
+						elseif ($row['id_paiement'] == 3){
+							$etat_nom = "En Cours";
+						}
+								
+					  
+					
+						echo "<td>" . $etat_nom . "</td>";
+						echo '<br/>';
 
-              if ($row['Id_Type'] == 1){
-				    		$nomType = "Repas";
-				    	}
-				    	elseif ($row['Id_Type'] == 2){
-				    		$nomType = "Transport";
-				    	}
-              elseif ($row['Id_Type'] == 3){
-				    		$nomType = "Essence";
-				    	}
+						if ($row['Id_Type'] == 1){
+							$nomType = "Repas";
+						}
+						elseif ($row['Id_Type'] == 2){
+							$nomType = "Transport";
+						}
+						elseif ($row['Id_Type'] == 3){
+							$nomType = "Essence";
+						}
 
 
-				    	echo "<td>" . $nomType . "</td>";
-            
-				    	foreach ($data as $nom){
-				    		if ($row['Id_Users'] == $nom['Id_Users']){
-				    			$le_nom = $nom['Nom'];
-				    			//$le_prenom = $nom['Prenom'];
-				    			break;
-				    		}
-				    	}
-            
-            
-            
-				      echo '<td> 
-                          <form method="post" action="comptable.php">
-                            <input type="hidden" name="accept" value="'.$row['Id_Fraie'].'">
-                            <button type="submit" class="btn btn-primary">Accepter</button>
-                          </form>
+						echo "<td>" . $nomType . "</td>";
+					
+						foreach ($data as $nom){
+							if ($row['Id_Users'] == $nom['Id_Users']){
+								$le_nom = $nom['Nom'];
+								//$le_prenom = $nom['Prenom'];
+								break;
+							}
+						}
+					
+					
+					
+						echo '<td> 
+							<form method="post" action="comptable.php">
+							<input type="hidden" name="accept" value="'.$row['Id_Fraie'].'">
+							<button id="accepter" type="submit" class="btn btn-primary">Accepter</button>
+							</form>
+							</td>'  ;
 
-                          </td>'  ;
-              echo '<td> 
-                    <form method="post" action="comptable.php">
-                      <input type="hidden" name="refuse" value="'.$row['Id_Fraie'].'">
-                      <button type="submit" class="btn btn-danger">Refuser</button>
-                    </form>
-                    </td>';
-              
-              echo "</tr>";
-                  }
+						echo '<td> 
+							<form method="post" action="comptable.php">
+							<input type="hidden" name="refuse" value="'.$row['Id_Fraie'].'">
+							<button id="refuser" type="submit" class="btn btn-danger">Refuser</button>
+							</form>
+							</td>';
+
+						echo "</tr>";
+					}
                   ?>
 
                   
-              </tbody>
+				</tbody>
             </table>
 			<script>
-              $(document).ready(function() {
-                $('#myTable').DataTable( {
-                  "language": {
-                    "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
-                  }
-              } );
-              } );
-            
+			$(document).ready(function() {
+			$('#myTable').DataTable( {
+				"language": {
+				"url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+				}
+			} );
+			} );
             
             </script>
 		</div>
