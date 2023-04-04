@@ -87,6 +87,7 @@
 				
 				<?php
 				session_start();
+				require('utils.php');
 				$_SESSION['user']=NULL;
 				$_SESSION['role_u']=NULL;
 				$_SESSION['id_u']=NULL;
@@ -98,9 +99,8 @@
 					
 					print_r($co_email,$co_passwrd);
 					
-					$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
-	 
-					$data = $db->query("SELECT * FROM users")->fetchAll();
+					$pdo = getDB();	 
+					$data = $pdo->query("SELECT * FROM users")->fetchAll();
 
 					foreach ($data as $row){
 						if ($row['Mail'] == $co_email && $row['Passwrd'] == $co_passwrd){
@@ -113,7 +113,7 @@
 						}
 					}
 
-					$data_role = $db->query("SELECT * FROM role")->fetchAll();
+					$data_role = $pdo->query("SELECT * FROM role")->fetchAll();
 					foreach ($data_role as $row){
 						if ($row['Id_Role'] == $Role0){
 							$_SESSION['role_u']=$row['Nom_role'];

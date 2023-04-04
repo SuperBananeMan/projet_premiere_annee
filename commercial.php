@@ -178,7 +178,7 @@
           <script>let table = new DataTable('#myTable');</script>
 
         <div class="all_center container myTitreDiv">
-          <h1 class="text-center mt-4 myTitre all_center">Mes Fraies</h1>     
+          <h1 class="text-center mt-4 myTitre all_center">Mes Frais</h1>     
         </div> 
 
     <div class="container">
@@ -292,8 +292,8 @@
 
 
                     // Vérifier si le formulaire a été soumis, supprime le fraie
-                  if(isset($_POST['delete_frais'])) {
-                    $id = $_POST['delete_frais'];
+                  if(isset($_POST['delete_fraie'])) {
+                    $id = $_POST['delete_fraie'];
                   
                     // Préparer et exécuter une requête de suppression
                     $stmt = $pdo->prepare("DELETE FROM fraie WHERE Id_Fraie = ?");
@@ -324,9 +324,8 @@
                   // Modale de confirmation de suppression
                   echo '<td> 
                   <form method="post" action="commercial.php">
-                    <input type="hidden" name="delete_frais" value="'.$myarray_res[$i]['Id_Fraie'].'">
-                    <!--<button type="submit" class="btn btn-danger">Supprimer</button>-->
-                    <button type="button" class="btn btn-danger" onclick="deleteFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) .')">Supprimer</button>
+                    <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
                   </form>
                 </td>';
 
@@ -364,7 +363,7 @@
     <!-- Ajouter Fraies -->
 
 
-    <p class="h2 text-center mt-2">Ajouter un Fraie</p>
+    <p class="h2 text-center mt-2">Ajouter un Frais</p>
 
           <form action="commercial.php" class="container" method="POST">
 
@@ -388,7 +387,7 @@
               
               <?php
                   // Connexion à la base de données
-                  $mysqli = mysqli_connect("localhost", "root", "", "projet_1erannee");
+                  $mysqli = getDB_mysqli();
             
                   // Vérifier la connexion
                   if (mysqli_connect_errno()) {

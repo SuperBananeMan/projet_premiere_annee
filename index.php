@@ -191,6 +191,7 @@
               <?php
                 // Connexion à votre base de données
                 $pdo = getDB();
+                
 
                 //role
                 $role_name =[1 => "Admin", 2 => "Comptable", 3 => "Commercial"];
@@ -381,7 +382,7 @@
               
 
 
-          <p class="h2 text-center">Ajouter un Fraie</p>
+          <p class="h2 text-center">Ajouter un Frais</p>
 
         <form action="index.php" method="POST">
 
@@ -405,7 +406,7 @@
               
                   <?php
                   // Connexion à la base de données
-                  $mysqli = mysqli_connect("localhost", "root", "", "projet_1erannee");
+                  $mysqli = getDB_mysqli();
             
                   // Vérifier la connexion
                   if (mysqli_connect_errno()) {
@@ -535,7 +536,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body text-center">
-                        Êtes-vous sûr de vouloir ajouter ce type de fraie ?
+                        Êtes-vous sûr de vouloir ajouter ce type de frais ?
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

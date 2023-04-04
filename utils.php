@@ -8,7 +8,14 @@
 //exemple d'utilisation : $pdo = getDB();
 function getDB() {
     $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8', 'root', '');
+    //**********
     return $pdo;
+}
+function getDB_mysqli() {
+    //**********
+    $mysqli = mysqli_connect("localhost", "root", "", "projet_1erannee");
+
+    return $mysqli;
 }
 
 

@@ -24,7 +24,7 @@
     <?php
 
         session_start();
-		require('utils.php');
+		    require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID = NULL;
@@ -173,7 +173,7 @@
     <!-- Main Content -->
 
 	<div class="all_center container myTitreDiv">
-		<h1 class="text-center mt-4 myTitre all_center">Mes Fraies</h1>     
+		<h1 class="text-center mt-4 myTitre all_center">Les Frais</h1>     
 	</div> 
     
 	
@@ -184,7 +184,7 @@
 					<tr>
 						<th>Intitulé</th>
 						<th>Prix</th>
-						<th>Date fraie</th>
+						<th>Date frais</th>
 						<th>Paiement</th>
 						<th>Type</th>
 						<th>Accepter</th>
@@ -195,7 +195,7 @@
         <?php
 			function popup_verif(){
 				echo '<script type="text/javascript">
-					window.confirm("Êtes-vous sur de vouloir refuser ce fraie ?")
+					window.confirm("Êtes-vous sur de vouloir refuser ce frais ?")
 					</script>';
 			}
 			

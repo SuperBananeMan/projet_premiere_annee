@@ -43,6 +43,7 @@
 				<input type="reset" value="Effacer"><br>
 				
 				<?php
+				require('utils.php');
 					if (isset($_POST['email']) && isset($_POST['passwrd']) && isset($_POST['user']) && isset($_POST['user2']) && isset($_POST['verif-pass-word']) && $_POST['passwrd'] == $_POST['verif-pass-word']){
 						$email = $_POST['email'];
 						$username = $_POST['user'];
@@ -50,9 +51,9 @@
 						$passwrd = $_POST['passwrd'];
 						$Id_role = $_POST['Id_role'];
 		 
-						$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
-		 
-						$stmt = $db->prepare("INSERT INTO users (Nom, Prenom, Mail, Passwrd, Id_role) VALUES (:username, :username2, :email, :passwrd, :Id_role)");
+						$pdo = getDB();		 
+						
+						$stmt = $pdo->prepare("INSERT INTO users (Nom, Prenom, Mail, Passwrd, Id_role) VALUES (:username, :username2, :email, :passwrd, :Id_role)");
 						$stmt->bindParam(':username', $username);
 						$stmt->bindParam(':username2', $username2);
 						$stmt->bindParam(':passwrd', $passwrd);
