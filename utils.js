@@ -1,5 +1,3 @@
-
-
 //fonction qui permet de faire des popups Bootstrap pour les formulaires (sans jQuery)
 function popupForm_valide(title, content, callback, mode) {
     //structure du popup (avec Bootstrap) en HTML :
@@ -64,11 +62,11 @@ function popupForm_valide(title, content, callback, mode) {
 
     //on ajoute un listener sur le bouton de fermeture
     
-    var popup_form_close = document.getElementById("popup_form_close");
+    /*var popup_form_close = document.getElementById("popup_form_close");
     popup_form_close.addEventListener("click", function() {
         popup_form.hide();
     }
-    );
+    );*/
     
 
 
@@ -275,3 +273,44 @@ function editFrais(id, file_name, details) {
 
 
 
+//valide un frais (avec popup de confirmation)
+function valideFrais(demande, id, file_name, details) {
+	console.log(demande)
+    console.log("frais");
+	if(demande=="accepter"){
+		popupForm_valide("Accepter ce frais ?", "Voulez-vous vraiment accepter ce frais ? <br><strong>"+details.toString()+"</strong>.", function() {
+			//on envoie la requête POST
+			$.post(file_name, {accept: id}, function(data) {
+				//on recharge la page
+				//location.reload();
+				//console.log(data);
+				//c'est ok
+				popupForm_valide("Frais accepté", "Le fraie a bien été accepté.", function() {
+					//on recharge la page après avoir fermé le popup
+					location.reload();
+				}, "ok");
+
+			});
+
+
+		}, "confirm");
+	}
+	else{
+		popupForm_valide("Refuser ce frais ?", "Voulez-vous vraiment refuser ce frais ? <br><strong>"+details.toString()+"</strong>.", function() {
+			//on envoie la requête POST
+			$.post(file_name, {refuse: id}, function(data) {
+				//on recharge la page
+				//location.reload();
+				//console.log(data);
+				//c'est ok
+				popupForm_valide("Frais refusé", "Le fraie a bien été refusé.", function() {
+					//on recharge la page après avoir fermé le popup
+					location.reload();
+				}, "ok");
+
+			});
+
+
+		}, "confirm");
+	}
+}
