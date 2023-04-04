@@ -308,14 +308,43 @@
                   }
 
                   // Vérifier si le formulaire a été soumis, Modifie le fraie
+                  if(isset($_POST['edit_frais'])) {
+                    $id = $_POST['edit_frais'];
+                    $date = $_POST['date_frais'];
+                    $intitule = $_POST['libelle_frais'];
+                    $prix = $_POST['prix_frais'];
+                    $type = $_POST['type_frais'];
+                    
+
+                    // Préparer et exécuter une requête de modification
+                    
+                    $stmt = $pdo->prepare("UPDATE fraie SET date_frais = ?, Intitule = ?, prix = ?, Id_Type = ? WHERE Id_Fraie = ?");
+                    
+                    $stmt->execute([$date, $intitule, $prix, $type, $id]);
+                    
+                  
+                    
+                    
+                    
+                  }
+
+
+                  // Vérifier si le formulaire a été soumis, Modifie le fraie
 
                  
 
                   echo '<td> 
                       <form method="post" action="commercial.php">
                         <input type="hidden" name="modify_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                        <script> const compte_params_'.$myarray_res[$i]['Id_Fraie'].' = []; 
+                        //add data to the array
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['date_frais'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Intitule'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['prix'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Id_Type'].'");
                         
-                        <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) .')" >
+                        </script>
+                        <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) . ',' . 'compte_params_'.$myarray_res[$i]['Id_Fraie'].')" >
                           Modifier
                         </button>
                       </form>
