@@ -24,7 +24,7 @@
     <?php
 
         session_start();
-        require('utils.php');
+		require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID = NULL;
@@ -172,7 +172,9 @@
 
     <!-- Main Content -->
 
-
+	<div class="all_center container myTitreDiv">
+		<h1 class="text-center mt-4 myTitre all_center">Mes Fraies</h1>     
+	</div> 
     
 	
 	<div class="container">
@@ -208,8 +210,6 @@
             if(isset($_POST['accept'])) {
 				
 				popup_verif();
-				
-				sleep(5);
 				
 				$accept = $_POST['accept'];
 				// Préparer et exécuter une requête de suppression
@@ -259,7 +259,6 @@
 					  
 					
 						echo "<td>" . $etat_nom . "</td>";
-						echo '<br/>';
 
 						if ($row['Id_Type'] == 1){
 							$nomType = "Repas";
@@ -286,18 +285,18 @@
 						}
 					
 					
-					
+						
 						echo '<td> 
 							<form method="post" action="comptable.php">
 							<input type="hidden" name="accept" value="'.$row['Id_Fraie'].'">
-							<button id="accepter" type="submit" class="btn btn-primary">Accepter</button>
+							<button id="accepter" type="button" class="btn btn-primary" onclick="valideFrais(\'accepter\','. $row['Id_Users'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Accepter</button>
 							</form>
 							</td>'  ;
 
 						echo '<td> 
 							<form method="post" action="comptable.php">
 							<input type="hidden" name="refuse" value="'.$row['Id_Fraie'].'">
-							<button id="refuser" type="submit" class="btn btn-danger">Refuser</button>
+							<button id="refuser" type="button" class="btn btn-danger" onclick="valideFrais(\'refuser\','. $row['Id_Users'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Refuser</button>
 							</form>
 							</td>';
 
@@ -322,5 +321,6 @@
 	</div>
 
 
+<script src="./utils.js"></script>
 </body>
 </html>
