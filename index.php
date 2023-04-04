@@ -190,7 +190,7 @@
               <tbody>
               <?php
                 // Connexion à votre base de données
-                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
+                $pdo = getDB();
 
                 //role
                 $role_name =[1 => "Admin", 2 => "Comptable", 3 => "Commercial"];
@@ -352,9 +352,9 @@
 
             
 
-						$db = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
+						$pdo = getDB();
 		 
-						$stmt = $db->prepare("INSERT INTO users (Nom, Mail, Passwrd, Id_role) VALUES (:username, :email, :passwrd, :Id_role)");
+						$stmt = $pdo->prepare("INSERT INTO users (Nom, Mail, Passwrd, Id_role) VALUES (:username, :email, :passwrd, :Id_role)");
 						$stmt->bindParam(':username', $username);
 					
 						$stmt->bindParam(':passwrd', $passwrd);
@@ -471,7 +471,7 @@
             if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
             
                 // Connexion à la base de données
-                $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
+                $pdo = getDB();
             
                 // Récupération des données du formulaire
                 $intitule = $_POST['intitulé'];
@@ -554,7 +554,7 @@
             if (isset($_POST['intituléF'])) {
             
                 // Connexion à la base de données
-                $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
+                $pdo = getDB();
             
                 // Récupération des données du formulaire
                 $intituleF = $_POST['intituléF'];

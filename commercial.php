@@ -200,8 +200,7 @@
               <tbody>
                 <?php
                 // Connexion à votre base de données
-                $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
-                
+                $pdo = getDB();                
                 // Recupere l'id du Users
 
                
@@ -437,8 +436,7 @@
             if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
             
                 // Connexion à la base de données
-                $pdo = new PDO('mysql:host=localhost;dbname=projet_1erannee;charset=utf8mb4', 'root', '');
-            
+                $pdo = getDB();            
                 // Récupération des données du formulaire
                 $intitule = $_POST['intitulé'];
                 $date = $_POST['date'];

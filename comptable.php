@@ -24,6 +24,7 @@
     <?php
 
         session_start();
+        require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID = NULL;
@@ -197,11 +198,10 @@
 			}
 			
 			// Connexion à votre base de données
-            $pdo = new PDO("mysql:host=localhost;dbname=projet_1erannee", "root", ""); 
-            // Exécuter une requête pour récupérer les données
+            $pdo = getDB();            // Exécuter une requête pour récupérer les données
             $resultat = $pdo->query("SELECT * FROM fraie");
-			$data = $pdo->query("SELECT * FROM users");
-			$etat = $pdo->query("SELECT * FROM etat");
+			      $data = $pdo->query("SELECT * FROM users");
+			      $etat = $pdo->query("SELECT * FROM etat");
 
             
             // Accepter le fraie
@@ -270,6 +270,9 @@
 						elseif ($row['Id_Type'] == 3){
 							$nomType = "Essence";
 						}
+            else{
+              $nomType = "";
+            }
 
 
 						echo "<td>" . $nomType . "</td>";
