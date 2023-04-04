@@ -74,7 +74,7 @@ function popupForm_valide(title, content, callback, mode) {
 }
 
 //fonction qui permet de faire des popups Bootstrap pour les formulaires (sans jQuery) (avec 4 entrées de texte)
-function popupForm_edit(title, content, callback) {
+function popupForm_edit(title, content, params, callback) {
     //structure du popup (avec Bootstrap) en HTML :
 
     let ppBtn;
@@ -100,9 +100,12 @@ function popupForm_edit(title, content, callback) {
         //on prend le texte de l'option
         select_array.push(select_value[i].text);
     }
-
+    console.log("select_array");
     console.log(select_array);
     console.log(select_value);
+
+    //compteur pour select_array
+    let compteur = 0;
 
 
 
@@ -136,21 +139,35 @@ function popupForm_edit(title, content, callback) {
                 + (content ? `<div class="modal-body">
                 <div class="mb-3">
                     <label for="popup_form_input_1" class="form-label">${elt_1}</label>
-                    <input type="date" class="form-control" id="popup_form_input_1">
+                    <input type="date" class="form-control" id="popup_form_input_1" value="${params[0]}">
                 </div>
                 <div class="mb-3">
                     <label for="popup_form_input_2" class="form-label">${elt_2}</label>
-                    <input type="text" class="form-control" id="popup_form_input_2">
+                    <input type="text" class="form-control" id="popup_form_input_2" value="${params[1]}">
                 </div>
                 <div class="mb-3">
                     <label for="popup_form_input_3" class="form-label">${elt_3}</label>
-                    <input type="text" class="form-control" id="popup_form_input_3">
+                    <input type="number" class="form-control" id="popup_form_input_3" value="${params[2]}">
                 </div>
                 <div class="mb-3">
                     <label for="popup_form_input_4" class="form-label">${elt_4}</label>
                     <select class="form-select" aria-label="Default select example" id="popup_form_input_4">
                         `
-                        + select_array.map((elt) => `<option value="${elt}">${elt}</option>`).join("") +                        
+                        + 
+                        
+                        
+                        //select_array.map((elt) => `<option value="${elt}">${elt}</option>`).join("") 
+                        
+                        select_array.map((elt) => {
+                            compteur++;
+                            if (compteur.toString() === params[3]) {
+                                return `<option value="${elt}" selected>${elt}</option>`
+                            } else {
+                                return `<option value="${elt}">${elt}</option>`
+                            }
+                        }).join("")
+                        
+                        +                        
                         
                         `
                     </select>
@@ -176,8 +193,14 @@ function popupForm_edit(title, content, callback) {
         var input_1 = document.getElementById("popup_form_input_1").value;
         var input_2 = document.getElementById("popup_form_input_2").value;
         var input_3 = document.getElementById("popup_form_input_3").value;
-        var input_4 = document.getElementById("popup_form_input_4").value;
+        var input_4 = document.getElementById("popup_form_input_4");
+        input_4 = input_4.selectedIndex + 1; //on récupère l'index de l'option sélectionnée (commence à 0) et on ajoute 1 pour avoir le bon id
         //on appelle la fonction callback avec les valeurs des inputs
+        console.log("popupForm_edit : ");
+        console.log(input_1);
+        console.log(input_2);
+        console.log(input_3);
+        console.log(input_4);
         callback(input_1, input_2, input_3, input_4);
     }
     );
@@ -250,18 +273,20 @@ function deleteFrais(id, file_name, details) {
 
 
 //modifie un frais (avec popup de confirmation)
-function editFrais(id, file_name, details) {
+function editFrais(id, file_name, details, params) {
     console.log("edit frais 1");
+    console.log(params);
     details = "<strong>" + details.toString() + "</strong>";
-    let TODO = "<strong>TODO : le code PHP pour modifier un frais</strong>";
-    popupForm_edit("Modifier un frais (WIP) : " + details + " (id : "+id+")", ["Date : ", "Libellé : ", "Montant : ", "Type : "], function(input_1, input_2, input_3, input_4) {
+    
+    
+    popupForm_edit("Modifier un frais (WIP) : " + details + " (id : "+id+")", ["Date : ", "Libellé : ", "Montant : ", "Type : "], params, function(input_1, input_2, input_3, input_4) {
         //on envoie la requête POST
-        $.post(file_name, {edit_frais: id, date: input_1, libelle: input_2, montant: input_3, justificatif: input_4}, function(data) {
+        $.post(file_name, {edit_frais: id, date_frais: input_1, libelle_frais: input_2, prix_frais: input_3, type_frais: input_4}, function(data) {
             //on recharge la page
             //location.reload();
             //console.log(data);
             //c'est ok
-            popupForm_valide("Frais modifié", "Le frais a bien été modifié.<br>"+TODO, function() {
+            popupForm_valide("Frais modifié", "Le frais a bien été modifié.<br>", function() {
                 //on recharge la page après avoir fermé le popup
                 location.reload();
             }, "ok");

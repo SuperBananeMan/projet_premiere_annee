@@ -116,19 +116,19 @@
               <?php
                 if ($_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="index.php">Admin</a>
+				  <button class="text-dark my_mid_lnk nav--item-elt-mid button-nav" onclick="window.location.href=./index.php"">Admin</button>
                 </li>';
                 }
 
                 if ($_USER_ROLE == "Commercial" || $_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="commercial.php">Frais</a>
+				  <button class="text-dark my_mid_lnk nav--item-elt-mid button-nav" onclick="window.location.href=./commercial.php"">Frais</button>
                 </li>';
                 }
 
                 if ($_USER_ROLE == "Comptable" || $_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="comptable.php">Comptable</a>
+                  <button class="text-dark my_mid_lnk nav--item-elt-mid button-nav" onclick="window.location.href=./comptable.php"">Comptable</button>
                 </li>';
                 }
 
@@ -193,6 +193,17 @@
 				</thead>
 				<tbody>
         <?php
+			function checkType($type,$row){
+				echo $row['Id_Type'];
+				$array_type = (array) $type;
+				for($i = 1; $i <= count($array_type); $i++){
+					echo $row['Id_Type'] . $i;
+					if ($row['Id_Type'] == $i){
+						$le_type = $array_type[$i]['Nom'];
+						return ($le_type);
+					}
+				}
+			}
 			function popup_verif(){
 				echo '<script type="text/javascript">
 					window.confirm("Êtes-vous sur de vouloir refuser ce frais ?")
@@ -202,8 +213,9 @@
 			// Connexion à votre base de données
             $pdo = getDB();            // Exécuter une requête pour récupérer les données
             $resultat = $pdo->query("SELECT * FROM fraie");
-			      $data = $pdo->query("SELECT * FROM users");
-			      $etat = $pdo->query("SELECT * FROM etat");
+			$data = $pdo->query("SELECT * FROM users");
+			$etat = $pdo->query("SELECT * FROM etat");
+			$type = $pdo->query("SELECT * FROM type");
 
             
             // Accepter le fraie
@@ -241,26 +253,18 @@
                     foreach ($resultat as $row) {
 						echo "<tr>";
 						echo "<td>" . $row['Intitule'] . "</td>";
-						echo "<td>" . $row['prix'] . "</td>";
+						echo "<td>" . $row['prix'] . " €</td>";
 
 						echo "<td>" . $row['date_frais'] . "</td>";
 							
-							
-						if ($row['id_paiement'] == 1){
-							$etat_nom = "Non Accepte";
-						}
-						elseif ($row['id_paiement'] == 2){
-							$etat_nom = "Accepte";
-						}
-						elseif ($row['id_paiement'] == 3){
-							$etat_nom = "En Cours";
-						}
-								
 					  
 					
 						echo "<td>" . $etat_nom . "</td>";
+						
+						$le_type = checkType($type,$row);
+						
 
-						if ($row['Id_Type'] == 1){
+						/*if ($row['Id_Type'] == 1){
 							$nomType = "Repas";
 						}
 						elseif ($row['Id_Type'] == 2){
@@ -269,13 +273,15 @@
 						elseif ($row['Id_Type'] == 3){
 							$nomType = "Essence";
 						}
-            else{
-              $nomType = "";
-            }
+						else{
+						  $nomType = "";
+						}*/
 
 
 						echo "<td>" . $nomType . "</td>";
-					
+						
+						echo "<td>" . $le_type . "</td>";
+						
 						foreach ($data as $nom){
 							if ($row['Id_Users'] == $nom['Id_Users']){
 								$le_nom = $nom['Nom'];
