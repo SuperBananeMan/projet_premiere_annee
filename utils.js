@@ -229,6 +229,28 @@ function deleteUser(id, file_name, details) {
     }, "confirm");
 }
 
+
+//supprime un frais (avec popup de confirmation)
+function deleteFrais(id, file_name, details) {
+    console.log("delete frais 1");
+    popupForm_valide("Supprimer un frais", "Voulez-vous vraiment supprimer ce frais ? <br><strong>"+details.toString()+"</strong>.", function() {
+        //on envoie la requête POST
+        $.post(file_name, {delete_frais: id}, function(data) {
+            //on recharge la page
+            //location.reload();
+            //console.log(data);
+            //c'est ok
+            popupForm_valide("Frais supprimé", "Le frais a bien été supprimé.", function() {
+                //on recharge la page après avoir fermé le popup
+                location.reload();
+            }, "ok");
+
+        });
+
+    }, "confirm");
+}
+
+
 //modifie un frais (avec popup de confirmation)
 function editFrais(id, file_name, details) {
     console.log("edit frais 1");

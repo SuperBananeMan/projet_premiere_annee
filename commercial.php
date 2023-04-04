@@ -293,8 +293,8 @@
 
 
                     // Vérifier si le formulaire a été soumis, supprime le fraie
-                  if(isset($_POST['delete_fraie'])) {
-                    $id = $_POST['delete_fraie'];
+                  if(isset($_POST['delete_frais'])) {
+                    $id = $_POST['delete_frais'];
                   
                     // Préparer et exécuter une requête de suppression
                     $stmt = $pdo->prepare("DELETE FROM fraie WHERE Id_Fraie = ?");
@@ -325,8 +325,9 @@
                   // Modale de confirmation de suppression
                   echo '<td> 
                   <form method="post" action="commercial.php">
-                    <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <input type="hidden" name="delete_frais" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                    <!--<button type="submit" class="btn btn-danger">Supprimer</button>-->
+                    <button type="button" class="btn btn-danger" onclick="deleteFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) .')">Supprimer</button>
                   </form>
                 </td>';
 
