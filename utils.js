@@ -296,6 +296,45 @@ function editFrais(id, file_name, details, params) {
     });
 }
 
+//ajoute un frais (avec popup de confirmation)
+function addFrais(file_name) {
+    console.log("add frais 1");
+    //details = "<strong>" + details.toString() + "</strong>";
+
+    let intitule = document.getElementsByName("intitulé")[0].value;
+    let prix = document.getElementsByName("prix")[0].value;
+    let date = document.getElementsByName("date")[0].value;
+    let type = document.getElementsByName("type")[0].value;
+    //console.log(intitule);
+    //console.log(prix);
+    //console.log(date);
+    //console.log(type);
+    let user = -1; //on met -1 pour dire puisque de toute façon PAR DÉFAUT cette valeur ne sera pas utilisée dans le PHP
+
+    if (typeof document.getElementsByName("user") !== 'undefined') {
+        user = document.getElementsByName("user")[0].value;
+    }
+
+    console.log(user);
+
+    popupForm_valide("Ajouter un frais : "+intitule.toString(), "Voulez-vous vraiment ajouter ce frais ?", function() {
+        //on envoie la requête POST
+        $.post(file_name, {add_frais: 1, date_frais: date, libelle_frais: intitule, prix_frais: prix, type_frais: type, user: user}, function(data) {
+            //on recharge la page
+            //location.reload();
+            //console.log(data);
+            //c'est ok
+            popupForm_valide("Frais ajouté", "Le frais a bien été ajouté.<br>", function() {
+                //on recharge la page après avoir fermé le popup
+                location.reload();
+            }, "ok");
+
+        });
+
+    }, "confirm");
+    
+}
+
 
 
 //valide un frais (avec popup de confirmation)

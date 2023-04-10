@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="src/styleheet.css">
     <link rel="icon" type="image/x-icon" href="./src/assets/logo-v2.png">
 
+    <script src="utils.js" crossorigin="anonymous"></script>
+
     
     <title>ISA Compta</title>
 
@@ -351,28 +353,65 @@
 						$passwrd = $_POST['passwrd'];
 						$Id_role = $_POST['dropdown'];
 
+            //verif si l'email est valide
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+              
+              echo '
+              <script type="text/javascript">
+              popupForm_valide("Erreur", "Mail incorecte.<br>", function() {
+                //on recharge la page après avoir fermé le popup
+                window.location = "index.php";
+            }, "ok");
+              </script>';
+
+
+            
+            }
+
+            else{
+
             
 
 						$pdo = getDB();
-		 
-						$stmt = $pdo->prepare("INSERT INTO users (Nom, Mail, Passwrd, Id_role) VALUES (:username, :email, :passwrd, :Id_role)");
-						$stmt->bindParam(':username', $username);
-					
-						$stmt->bindParam(':passwrd', $passwrd);
-						$stmt->bindParam(':email', $email);
-						$stmt->bindParam(':Id_role', $Id_role);
-		 
-						$stmt->execute();
-		 
-						echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-					  <strong>C est nickel</strong> l ajout est OK.
-					  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>';
 
-          //refresh la page js
-          echo '<script type="text/javascript">
-          setTimeout(function(){window.location = "index.php"}, 2000);
-          </script>';
+            //verif si l'email existe deja
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE Mail = :email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row) {
+              echo '
+              <script type="text/javascript">
+              popupForm_valide("Erreur", "Mail deja existant.<br>", function() {
+                //on recharge la page après avoir fermé le popup
+                window.location = "index.php";
+            }, "ok");
+              </script>';
+            }
+
+            else{
+		 
+						  $stmt = $pdo->prepare("INSERT INTO users (Nom, Mail, Passwrd, Id_role) VALUES (:username, :email, :passwrd, :Id_role)");
+						  $stmt->bindParam(':username', $username);
+              
+						  $stmt->bindParam(':passwrd', $passwrd);
+						  $stmt->bindParam(':email', $email);
+						  $stmt->bindParam(':Id_role', $Id_role);
+              
+						  $stmt->execute();
+              
+						  echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+					    <strong>C est nickel</strong> l ajout est OK.
+					    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					    </div>';
+
+              //refresh la page js
+              echo '<script type="text/javascript">
+              setTimeout(function(){window.location = "index.php"}, 2000);
+              </script>';
+              }
+
+            }
 					
 					}
 
