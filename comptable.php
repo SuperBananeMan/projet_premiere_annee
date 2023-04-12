@@ -204,11 +204,7 @@
 			// 		}
 			// 	}
 			// }
-			function popup_verif(){
-				echo '<script type="text/javascript">
-					window.confirm("Êtes-vous sur de vouloir refuser ce frais ?")
-					</script>';
-			}
+			
 			
 			// Connexion à votre base de données
             $pdo = getDB();            // Exécuter une requête pour récupérer les données
@@ -225,31 +221,29 @@
             // Accepter le fraie
             if(isset($_POST['accept'])) {
 				
-				popup_verif();
-				
-				$accept = $_POST['accept'];
-				// Préparer et exécuter une requête de suppression
-				$stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='2' WHERE Id_Fraie = ?");
-				$stmt->execute([$accept]);
-				// Rediriger vers la page d'affichage
-				header("Location: comptable.php");
 
-				exit();
+				        $accept = $_POST['accept'];
+				        // Préparer et exécuter une requête de suppression
+				        $stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='2' WHERE Id_Fraie = ?");
+				        $stmt->execute([$accept]);
+				        // Rediriger vers la page d'affichage
+				        header("Location: comptable.php");
+
+				        exit();
             }
 
             // Refuser le fraie
             if(isset($_POST['refuse'])) {
 				
-				popup_verif();
-				
-				$refuse = $_POST['refuse'];
-				// Préparer et exécuter une requête de suppression
-				$stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='1' WHERE Id_Fraie = ?");
-				$stmt->execute([$refuse]);
-				// Rediriger vers la page d'affichage
-				header("Location: comptable.php");
 
-				exit();
+				        $refuse = $_POST['refuse'];
+				        // Préparer et exécuter une requête de suppression
+				        $stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='1' WHERE Id_Fraie = ?");
+				        $stmt->execute([$refuse]);
+				        // Rediriger vers la page d'affichage
+				        header("Location: comptable.php");
+
+				        exit();
             }
 
 				    //identifier l'utilisateur
