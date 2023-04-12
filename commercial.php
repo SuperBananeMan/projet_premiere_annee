@@ -628,10 +628,10 @@
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-6">
-                    <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" require>
+                    <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" required>
                   </div>
                   <div class="col-md-6">
-                    <input type="date" placeholder="14/03/2023" class="form-control" name="date" require>
+                    <input type="date" placeholder="14/03/2023" class="form-control" name="date" required>
                   </div>
             </div>
             <div class="row">
@@ -708,7 +708,7 @@
               </div>
               <div class="form-group col-md-6 mt-2">
                 
-                <select class="form-control" name="U" id="U">
+                <select class="form-control" name="user" id="U">
 
                   '. $options2 .'
                 
