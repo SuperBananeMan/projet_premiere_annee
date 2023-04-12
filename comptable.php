@@ -175,11 +175,12 @@
 	<div class="all_center container myTitreDiv">
 		<h1 class="text-center mt-4 myTitre all_center">Les Frais En Cours</h1>     
 	</div> 
-    
+  
+
 	
 	<div class="container">
 		<div class="mt-5 pt-5 a_droite">
-			<table id="myTable_1">
+			<table id="myTable">
 				<thead>
 					<tr>
 						<th>Intitulé</th>
@@ -337,7 +338,7 @@
             </table>
 			<script>
 			$(document).ready(function() {
-			$('#myTable_1').DataTable( {
+			$('#myTable').DataTable( {
 
 				"language": {
 				"url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
