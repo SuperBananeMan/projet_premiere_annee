@@ -8,8 +8,7 @@
 
 ## Historique de L'avancé :
 
-
-- test test ahhhh open commit damien jtm
-
-
-
+- Fevrier : Création du projet
+- Mi Février : Création Des Features Principales
+- Fin Fevrier : Création du design principale
+- Mars : Création des features secondaires
