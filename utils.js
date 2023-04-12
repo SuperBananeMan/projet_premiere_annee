@@ -320,19 +320,31 @@ function addFrais(file_name) {
     console.log(user);
 
     popupForm_valide("Ajouter un frais : "+intitule.toString(), "Voulez-vous vraiment ajouter ce frais ?", function() {
+        // If de verification si les champs sont rentrés        
+        if (intitule.length != 0 & prix.length != 0 & date.length != 0 & type.length != 0){
+        
         //on envoie la requête POST
-        $.post(file_name, {add_frais: 1, date_frais: date, libelle_frais: intitule, prix_frais: prix, type_frais: type, user: user}, function(data) {
-            //on recharge la page
-            //location.reload();
-            //console.log(data);
-            //c'est ok
-            popupForm_valide("Frais ajouté", "Le frais a bien été ajouté.<br>", function() {
+                $.post(file_name, {add_frais: 1, date_frais: date, libelle_frais: intitule, prix_frais: prix, type_frais: type, user: user}, function(data) {
+                    //on recharge la page
+                    //location.reload();
+                    //console.log(data);
+                    //c'est ok
+                    popupForm_valide("Frais ajouté", "Le frais a bien été ajouté.<br>", function() {
+                        //on recharge la page après avoir fermé le popup
+                        location.reload();
+                    }, "ok");
+                
+                });}
+
+        // Sinon on affiche un message d'erreur disant de remplir tous les champs
+        
+        else {
+            popupForm_valide("Erreur", "Veuillez remplir tous les champs", function() {
                 //on recharge la page après avoir fermé le popup
                 location.reload();
             }, "ok");
-
-        });
-
+        }        
+            
     }, "confirm");
     
 }
