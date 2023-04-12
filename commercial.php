@@ -178,7 +178,7 @@
           <script>let table = new DataTable('#myTable');</script>
 
         <div class="all_center container myTitreDiv">
-          <h1 class="text-center mt-4 myTitre all_center">Mes Frais</h1>     
+          <h1 class="text-center mt-4 myTitre all_center">Mes Frais En Cours</h1>     
         </div> 
 
     <div class="container">
@@ -390,7 +390,7 @@
         </div>
     </div>
 
-    <h1 class="text-center mt-4">Frais payés</h1>
+    <h1 class="text-center mt-4">Frais Accepté</h1>
 
 
 
@@ -428,10 +428,10 @@
                
                 $select_opt= NULL;
                 if ($_USER_ROLE == "Admin"){
-                  $select_opt = "SELECT * FROM fraie WHERE id_paiement != 3" . ";";
+                  $select_opt = "SELECT * FROM fraie WHERE id_paiement = 2" . ";";
                 }
                 else{
-                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . "AND id_paiement != 3" . ";";
+                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . "AND id_paiement = 2" . ";";
                 }
                 
                 
@@ -603,6 +603,231 @@
               
               $(document).ready(function() {
                 $('#myTable_2').DataTable( {
+                  "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+                  }
+              } );
+              } );
+            
+            
+            </script>
+        </div>
+    </div>
+
+
+    <h1 class="text-center mt-4">Frais Refusé</h1>
+
+
+
+    <!--Tableau des Fraies payés-->
+    <script>table = new DataTable('#myTable_3');</script>
+
+    <div class="container">
+          <div class="mt-2 pt-5"> <!-- Partie gauche avec le tableau-->
+            <table id="myTable_3">
+              <thead>
+                <tr>
+                  <th>Intitulé</th>
+                  <th>Prix</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>User</th>
+                  <th>Etat</th>
+                  <!--<th>Modifier</th>-->
+                  <!--<th>Supprimer</th>-->
+                  <?php
+                  if ($_USER_ROLE == "Admin"){
+                    echo "<th>Modifier</th>";
+                    echo "<th>Supprimer</th>";
+                  }
+                  ?>
+            
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                // Connexion à votre base de données
+                $pdo = getDB();                
+                // Recupere l'id du Users
+
+               
+                $select_opt= NULL;
+                if ($_USER_ROLE == "Admin"){
+                  $select_opt = "SELECT * FROM fraie WHERE id_paiement = 1" . ";";
+                }
+                else{
+                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . "AND id_paiement = 1" . ";";
+                }
+                
+                
+                // Exécuter une requête pour récupérer les données
+                $resultat = $pdo->query($select_opt);
+                $res2 = $pdo->query("SELECT * FROM etat ");
+                $name = $pdo->query("SELECT * FROM users"); 
+                $types = $pdo->query("SELECT * FROM type"); 
+                //Array
+                $myarray_res = array();
+                $myarray_res2 = array();
+                $myarray_name = array();
+                $myarray_type = array();
+                foreach ($resultat as $row) {
+                  //push the data in the array
+                  array_push($myarray_res, $row);
+                  
+                }
+
+                foreach ($res2 as $row2) {
+                  //push the data in the array
+                  array_push($myarray_res2, $row2);
+                  
+                }
+
+                  
+                // Boucle pour afficher les résultats de la requête
+
+                foreach ($name as $nom){
+                
+                  array_push($myarray_name, $nom);
+                  
+
+                }
+                
+                  
+                foreach ($types as $type){
+
+                  array_push($myarray_type, $type);
+                
+                
+                }
+                
+                for ($i=0; $i < count($myarray_res); $i++) {
+                  
+                  echo "<tr>";
+                  echo "<td>" . $myarray_res[$i]['Intitule'] . "</td>";
+                  echo "<td>" . $myarray_res[$i]['prix'] . "</td>";
+                  
+                  
+                  foreach ($myarray_type as $type) {
+                    if ($myarray_res[$i]['Id_Type'] == $type['Id_Type']){
+                      echo "<td>" . $type['Nom'] . "</td>";
+                    }
+                  }
+                  
+                  
+                  echo "<td>" . $myarray_res[$i]['date_frais'] . "</td>";
+
+                  
+
+
+
+                  foreach ($myarray_name as $nom) {
+                    if ($myarray_res[$i]['Id_Users'] == $nom['Id_Users']){
+                      echo "<td>" . $nom['Nom'] . "</td>"; 
+                    }
+                  }
+
+
+                  //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
+                  if ($myarray_res[$i]['id_paiement'] == 1) {
+                    echo "<td>" . $myarray_res2[0]['type_paiement'] . "</td>";
+                  } else if ($myarray_res[$i]['id_paiement'] == 2){
+                    echo "<td>" . $myarray_res2[1]['type_paiement'] . "</td>";
+                  }
+                  else if ($myarray_res[$i]['id_paiement'] == 3){
+                    echo "<td>" . $myarray_res2[2]['type_paiement'] . "</td>";
+                  }
+
+
+                    // Vérifier si le formulaire a été soumis, supprime le fraie
+                  /*if(isset($_POST['delete_fraie'])) {
+                    $id = $_POST['delete_fraie'];
+                  
+                    // Préparer et exécuter une requête de suppression
+                    $stmt = $pdo->prepare("DELETE FROM fraie WHERE Id_Fraie = ?");
+                    
+                    $stmt->execute([$id]);
+                
+                    
+                  
+                    
+                    
+                    
+                  }*/
+
+                  // Vérifier si le formulaire a été soumis, Modifie le fraie
+                  /*if(isset($_POST['edit_frais'])) {
+                    $id = $_POST['edit_frais'];
+                    $date = $_POST['date_frais'];
+                    $intitule = $_POST['libelle_frais'];
+                    $prix = $_POST['prix_frais'];
+                    $type = $_POST['type_frais'];
+                    
+
+                    // Préparer et exécuter une requête de modification
+                    
+                    $stmt = $pdo->prepare("UPDATE fraie SET date_frais = ?, Intitule = ?, prix = ?, Id_Type = ? WHERE Id_Fraie = ?");
+                    
+                    $stmt->execute([$date, $intitule, $prix, $type, $id]);
+                    
+                  
+                    
+                    
+                    
+                  }*/
+
+
+                  // Vérifier si le formulaire a été soumis, Modifie le fraie
+
+                 
+                  if ($_USER_ROLE == "Admin"){
+                    
+                    echo '<td> 
+                      <form method="post" action="commercial.php">
+                        <input type="hidden" name="modify_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                        <script> const compte_params_'.$myarray_res[$i]['Id_Fraie'].' = []; 
+                        //add data to the array
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['date_frais'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Intitule'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['prix'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Id_Type'].'");
+                        
+                        </script>
+                        <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) . ',' . 'compte_params_'.$myarray_res[$i]['Id_Fraie'].')" >
+                          Modifier
+                        </button>
+                      </form>
+                    </td>';
+                  
+                  // Modale de confirmation de suppression
+                  echo '<td> 
+                  <form method="post" action="commercial.php">
+                    <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </form>
+                </td>';
+                  }
+                  
+
+                  echo "</tr>";
+
+
+
+                }
+                ?>
+              </tbody>
+            </table>
+              
+            <script>
+
+
+   
+
+
+
+
+              
+              $(document).ready(function() {
+                $('#myTable_3').DataTable( {
                   "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
                   }
