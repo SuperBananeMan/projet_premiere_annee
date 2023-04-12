@@ -73,8 +73,8 @@
     
     ?>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar_color sticky-top">
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg navbar_color sticky-top">
         <!-- Container wrapper -->
         <div class="container">
       <!-- Navbar brand -->
@@ -116,19 +116,19 @@
               <?php
                 if ($_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-				  <button class="text-dark my_mid_lnk nav--item-elt-mid button-nav" onclick="window.location.href=./index.php"">Admin</button>
+                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="index.php">Admin</a>
                 </li>';
                 }
 
                 if ($_USER_ROLE == "Commercial" || $_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-				  <button class="text-dark my_mid_lnk nav--item-elt-mid button-nav" onclick="window.location.href=./commercial.php"">Frais</button>
+                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="commercial.php">Frais</a>
                 </li>';
                 }
 
                 if ($_USER_ROLE == "Comptable" || $_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <button class="text-dark my_mid_lnk nav--item-elt-mid button-nav" onclick="window.location.href=./comptable.php"">Comptable</button>
+                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="comptable.php">Comptable</a>
                 </li>';
                 }
 
@@ -193,17 +193,17 @@
 				</thead>
 				<tbody>
         <?php
-			function checkType($type,$row){
-				echo $row['Id_Type'];
-				$array_type = (array) $type;
-				for($i = 1; $i <= count($array_type); $i++){
-					echo $row['Id_Type'] . $i;
-					if ($row['Id_Type'] == $i){
-						$le_type = $array_type[$i]['Nom'];
-						return ($le_type);
-					}
-				}
-			}
+			// function checkType($type,$row){
+			// 	echo $row['Id_Type'];
+			// 	$array_type = (array) $type;
+			// 	for($i = 1; $i <= count($array_type); $i++){
+			// 		echo $row['Id_Type'] . $i;
+			// 		if ($row['Id_Type'] == $i){
+			// 			$le_type = $array_type[$i]['Nom'];
+			// 			return ($le_type);
+			// 		}
+			// 	}
+			// }
 			function popup_verif(){
 				echo '<script type="text/javascript">
 					window.confirm("Êtes-vous sur de vouloir refuser ce frais ?")
@@ -213,10 +213,14 @@
 			// Connexion à votre base de données
             $pdo = getDB();            // Exécuter une requête pour récupérer les données
             $resultat = $pdo->query("SELECT * FROM fraie");
-			$data = $pdo->query("SELECT * FROM users");
-			$etat = $pdo->query("SELECT * FROM etat");
-			$type = $pdo->query("SELECT * FROM type");
+			      $data = $pdo->query("SELECT * FROM users");
+			      $etat = $pdo->query("SELECT * FROM etat");
+			      $type = $pdo->query("SELECT * FROM type");
 
+            // Declaration des tableaux
+            
+            $typeT = array();   
+            $etatE = array();
             
             // Accepter le fraie
             if(isset($_POST['accept'])) {
@@ -249,8 +253,29 @@
             }
 
 				    //identifier l'utilisateur
-                    // Boucle pour afficher les résultats de la requête
-                    foreach ($resultat as $row) {
+          // Boucle pour rentrer les résultats de la requête type dans le tab
+
+          foreach($type as $rowT){
+
+            $typeT[$rowT['Id_Type']] = $rowT['Nom'];
+              
+
+          }     
+          
+          // Boucle pour rentrer les résultats de la requête etat dans le tab
+
+
+          foreach($etat as $rowE){
+
+            $etatE[$rowE['id_paiement']] = $rowE['type_paiement'];
+              
+
+          } 
+          
+          // Boucle pour afficher les résultats de la requête fraie
+
+
+          foreach ($resultat as $row) {
 						echo "<tr>";
 						echo "<td>" . $row['Intitule'] . "</td>";
 						echo "<td>" . $row['prix'] . " €</td>";
@@ -259,9 +284,12 @@
 							
 					  
 					
-						echo "<td>" . $etat_nom . "</td>";
+						echo "<td>" . $etatE[$row['id_paiement']] . "</td>";
+
+
+            echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
 						
-						$le_type = checkType($type,$row);
+						// $le_type = checkType($type,$row);
 						
 
 						/*if ($row['Id_Type'] == 1){
@@ -278,9 +306,9 @@
 						}*/
 
 
-						echo "<td>" . $nomType . "</td>";
+						// echo "<td>" . $nomType . "</td>";
 						
-						echo "<td>" . $le_type . "</td>";
+						// echo "<td>" . $le_type . "</td>";
 						
 						foreach ($data as $nom){
 							if ($row['Id_Users'] == $nom['Id_Users']){
@@ -295,14 +323,14 @@
 						echo '<td> 
 							<form method="post" action="comptable.php">
 							<input type="hidden" name="accept" value="'.$row['Id_Fraie'].'">
-							<button id="accepter" type="button" class="btn btn-primary" onclick="valideFrais(\'accepter\','. $row['Id_Users'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Accepter</button>
+							<button id="accepter" type="button" class="btn btn-primary" onclick="valideFrais(\'accepter\','. $row['Id_Fraie'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Accepter</button>
 							</form>
 							</td>'  ;
 
 						echo '<td> 
 							<form method="post" action="comptable.php">
 							<input type="hidden" name="refuse" value="'.$row['Id_Fraie'].'">
-							<button id="refuser" type="button" class="btn btn-danger" onclick="valideFrais(\'refuser\','. $row['Id_Users'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Refuser</button>
+							<button id="refuser" type="button" class="btn btn-danger" onclick="valideFrais(\'refuser\','. $row['Id_Fraie'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Refuser</button>
 							</form>
 							</td>';
 
