@@ -675,6 +675,21 @@
 
               
              <?php
+
+            $mysqli = getDB_mysqli();
+            $resultU = mysqli_query($mysqli, "SELECT Id_Users, Nom FROM users");
+
+             // Vérifier la connexion
+             if (mysqli_connect_errno()) {
+              echo "Échec de la connexion à la base de données: " . mysqli_connect_error();
+              exit();
+            }
+
+            $options2 = "";
+                  while ($row = mysqli_fetch_assoc($result)) {
+                      $options2 .= "<option value='" . $row['Id_Users'] . "'>" . $row['Nom'] . "</option>";
+            }
+
             
             //si le rôle de l'user actuel est 1 (admin) alors on affiche les options pour choisir l'utilisateur
             if ($_USER_ROLE == "Admin"){
@@ -683,7 +698,13 @@
                 <label for="user">Utilisateur ID :</label>
                 </div>
               <div class="form-group col-md-6 mt-2">
-                  <input type="text" class="form-control" name="user" require value="'.$_USER_ID.'">
+                
+                <select class="form-control" name="U" id="U">
+
+                  '. $options2 .'
+                
+                </select>
+
               </div>
               
               ';
