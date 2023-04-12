@@ -390,6 +390,10 @@
         </div>
     </div>
 
+    <h1 class="text-center mt-4">Frais payés</h1>
+
+
+
     <!--Tableau des Fraies payés-->
     <script>table = new DataTable('#myTable_2');</script>
 
@@ -614,7 +618,7 @@
     <!-- Ajouter Fraies -->
 
 
-    <p class="h2 text-center mt-2">Ajouter un Frais</p>
+    <p class="h2 text-center mt-5 mb-5">Ajouter un Frais</p>
 
           <form action="commercial.php" class="container" method="POST">
 
