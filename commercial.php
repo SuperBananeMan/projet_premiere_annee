@@ -687,8 +687,12 @@
 
             $options2 = "";
                   while ($row = mysqli_fetch_assoc($resultU)) {
-                      $options2 .= "<option value='" . $row['Id_Users'] . "'>" .  'ID: ' .  $row['Id_Users'] . ' - ' . $row['Nom'] . "</option>";
-
+                    if ($row['Id_Users'] == $_USER_ID){
+                      $options2 .= "<option value='" . $row['Id_Users'] . "' selected>" . $row['Nom'] . " (" . $row['Id_Users'] . ")" . "</option>";
+                    }
+                    else{
+                      $options2 .= "<option value='" . $row['Id_Users'] . "'>" . $row['Nom'] . " (" . $row['Id_Users'] . ")" . "</option>";
+                    }
             }
 
             
@@ -700,7 +704,7 @@
                 </div>
               <div class="form-group col-md-6 mt-2">
                 
-                <select class="form-control" name="U" id="U">
+                <select class="form-control" name="user" id="U">
 
                   '. $options2 .'
                 
@@ -733,7 +737,7 @@
                 $date = $_POST['date_frais'];
                 $type = $_POST['type_frais'];
                 $prix = $_POST['prix_frais'];
-                if ($_USER_ROLE == "Admin") $user = $_POST['U'];
+                if ($_USER_ROLE == "Admin") $user = $_POST['user'];
                 else $user = $_USER_ID;
 
 
