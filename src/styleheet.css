@@ -104,7 +104,7 @@ body{
 	background-color:#EFEFEF;
 }
 
-#myTable{
+#myTable, #myTable_2{
 
     width: 100%;
 
@@ -119,7 +119,7 @@ body{
 }
 
 
-#myTable td{
+#myTable td,#myTable_2 td{
 
     text-align: center;
     padding: 8px;
@@ -128,7 +128,7 @@ body{
 
 }
 
-#myTable th{
+#myTable th,#myTable_2 th{
 
     text-align: center;
     padding: 8px;
@@ -138,25 +138,25 @@ body{
 
 
 
-#myTable tr:nth-child(even){
+#myTable tr:nth-child(even), #myTable_2 tr:nth-child(even){
 
     background-color: var(--background-color);
 
 }
 
-#myTable tr:nth-child(odd){
+#myTable tr:nth-child(odd), #myTable_2 tr:nth-child(odd){
 
     background-color: hsl(34, 8%, 90%)
 
 }
 
-#myTable tr:hover{
+#myTable tr:hover, #myTable_2 tr:hover{
 
     background-color: var(--secondary-color-light);
 
 }
 
-#myTable_filter, #myTable_paginate, #myTable_info, #myTable_length{
+#myTable_filter, #myTable_paginate, #myTable_info, #myTable_length, #myTable_2_filter, #myTable_2_paginate, #myTable_2_info, #myTable_2_length{
 
     margin: 8px;
 
