@@ -686,8 +686,9 @@
             }
 
             $options2 = "";
-                  while ($row = mysqli_fetch_assoc($result)) {
+                  while ($row = mysqli_fetch_assoc($resultU)) {
                       $options2 .= "<option value='" . $row['Id_Users'] . "'>" . $row['Nom'] . "</option>";
+
             }
 
             
@@ -709,6 +710,7 @@
               
               ';
             }
+            mysqli_close($mysqli);
 
 
             ?>
