@@ -209,7 +209,7 @@
 			
 			// Connexion à votre base de données
             $pdo = getDB();            // Exécuter une requête pour récupérer les données
-            $resultat = $pdo->query("SELECT * FROM fraie WHERE id_paiement = 1");
+            $resultat = $pdo->query("SELECT * FROM fraie WHERE id_paiement = 3");
 			      $data = $pdo->query("SELECT * FROM users");
 			      $etat = $pdo->query("SELECT * FROM etat");
 			      $type = $pdo->query("SELECT * FROM type");
