@@ -687,7 +687,7 @@
 
             $options2 = "";
                   while ($row = mysqli_fetch_assoc($resultU)) {
-                      $options2 .= "<option value='" . $row['Id_Users'] . "'>" . $row['Nom'] . "</option>";
+                      $options2 .= "<option value='" . $row['Id_Users'] . "'>" .  'ID: ' .  $row['Id_Users'] . ' - ' . $row['Nom'] . "</option>";
 
             }
 
@@ -733,7 +733,7 @@
                 $date = $_POST['date_frais'];
                 $type = $_POST['type_frais'];
                 $prix = $_POST['prix_frais'];
-                if ($_USER_ROLE == "Admin") $user = $_POST['user'];
+                if ($_USER_ROLE == "Admin") $user = $_POST['U'];
                 else $user = $_USER_ID;
 
 
