@@ -173,20 +173,20 @@
     <!-- Main Content -->
 
 	<div class="all_center container myTitreDiv">
-		<h1 class="text-center mt-4 myTitre all_center">Les Frais</h1>     
+		<h1 class="text-center mt-4 myTitre all_center">Les Frais En Cours</h1>     
 	</div> 
     
 	
 	<div class="container">
 		<div class="mt-5 pt-5 a_droite">
-			<table id="myTable">
+			<table id="myTable_1">
 				<thead>
 					<tr>
 						<th>Intitulé</th>
 						<th>Prix</th>
 						<th>Date frais</th>
-						<th>Paiement</th>
 						<th>Type</th>
+						<th>Paiement</th>
 						<th>Accepter</th>
 						<th>Refuser</th>
 					</tr>
@@ -208,7 +208,7 @@
 			
 			// Connexion à votre base de données
             $pdo = getDB();            // Exécuter une requête pour récupérer les données
-            $resultat = $pdo->query("SELECT * FROM fraie");
+            $resultat = $pdo->query("SELECT * FROM fraie WHERE id_paiement = 1");
 			      $data = $pdo->query("SELECT * FROM users");
 			      $etat = $pdo->query("SELECT * FROM etat");
 			      $type = $pdo->query("SELECT * FROM type");
@@ -276,12 +276,12 @@
 
 						echo "<td>" . $row['date_frais'] . "</td>";
 							
-					  
+            echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
+
 					
 						echo "<td>" . $etatE[$row['id_paiement']] . "</td>";
 
 
-            echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
 						
 						// $le_type = checkType($type,$row);
 						
@@ -337,7 +337,8 @@
             </table>
 			<script>
 			$(document).ready(function() {
-			$('#myTable').DataTable( {
+			$('#myTable_1').DataTable( {
+
 				"language": {
 				"url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
 				}
@@ -347,6 +348,202 @@
             </script>
 		</div>
 	</div>
+
+
+  <div class="all_center container myTitreDiv">
+		<h1 class="text-center mt-4 myTitre all_center">Les Frais Traités </h1>     
+	</div> 
+    
+	
+	<div class="container">
+		<div class="mt-5 pt-5 a_droite">
+			<table id="myTable_2">
+				<thead>
+					<tr>
+						<th>Intitulé</th>
+						<th>Prix</th>
+						<th>Date frais</th>
+						<th>Type</th>
+						<th>Paiement</th>
+						
+            <?php 
+                  
+                  
+                if ($_USER_ROLE == "Admin"){
+
+                  echo '<th>Accepter</th>';
+                  echo '<th>Refuser</th>';
+
+                }
+                  
+                  
+            ?>
+            
+            
+            
+					</tr>
+				</thead>
+				<tbody>
+        <?php
+			// function checkType($type,$row){
+			// 	echo $row['Id_Type'];
+			// 	$array_type = (array) $type;
+			// 	for($i = 1; $i <= count($array_type); $i++){
+			// 		echo $row['Id_Type'] . $i;
+			// 		if ($row['Id_Type'] == $i){
+			// 			$le_type = $array_type[$i]['Nom'];
+			// 			return ($le_type);
+			// 		}
+			// 	}
+			// }
+			
+			
+			// Connexion à votre base de données
+            $pdo = getDB();            // Exécuter une requête pour récupérer les données
+            $resultat = $pdo->query("SELECT * FROM fraie WHERE id_paiement != 3");
+			      $data = $pdo->query("SELECT * FROM users");
+			      $etat = $pdo->query("SELECT * FROM etat");
+			      $type = $pdo->query("SELECT * FROM type");
+
+            // Declaration des tableaux
+            
+            $typeT = array();   
+            $etatE = array();
+            
+            // Accepter le fraie
+            if(isset($_POST['accept'])) {
+				
+
+				        $accept = $_POST['accept'];
+				        // Préparer et exécuter une requête de suppression
+				        $stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='2' WHERE Id_Fraie = ?");
+				        $stmt->execute([$accept]);
+				        // Rediriger vers la page d'affichage
+				        header("Location: comptable.php");
+
+				        exit();
+            }
+
+            // Refuser le fraie
+            if(isset($_POST['refuse'])) {
+				
+
+				        $refuse = $_POST['refuse'];
+				        // Préparer et exécuter une requête de suppression
+				        $stmt = $pdo->prepare("UPDATE fraie SET id_paiement ='1' WHERE Id_Fraie = ?");
+				        $stmt->execute([$refuse]);
+				        // Rediriger vers la page d'affichage
+				        header("Location: comptable.php");
+
+				        exit();
+            }
+
+				    //identifier l'utilisateur
+          // Boucle pour rentrer les résultats de la requête type dans le tab
+
+          foreach($type as $rowT){
+
+            $typeT[$rowT['Id_Type']] = $rowT['Nom'];
+              
+
+          }     
+          
+          // Boucle pour rentrer les résultats de la requête etat dans le tab
+
+
+          foreach($etat as $rowE){
+
+            $etatE[$rowE['id_paiement']] = $rowE['type_paiement'];
+              
+
+          } 
+          
+          // Boucle pour afficher les résultats de la requête fraie
+
+
+          foreach ($resultat as $row) {
+						echo "<tr>";
+						echo "<td>" . $row['Intitule'] . "</td>";
+						echo "<td>" . $row['prix'] . " €</td>";
+
+						echo "<td>" . $row['date_frais'] . "</td>";
+							
+
+            echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
+
+					  
+					
+						echo "<td>" . $etatE[$row['id_paiement']] . "</td>";
+
+
+						
+						// $le_type = checkType($type,$row);
+						
+
+						/*if ($row['Id_Type'] == 1){
+							$nomType = "Repas";
+						}
+						elseif ($row['Id_Type'] == 2){
+							$nomType = "Transport";
+						}
+						elseif ($row['Id_Type'] == 3){
+							$nomType = "Essence";
+						}
+						else{
+						  $nomType = "";
+						}*/
+
+
+						// echo "<td>" . $nomType . "</td>";
+						
+						// echo "<td>" . $le_type . "</td>";
+						
+						foreach ($data as $nom){
+							if ($row['Id_Users'] == $nom['Id_Users']){
+								$le_nom = $nom['Nom'];
+								//$le_prenom = $nom['Prenom'];
+								break;
+							}
+						}
+					
+					
+          if ($_USER_ROLE == "Admin"){
+						
+						echo '<td> 
+							<form method="post" action="comptable.php">
+							<input type="hidden" name="accept" value="'.$row['Id_Fraie'].'">
+							<button id="accepter" type="button" class="btn btn-primary" onclick="valideFrais(\'accepter\','. $row['Id_Fraie'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Accepter</button>
+							</form>
+							</td>'  ;
+
+						echo '<td> 
+							<form method="post" action="comptable.php">
+							<input type="hidden" name="refuse" value="'.$row['Id_Fraie'].'">
+							<button id="refuser" type="button" class="btn btn-danger" onclick="valideFrais(\'refuser\','. $row['Id_Fraie'] .','. text2quote("comptable.php") . ','. text2quote($row['Intitule']) .')">Refuser</button>
+							</form>
+							</td>';
+
+						echo "</tr>";
+					}}
+                  ?>
+
+                  
+				</tbody>
+            </table>
+			<script>
+			$(document).ready(function() {
+			$('#myTable_2').DataTable( {
+        order: [[4, 'asc']],
+				"language": {
+				"url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/French.json"
+				}
+			} );
+			} );
+            
+            </script>
+		</div>
+	</div>
+
 
 
 <script src="./utils.js"></script>
