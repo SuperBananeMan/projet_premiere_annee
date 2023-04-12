@@ -138,7 +138,7 @@
         
             <?php
 
-              echo '<div class="d-flex align-items-center ">
+              echo '<div id="user_info" class="d-flex align-items-center ">
               
               '. $_USER_INIT . ' - ' . $_USER_ROLE .''
               .'</div>';
@@ -209,7 +209,7 @@
                   $select_opt = "SELECT * FROM fraie WHERE id_paiement = 3" . ";";
                 }
                 else{
-                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . "AND id_paiement = 3" . ";";
+                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . " AND id_paiement = 3" . ";";
                 }
                 
                 
@@ -431,7 +431,7 @@
                   $select_opt = "SELECT * FROM fraie WHERE id_paiement = 2" . ";";
                 }
                 else{
-                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . "AND id_paiement = 2" . ";";
+                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . " AND id_paiement = 2" . ";";
                 }
                 
                 
@@ -656,7 +656,7 @@
                   $select_opt = "SELECT * FROM fraie WHERE id_paiement = 1" . ";";
                 }
                 else{
-                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . "AND id_paiement = 1" . ";";
+                  $select_opt = "SELECT * FROM fraie WHERE Id_Users = " . $_USER_ID . " AND id_paiement = 1" . ";";
                 }
                 
                 

@@ -133,7 +133,7 @@
         
             <?php
 
-              echo '<div class="d-flex align-items-center ">
+              echo '<div id="user_info" class="d-flex align-items-center ">
               
               '. $_USER_INIT . ' - ' . $_USER_ROLE .''
               .'</div>';

@@ -392,3 +392,15 @@ function valideFrais(demande, id, file_name, details) {
 		}, "confirm");
 	}
 }
+
+window.onload = function() {
+    //script à exécuter à la fin du chargement de la page
+
+    //on récupère le rôle de l'utilisateur
+    const role = document.getElementById("user_info").outerText.split(" ")[2];
+
+    //on change une variable css
+    if (role == "Admin") {
+        document.documentElement.style.setProperty('--warn-elt-color', '#ff00004d');
+    }
+}
