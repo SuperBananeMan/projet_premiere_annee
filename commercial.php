@@ -703,12 +703,12 @@
             //si le rôle de l'user actuel est 1 (admin) alors on affiche les options pour choisir l'utilisateur
             if ($_USER_ROLE == "Admin"){
               echo '
-              <div class="form-group col-md-6 mt-2">
-                <label for="user">Utilisateur ID :</label>
-                </div>
+              <div class="form-group col-md-6 mt-3 text-center">
+                <label for="U">Utilisateur ID :</label>
+              </div>
               <div class="form-group col-md-6 mt-2">
                 
-                <select class="form-control" name="user" id="U">
+                <select class="form-control" name="U" id="U">
 
                   '. $options2 .'
                 
