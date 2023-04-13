@@ -89,6 +89,8 @@
 				<?php
 				session_start();
 				require('utils.php');
+				require('BDD_updater.php');
+				bdd_upd_main();
 				$_SESSION['user']=NULL;
 				$_SESSION['role_u']=NULL;
 				$_SESSION['id_u']=NULL;
@@ -97,13 +99,23 @@
 					$co_passwrd = $_POST['co_passwrd'];
 					$success = false;
 					$Role0=NULL;
+
+					//hashage du mot de passe
+					$co_passwrd = hash_password_rpd($co_passwrd,get_salt());
+					//echo '<br>'.$co_passwrd.'<br>';
 					
 					print_r($co_email,$co_passwrd);
+
 					
 					$pdo = getDB();	 
 					$data = $pdo->query("SELECT * FROM users")->fetchAll();
 
+					
+
 					foreach ($data as $row){
+						/*if ($row['Mail'] == $co_email) {
+							echo '<br>'.$row['Passwrd'].'<br>';
+						}*/
 						if ($row['Mail'] == $co_email && $row['Passwrd'] == $co_passwrd){
 							$success = true;
 							$Role0=$row['Id_Role'];
