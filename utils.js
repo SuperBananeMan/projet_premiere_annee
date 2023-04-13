@@ -311,7 +311,7 @@ function addFrais(file_name) {
     //console.log(type);
     let user = -1; //on met -1 pour dire puisque de toute façon PAR DÉFAUT cette valeur ne sera pas utilisée dans le PHP
 
-    if (typeof document.getElementsByName("user") !== 'undefined') {
+    if (document.getElementsByName("user").length != 0) {
         user = document.getElementsByName("user");
         //select 
         user = user[0].options[user[0].selectedIndex].value;
