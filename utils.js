@@ -279,7 +279,7 @@ function editFrais(id, file_name, details, params) {
     details = "<strong>" + details.toString() + "</strong>";
     
     
-    popupForm_edit("Modifier un frais (WIP) : " + details + " (id : "+id+")", ["Date : ", "Libellé : ", "Montant : ", "Type : "], params, function(input_1, input_2, input_3, input_4) {
+    popupForm_edit("Modifier un frais : " + details , ["Date : ", "Libellé : ", "Montant : ", "Type : "], params, function(input_1, input_2, input_3, input_4) {
         //on envoie la requête POST
         $.post(file_name, {edit_frais: id, date_frais: input_1, libelle_frais: input_2, prix_frais: input_3, type_frais: input_4}, function(data) {
             //on recharge la page
