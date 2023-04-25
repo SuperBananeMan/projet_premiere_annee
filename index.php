@@ -99,7 +99,7 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link text-dark " href="#">ISA Comptable</a>
+                <a class="nav-link text-dark leTitre" href="#">ISA Comptable</a>
               </li>
             </ul>
             
@@ -109,19 +109,19 @@
               <?php
                 if ($_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="index.php">Admin</a>
+				  <input type="button" class="nav--item-elt-mid button-nav" onclick="window.location.href=`index.php`" value="Admin">
                 </li>';
                 }
 
                 if ($_USER_ROLE == "Commercial" || $_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="commercial.php">Frais</a>
+				  <input type="button" class="nav--item-elt-mid button-nav" onclick="window.location.href=`commercial.php`" value="Frais">
                 </li>';
                 }
 
                 if ($_USER_ROLE == "Comptable" || $_USER_ROLE == "Admin"){
                   echo '<li class="nav--item-elt-mid">
-                  <a class="text-dark my_mid_lnk nav--item-elt-mid" href="comptable.php">Comptable</a>
+				  <input type="button" class="nav--item-elt-mid button-nav" onclick="window.location.href=`comptable.php`" value="Comptable">
                 </li>';
                 }
 
@@ -145,17 +145,16 @@
 
             
           </div>
-                
-          <div class="d-flex align-items-center mb-2 mb-lg-0 nav--item-elt-mid">
-                <?php
-                  $log = "Se déconnecter";
-                  if ($_USER_INIT == NULL) {
-                    $log = "Se connecter";
-                  }
-                echo '<button type="button" class="btn button_color  me-2"><a class="text-light text_deco" href="login.php">'.$log.'</a></button>';
-                ?>
-
-          </div>
+          
+		  <div class="d-flex align-items-center mb-2 mb-lg-0 nav--item-elt-mid">
+				<?php
+				  $log = "Se déconnecter";
+				  if ($_USER_INIT == NULL) {
+					$log = "Se connecter";
+				  }
+				echo '<button type="button" class="btn button_color  me-2"><a class="text-light text_deco" href="login.php">'.$log.'</a></button>';
+				?>
+		  </div>
           <!-- Collapsible wrapper -->
         </div>
         <!-- Container wrapper -->
