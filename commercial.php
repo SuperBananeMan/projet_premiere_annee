@@ -26,6 +26,7 @@
 
         session_start();
         require('utils.php');
+        require('BDD_updater.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID= NULL;
@@ -228,6 +229,7 @@
                   array_push($myarray_res, $row);
                   
                 }
+                
 
                 foreach ($res2 as $row2) {
                   //push the data in the array
@@ -294,7 +296,21 @@
                     // Vérifier si le formulaire a été soumis, supprime le fraie
                   if(isset($_POST['delete_fraie'])) {
                     $id = $_POST['delete_fraie'];
-                  
+
+                    //recupere les infos du frais
+                    $stmt = $pdo->prepare("SELECT * FROM fraie WHERE Id_Fraie = :id");
+                    $stmt->bindParam(':id', $id);
+                    $stmt->execute();
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    $file = $row['file_frais'];
+
+                    if ($file != NULL && $file != "" && file_exists($file)) {
+                      //supprime le fichier
+                      unlink($file);
+                    }
+
+                    //supprime le frais
                     // Préparer et exécuter une requête de suppression
                     $stmt = $pdo->prepare("DELETE FROM fraie WHERE Id_Fraie = ?");
                     
@@ -315,13 +331,86 @@
                     $prix = $_POST['prix_frais'];
                     $type = $_POST['type_frais'];
                     $etat = 3; // lorsque le commercial modifie un fraie, il passe TOUJOURS en attente de validation (id_paiement = 3)
+                    $file = $_POST['file_frais']; //get the file name from the form
+                    $action = $_POST['action_frais'];
+                    //get file extension
+                    $file_ext = explode('.', $file);
+                    $file_ext = strtolower(end($file_ext));
+
+                    //file name adjustment
+                    
+                    $file = $file . '_' . $id . '.' . $file_ext;
+                    
+
+
+                    //get the id of the user who owns the fraie
+                    $id_user = $pdo->query("SELECT Id_Users FROM fraie WHERE Id_Fraie = " . $id . ";");
+                    $id_user = $id_user->fetch();
+                    $id_user = $id_user['Id_Users'];
+
+
+                    $target_dir = "uploads/"."$id_user"."/"; //target directory
+
+                    //check if there is already a file in the database for this fraie
+                    $file_check = $pdo->query("SELECT file_frais FROM fraie WHERE Id_Fraie = " . $id . ";");
+                    $file_check = $file_check->fetch();
+                    $file_check = $file_check['file_frais']; //get the file name from the database
+                    
+                    //if there is already a file in the database for this fraie
+                    if ($file_check == $file || $action == "0"){ 
+                      //$file_check == $file NEVER TRUE (DOESN'T WORK)
+                      //do nothing
+                      $file = $file_check;
+                      $target_file = $file_check;
+                    }
+                    else if ($file != NULL && $action == "1"){
+
+                     $file = basename($_FILES["file_frais_fl"]["name"])."_".$id.'.'.$file_ext;
+                      
+
+                      if (file_exists($file_check)){
+                        //rename the old file
+                        rename($file_check, $target_dir . $file);
+                      }
+                      else {
+                        //error
+                        //create an alert
+                        echo '<script type="text/javascript">alert("Erreur lors de la modification du fichier");</script>';
+                      }
+
+                      
+                      //upload the new file
+                      
+                      $target_file = $target_dir . basename($_FILES["file_frais_fl"]["name"])."_".$id.'.'.$file_ext;
+                      move_uploaded_file($_FILES["file_frais_fl"]["tmp_name"], $target_file);
+                      
+                      
+                      
+
+
+                      
+
+                    }
+                    else if ($action == "2"){
+                      //delete the old file
+                      unlink($file_check);
+                      //set the file name to empty
+                      $target_file = "";
+                    }
+                    else {
+                      //error
+                      //create an alert
+                      echo '<script type="text/javascript">alert("Erreur lors de la modification du fichier");</script>';
+                    }
+
                     
 
                     // Préparer et exécuter une requête de modification
+
                     
-                    $stmt = $pdo->prepare("UPDATE fraie SET date_frais = ?, Intitule = ?, prix = ?, Id_Type = ?, id_paiement = ?  WHERE Id_Fraie = ?");
+                    $stmt = $pdo->prepare("UPDATE fraie SET date_frais = ?, Intitule = ?, prix = ?, Id_Type = ?, id_paiement = ?, file_frais = ?  WHERE Id_Fraie = ?");
                     
-                    $stmt->execute([$date, $intitule, $prix, $type,$etat, $id]);
+                    $stmt->execute([$date, $intitule, $prix, $type, $etat, $target_file, $id]);
                     
                   
                     
@@ -343,6 +432,8 @@
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Intitule'].'");
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['prix'].'");
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Id_Type'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['file_frais'].'");
+                        
                         
                         </script>
                         <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) . ',' . 'compte_params_'.$myarray_res[$i]['Id_Fraie'].')" >
@@ -355,7 +446,7 @@
                   echo '<td> 
                   <form method="post" action="commercial.php">
                     <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']).')">Supprimer</button>
                   </form>
                 </td>';
 
@@ -364,6 +455,8 @@
 
 
                 }
+                //echo "################## : ".$myarray_res[0]['file_frais'];
+
                 ?>
               </tbody>
             </table>
@@ -577,7 +670,7 @@
                   echo '<td> 
                   <form method="post" action="commercial.php">
                     <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) . ')">Supprimer</button>
                   </form>
                 </td>';
                   }
@@ -802,7 +895,7 @@
                   echo '<td> 
                   <form method="post" action="commercial.php">
                     <input type="hidden" name="delete_fraie" value="'.$myarray_res[$i]['Id_Fraie'].'">
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) .')">Supprimer</button>
                   </form>
                 </td>';
                   }
@@ -895,13 +988,16 @@
                   ?>
 
                 <!-- Afficher le formulaire HTML avec les options dynamiques -->
+                <!--type de dépense-->
                 <div class="form-group col-md-6 mt-2">
                     <select class="form-control" name="type" id="type">
                         <?php echo $options; ?>
                     </select>
                 </div>
 
-
+                <div class="form-group col-md-12 mt-2">
+                  <input type="file" placeholder="Fichier" class="form-control" name="file">
+                </div>
               
              <?php
 
@@ -957,6 +1053,12 @@
 
 
           <?php
+            if (isset($_POST['add_frais'])){
+              //check_ini("add.ini");
+
+            }
+
+
             if (isset($_POST['libelle_frais']) && isset($_POST['add_frais'])) {
             
                 // Connexion à la base de données
@@ -968,19 +1070,109 @@
                 $prix = $_POST['prix_frais'];
                 if ($_USER_ROLE == "Admin") $user = $_POST['user'];
                 else $user = $_USER_ID;
+                $file_name = $_POST['n_file'];
+
+                if ($file_name != ""){
+
+                
+                /*START save file in folder*/
+                $target_dir = "uploads/".$user."/"; //folder : uploads/user_id/
+
+                // Check if directory exists
+                if (!file_exists($target_dir)) {
+                  mkdir($target_dir, 0777, true); //create folder : uploads/user_id/; 0777 = full access; true = recursive
+                }
+
+                $target_file = $target_dir . basename($_FILES["file"]["name"]); //folder + file name : uploads/user_id/file_name
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                //check_ini($target_file);
+               
+                // Check if file already exists
+                if (file_exists($target_file)) {
+                  echo "Sorry, file already exists.";
+                  check_ini("err.ini");
+                  $uploadOk = 0;
+                }
+
+                // Check file size : 1Mo max
+                if ($_FILES["file"]["size"] > 1000000) {
+                  echo "Sorry, your file is too large.";
+                  //check_ini("err.ini");
+                  $uploadOk = 0;
+                }
+                // Allow certain file formats : PNG, JPG, JPEG, GIF, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV
+                if($imageFileType != "png" && $imageFileType != "jpg" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" && $imageFileType != "pdf" && $imageFileType != "doc"
+                && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx"
+                && $imageFileType != "ppt" && $imageFileType != "pptx" && $imageFileType != "txt"
+                && $imageFileType != "csv") {
+                  echo "Sorry, only PNG, JPG, JPEG, GIF, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT & CSV files are allowed.";
+                  $uploadOk = 0;
+                }
+                //$uploadOk = 1;
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0) {
+                  echo "Sorry, your file was not uploaded.";
+                // if everything is ok, try to upload file
+                } else {
+                  if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                    echo "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.";
+                  } else {
+                    echo "Sorry, there was an error uploading your file.";
+                    //check_ini("err.ini");
+                  }
+                }
+
+
+                
+
+                
+                /*END save file in folder*/
+                  
+                  }
+               
+
+                //check_ini("err.ini");
+
+
+
+                
+                
 
 
                 // Préparation et exécution de la requête SQL pour l'insertion des données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, prix, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :prix, :dateok, "3", :typeok, :iduser)');
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, prix, date_frais, id_paiement, Id_Type, Id_Users, file_frais) VALUES (:intitule, :prix, :dateok, "3", :typeok, :iduser, :fileok)');
                 
                 $stmt->bindParam(':intitule', $intitule);
                 $stmt->bindParam(':prix', $prix);
 						    $stmt->bindParam(':dateok', $date);
 						    $stmt->bindParam(':typeok', $type);
                 $stmt->bindParam(':iduser', $user);
+                $stmt->bindParam(':fileok', $target_file);
                 
 
 						    $stmt->execute();
+
+                if ($file_name != ""){
+                  $stmt = $pdo->prepare('SELECT Id_fraie FROM fraie WHERE file_frais = :fileok');
+                  $stmt->bindParam(':fileok', $target_file);
+                  $stmt->execute();
+                  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                  $id_frais = $row['Id_fraie'];
+                  
+                  //rename file
+                  $new_file_name = $target_file.'_'.$id_frais.'.'.$imageFileType;
+                  rename($target_file, $new_file_name);
+                  //update file name in DB
+                  $stmt = $pdo->prepare('UPDATE fraie SET file_frais = :fileok WHERE Id_fraie = :id_frais');
+                  $stmt->bindParam(':fileok', $new_file_name);
+                  $stmt->bindParam(':id_frais', $id_frais);
+                  $stmt->execute();
+
+
+                  
+                }
               
                 // Affichage d'un message de succès
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -989,10 +1181,22 @@
 					</div>';
               
               //refresh la page js
+              /*
               echo '<script type="text/javascript">
               setTimeout(function(){window.location = "commercial.php"}, 2000);
               </script>';
+              */
 
+            }
+            ?>
+
+            <?php
+            if (isset($_POST['greating'])) {
+              $data = $_POST['greating'];
+              echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>'.$data.'</strong> l ajout est OK.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
             }
             ?>
 

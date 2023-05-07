@@ -352,6 +352,9 @@
 						$passwrd = $_POST['passwrd'];
 						$Id_role = $_POST['dropdown'];
 
+            //hashage du mdp
+            $passwrd = hash_password_rpd($passwrd, get_salt());
+
             //verif si l'email est valide
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
               

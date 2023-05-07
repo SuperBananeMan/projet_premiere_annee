@@ -169,6 +169,32 @@ function fix_ini(){
 }
 
 
+//fonction pour ajouter une section 'file' dans la table 'fraie' de la base de données
+function bdd_upd_fraie_file_ft(){
+    //on vérifie si l'action existe dans le fichier ini
+    if (!check_action_ini("bdd_upd.ini","FILE_FT")) {
+        //si elle n'existe pas, on l'ajoute
+        add_ini("bdd_upd.ini","FILE_FT","0");
+    }
+
+    //on vérifie si l'action a déjà été effectuée
+    if (!check_action("bdd_upd.ini","FILE_FT","1")) {
+        //si elle n'a pas été effectuée, on l'effectue
+        echo "ajout de la section 'file' dans la table 'fraie' de la base de données en cours... <br>";
+        $bdd = getDB();
+        $req = $bdd->prepare('ALTER TABLE fraie ADD file_frais VARCHAR(255) NOT NULL');
+        $req->execute();
+        $req->closeCursor();
+        //on change l'état de l'action dans le fichier ini
+        change_sate("bdd_upd.ini","FILE_FT","1");
+        echo "<br>ajout de la section 'file' dans la table 'fraie' de la base de données terminé <br>";
+    }
+    else{
+        //echo "action déjà effectuée";
+    }   
+}
+
+
 
 //fonction pour mettre à jour la base de données
 function bdd_upd_main(){
@@ -213,7 +239,9 @@ function bdd_upd_main(){
 
     fix_ini();
 
+    bdd_upd_fraie_file_ft();
 
+    fix_ini();
 
 
     

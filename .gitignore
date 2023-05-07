@@ -1,3 +1,9 @@
 
 *.zip
 *.ini
+
+# ignore all files in uploads folder but not the folder itself
+uploads/*
+!uploads
+
+
