@@ -24,10 +24,12 @@
     <?php
 
         session_start();
-		    require('utils.php');
+		require('utils.php');
         $_USER_INIT= NULL;
         $_USER_ROLE= NULL;
         $_USER_ID = NULL;
+		
+		
         if (isset($_SESSION['user'])) {
             $_USER_INIT = $_SESSION['user'];
             $_USER_ROLE = $_SESSION['role_u'];
@@ -342,6 +344,10 @@
 
 						echo "</tr>";
 					}
+
+					//compte le nombre de ligne dans la table
+					$nb_ligne = $resultat->rowCount();
+					//echo "<p>Il y a $nb_ligne lignes dans la table</p>";
                   ?>
 
                   
@@ -564,6 +570,65 @@
 		</div>
 	</div>
 
+	<!--toast-->
+
+
+	<div class="toast position-sticky p-3 bottom-0 end-0" id="myToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+  <div class="toast-header" data-bs-autohide="false">
+    <img src="./src/assets/logo-v2.png" class="rounded me-2" alt="..." style="width: 2em;heigth: 2em;">
+    <strong class="me-auto">INFO</strong>
+    <small class="text-muted"><?php
+	date_default_timezone_set('Europe/Paris');
+	$date = date("d-m-Y");
+	
+	$heure = date("H:i");//
+	echo "Le $date à $heure";
+	?>
+	</small>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body">
+    <?php
+	echo "Bonjour ".$_SESSION['user']." !";
+	echo "<br>";
+	echo "Il vous reste <strong>". $nb_ligne . "</strong> frais à traiter.";
+	?>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    
+    var element = document.getElementById("myToast");
+	var nb_ligne = <?php echo $nb_ligne; ?>;
+
+	<?php
+	//echo "var sess_dt = '". $_SESSION['usr_date'] . "';";
+	//echo "var sess_hr = '". date("d/m/Y") . "';";
+
+	if (text2quote($_SESSION['usr_date']) == text2quote(date("d/m/Y")) && $_SESSION['compt_fco'] == 0){
+		echo "var boolval = false;";
+	}
+	else{
+		echo "var boolval = true;";
+		$_SESSION['compt_fco'] = 0;
+	}
+
+	?>
+
+	
+
+    // Create toast instance
+    var myToast = new bootstrap.Toast(element);
+
+    if (nb_ligne > 0 && boolval == true){
+        myToast.show();
+	}
+	else{
+		myToast.hide();
+	}
+    
+});
+</script>
 
 
 <script src="./utils.js"></script>

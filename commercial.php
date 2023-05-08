@@ -680,6 +680,7 @@
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Intitule'].'");
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['prix'].'");
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Id_Type'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['file_frais'].'");
                         
                         </script>
                         <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) . ',' . 'compte_params_'.$myarray_res[$i]['Id_Fraie'].')" >
@@ -915,6 +916,7 @@
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Intitule'].'");
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['prix'].'");
                         compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['Id_Type'].'");
+                        compte_params_'.$myarray_res[$i]['Id_Fraie'].'.push("'.$myarray_res[$i]['file_frais'].'");
                         
                         </script>
                         <button type="button" class="btn btn-primary" onclick="editFrais('.$myarray_res[$i]['Id_Fraie'] .','. text2quote("commercial.php") .','. text2quote($myarray_res[$i]['Intitule']) . ',' . 'compte_params_'.$myarray_res[$i]['Id_Fraie'].')" >

@@ -121,6 +121,9 @@
 							$Role0=$row['Id_Role'];
 							$_SESSION['user']=$row['Nom'];
 							$_SESSION['id_u']=$row['Id_Users'];
+							date_default_timezone_set('Europe/Paris');
+							$_SESSION['usr_date'] = date("d/m/Y");
+							$_SESSION['compt_fco'] = 1;
 							echo"reussite !!!!!!";
 							break;
 						}
