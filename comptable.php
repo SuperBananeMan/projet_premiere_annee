@@ -280,7 +280,13 @@
 							
             			echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
 						
-						echo "<td><a href=". $row['file_frais'] . "  target='_blank'>Voir</a></td>";
+						//echo "<td><a href=". $row['file_frais'] . "  target='_blank'>Voir</a></td>";
+						if ($row['file_frais'] != NULL){
+							echo '<td><a type="button" class="btn btn-secondary" href="./download.php/?id='.$row['Id_Fraie'].'" target="_blank">Télécharger</a></td>';
+						}
+						else{
+							echo "<td> NaN </td>";
+						}
 
 
 
@@ -478,7 +484,13 @@
 
             			echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
 
-						echo "<td><a href=". $row['file_frais'] . "  target='_blank'>Voir</a></td>";
+						//echo "<td><a href=". $row['file_frais'] . "  target='_blank'>Voir</a></td>";
+						if ($row['file_frais'] != NULL){
+							echo '<td><a type="button" class="btn btn-secondary" href="./download.php/?id='.$row['Id_Fraie'].'" target="_blank">Télécharger</a></td>';
+						}
+						else{
+							echo "<td> NaN </td>";
+						}
 
 					
 						echo "<td>" . $etatE[$row['id_paiement']] . "</td>";

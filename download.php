@@ -71,6 +71,9 @@ session_start();
                     readfile($file);
                     exit;
                 }
+                else {
+                    echo "Error file not found";
+                }
             } else {
                 header("location:../403.html");
             }
@@ -91,6 +94,9 @@ session_start();
                 flush();
                 readfile($file);
                 exit;
+            }
+            else {
+                echo "Error file not found";
             }
         }
 

@@ -281,9 +281,13 @@
                       echo "<td>" . $nom['Nom'] . "</td>"; 
                     }
                   }
-                  
-                  echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
-
+                
+                  if ($myarray_res[$i]['file_frais'] != NULL){
+                  echo '<td><a type="button" class="btn btn-secondary" href="./download.php/?id='.$myarray_res[$i]['Id_Fraie'].'" target="_blank">Télécharger</a></td>';
+                  }
+                  else{
+                    echo "<td> NaN </td>";
+                  }
 
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
@@ -354,6 +358,10 @@
 
 
                     $target_dir = "uploads/"."$id_user"."/"; //target directory
+                    // Check if directory exists
+                    if (!file_exists($target_dir)) {
+                      mkdir($target_dir, 0777, true); //create folder : uploads/user_id/; 0777 = full access; true = recursive
+                    }
 
                     //check if there is already a file in the database for this fraie
                     $file_check = $pdo->query("SELECT file_frais FROM fraie WHERE Id_Fraie = " . $id . ";");
@@ -599,7 +607,13 @@
                     }
                   }
 
-                  echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
+                  //echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
+                  if ($myarray_res[$i]['file_frais'] != NULL){
+                    echo '<td><a type="button" class="btn btn-secondary" href="./download.php/?id='.$myarray_res[$i]['Id_Fraie'].'" target="_blank">Télécharger</a></td>';
+                  }
+                  else{
+                      echo "<td> NaN </td>";
+                  }
 
 
 
@@ -829,7 +843,13 @@
                   }
 
 
-                  echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
+                  //echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
+                  if ($myarray_res[$i]['file_frais'] != NULL){
+                    echo '<td><a type="button" class="btn btn-secondary" href="./download.php/?id='.$myarray_res[$i]['Id_Fraie'].'" target="_blank">Télécharger</a></td>';
+                  }
+                  else{
+                      echo "<td> NaN </td>";
+                  }
 
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
@@ -1083,6 +1103,8 @@
                 if ($_USER_ROLE == "Admin") $user = $_POST['user'];
                 else $user = $_USER_ID;
                 $file_name = $_POST['n_file'];
+                
+                $target_file = "";
 
                 if ($file_name != ""){
 

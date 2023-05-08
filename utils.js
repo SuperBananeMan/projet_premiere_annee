@@ -451,7 +451,7 @@ function addFrais(file_name) {
 
     console.log(user);
     console.log(file);
-    let fjs_file = -1;
+    let fjs_file = "";
     let fjs_formData = -1;
     let n_file = "";
 
@@ -460,6 +460,7 @@ function addFrais(file_name) {
         if (intitule.length != 0 & prix.length != 0 & date.length != 0 & type.length != 0){
 
             // Si un fichier est ajouté
+            if (typeof file.files != "undefined" && file.files != null){
             if (file.files.length != 0){
                 // On récupère le fichier
                 fjs_file = file.files[0];
@@ -470,12 +471,12 @@ function addFrais(file_name) {
                 
 
             }
-
+        }
             console.log("fromdata");
 
             console.log(fjs_file);
             console.log(n_file);
-            console.log(fjs_formData.get("file"));
+            //console.log(fjs_formData.get("file"));
             
         
         //on envoie la requête POST
