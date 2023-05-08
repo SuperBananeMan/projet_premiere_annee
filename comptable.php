@@ -187,6 +187,7 @@
 						<th>Prix</th>
 						<th>Date frais</th>
 						<th>Type</th>
+						<th>Pièce-Jointe</th>
 						<th>Paiement</th>
 						<th>Accepter</th>
 						<th>Refuser</th>
@@ -277,7 +278,11 @@
 
 						echo "<td>" . $row['date_frais'] . "</td>";
 							
-            echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
+            			echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
+						
+						echo "<td><a href=". $row['file_frais'] . "  target='_blank'>Voir</a></td>";
+
+
 
 					
 						echo "<td>" . $etatE[$row['id_paiement']] . "</td>";
@@ -365,6 +370,7 @@
 						<th>Prix</th>
 						<th>Date frais</th>
 						<th>Type</th>
+						<th>Pièce-Jointe</th>
 						<th>Paiement</th>
 						
             <?php 
@@ -470,9 +476,10 @@
 						echo "<td>" . $row['date_frais'] . "</td>";
 							
 
-            echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
+            			echo '<td>' . $typeT[$row["Id_Type"]] . '</td>';
 
-					  
+						echo "<td><a href=". $row['file_frais'] . "  target='_blank'>Voir</a></td>";
+
 					
 						echo "<td>" . $etatE[$row['id_paiement']] . "</td>";
 

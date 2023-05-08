@@ -192,6 +192,7 @@
                   <th>Type</th>
                   <th>Date</th>
                   <th>User</th>
+                  <th>Pièce-Jointe</th>
                   <th>Etat</th>
                   <th>Modifier</th>
                   <th>Supprimer</th>
@@ -280,6 +281,9 @@
                       echo "<td>" . $nom['Nom'] . "</td>"; 
                     }
                   }
+                  
+                  echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
+
 
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
@@ -500,6 +504,7 @@
                   <th>Type</th>
                   <th>Date</th>
                   <th>User</th>
+                  <th>Pièce-Jointe</th>
                   <th>Etat</th>
                   <!--<th>Modifier</th>-->
                   <!--<th>Supprimer</th>-->
@@ -593,6 +598,9 @@
                       echo "<td>" . $nom['Nom'] . "</td>"; 
                     }
                   }
+
+                  echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
+
 
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";
@@ -724,7 +732,8 @@
                   <th>Prix</th>
                   <th>Type</th>
                   <th>Date</th>
-                  <th>User</th>
+                  <th>Utilisateur</th>
+                  <th>Pièce-Jointe</th>
                   <th>Etat</th>
                   <!--<th>Modifier</th>-->
                   <!--<th>Supprimer</th>-->
@@ -818,6 +827,9 @@
                       echo "<td>" . $nom['Nom'] . "</td>"; 
                     }
                   }
+
+
+                  echo "<td><a href=". $myarray_res[$i]['file_frais'] . "  target='_blank'>Voir</a></td>";
 
 
                   //echo "<td>" . $myarray_res2[$i]['type_paiement'] . "</td>";

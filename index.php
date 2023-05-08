@@ -423,32 +423,32 @@
               
 
 
-          <p class="h2 text-center">Ajouter un Frais</p>
+        <p class="h2 text-center mt-5 mb-5">Ajouter un Frais</p>
 
-        <form action="index.php" method="POST">
+          <form action="index.php" class="container" method="POST">
 
 
-          <div class="row mt-4">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-            <div class="row">
+          <div class="row mt-2 container">
+            <div class="col-md-3"></div>
               <div class="col-md-6">
-                <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" required>
-              </div>
-              <div class="col-md-6">
-                <input type="date" placeholder="14/03/2023" class="form-control" name="date" required>
-              </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="text" placeholder="Intitulé" class="form-control" name="intitulé" required>
+                  </div>
+                  <div class="col-md-6">
+                    <input type="date" placeholder="14/03/2023" class="form-control" name="date" required>
+                  </div>
             </div>
             <div class="row">
 
               <div class="col-md-6 mt-2">
                 <input type="number" placeholder="Prix" class="form-control" name="prix" required>
               </div>
-              
-                  <?php
+
+              <?php
                   // Connexion à la base de données
                   $mysqli = getDB_mysqli();
-            
+
                   // Vérifier la connexion
                   if (mysqli_connect_errno()) {
                       echo "Échec de la connexion à la base de données: " . mysqli_connect_error();
@@ -475,82 +475,196 @@
                   ?>
 
                 <!-- Afficher le formulaire HTML avec les options dynamiques -->
+                <!--type de dépense-->
                 <div class="form-group col-md-6 mt-2">
                     <select class="form-control" name="type" id="type">
                         <?php echo $options; ?>
                     </select>
                 </div>
-
-             
-
-            </div>
-            <!-- Bouton "Ajouter" -->
-                <p class="text-center"><button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#confirmFModal">Ajouter</button></p>
-
-                <!-- Popup de confirmation de l'ajout du frais -->
-                <div class="modal fade" id="confirmFModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel">Confirmation de l'ajout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        Êtes-vous sûr de vouloir ajouter ce frais ?
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-primary" id="confirmAddF">Ajouter</button>
-                      </div>
-                    </div>
-                  </div>
+                
+                <div class="form-group col-md-12 mt-2">
+                  <input type="file" placeholder="Fichier" class="form-control" name="file">
                 </div>
-              </div>
-            </div>
-        </form>
+                
+             <?php
 
+            $mysqli = getDB_mysqli();
+            $resultU = mysqli_query($mysqli, "SELECT Id_Users, Nom FROM users");
+                
+             // Vérifier la connexion
+             if (mysqli_connect_errno()) {
+              echo "Échec de la connexion à la base de données: " . mysqli_connect_error();
+              exit();
+            }
+          
+            $options2 = "";
+                  while ($row = mysqli_fetch_assoc($resultU)) {
+                    if ($row['Id_Users'] == $_USER_ID){
+                      $options2 .= "<option value='" . $row['Id_Users'] . "' selected>" . $row['Nom'] . " (" . $row['Id_Users'] . ")" . "</option>";
+                    }
+                    else{
+                      $options2 .= "<option value='" . $row['Id_Users'] . "'>" . $row['Nom'] . " (" . $row['Id_Users'] . ")" . "</option>";
+                    }
+            }
+          
+
+            
+            mysqli_close($mysqli);
+          
+          
+            ?>
+
+            </div>
+            <!--<p class="text-center mt-5"><button type="submit" class="btn btn-primary" name="delete-user">Ajouter</button></p>-->
+            <p class="text-center mt-5"><button type="button" class="btn btn-primary" onclick="addFrais('index.php')">Ajouter</button></p>
+          </form>
+           </div>
+          </div>
+          
+          
           <?php
-            if (isset($_POST['intitulé']) && isset($_POST['date']) && isset($_POST['type'])) {
+            if (isset($_POST['add_frais'])){
+              //check_ini("add.ini");
+            
+            }
+          
+          
+            if (isset($_POST['libelle_frais']) && isset($_POST['add_frais'])) {
             
                 // Connexion à la base de données
-                $pdo = getDB();
-            
+                $pdo = getDB();            
                 // Récupération des données du formulaire
-                $intitule = $_POST['intitulé'];
-                $date = $_POST['date'];
-                $type = $_POST['type'];
-                $prix = $_POST['prix'];
+                $intitule = $_POST['libelle_frais'];
+                $date = $_POST['date_frais'];
+                $type = $_POST['type_frais'];
+                $prix = $_POST['prix_frais'];
+                if ($_USER_ROLE == "Admin") $user = $_POST['user'];
+                else $user = $_USER_ID;
+                $file_name = $_POST['n_file'];
             
+                if ($file_name != ""){
+                
+                
+                /*START save file in folder*/
+                $target_dir = "uploads/".$user."/"; //folder : uploads/user_id/
+                
+                // Check if directory exists
+                if (!file_exists($target_dir)) {
+                  mkdir($target_dir, 0777, true); //create folder : uploads/user_id/; 0777 = full access; true = recursive
+                }
+              
+                $target_file = $target_dir . basename($_FILES["file"]["name"]); //folder + file name : uploads/user_id/file_name
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                //check_ini($target_file);
+              
+                // Check if file already exists
+                if (file_exists($target_file)) {
+                  echo "Sorry, file already exists.";
+                  check_ini("err.ini");
+                  $uploadOk = 0;
+                }
+              
+                // Check file size : 1Mo max
+                if ($_FILES["file"]["size"] > 1000000) {
+                  echo "Sorry, your file is too large.";
+                  //check_ini("err.ini");
+                  $uploadOk = 0;
+                }
+                // Allow certain file formats : PNG, JPG, JPEG, GIF, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT, CSV
+                if($imageFileType != "png" && $imageFileType != "jpg" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" && $imageFileType != "pdf" && $imageFileType != "doc"
+                && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx"
+                && $imageFileType != "ppt" && $imageFileType != "pptx" && $imageFileType != "txt"
+                && $imageFileType != "csv") {
+                  echo "Sorry, only PNG, JPG, JPEG, GIF, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, TXT & CSV files are allowed.";
+                  $uploadOk = 0;
+                }
+                //$uploadOk = 1;
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0) {
+                  echo "Sorry, your file was not uploaded.";
+                // if everything is ok, try to upload file
+                } else {
+                  if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                    echo "The file ". htmlspecialchars( basename( $_FILES["file"]["name"])). " has been uploaded.";
+                  } else {
+                    echo "Sorry, there was an error uploading your file.";
+                    //check_ini("err.ini");
+                  }
+                }
+              
+              
+
+              
+
+                /*END save file in folder*/
+
+                  }
+                
+                
+                //check_ini("err.ini");
+                
+                
+                
+                
+                
+                
+                
                 // Préparation et exécution de la requête SQL pour l'insertion des données
-                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, prix, date_frais, id_paiement, Id_Type, Id_Users) VALUES (:intitule, :prix, :dateok, "3", :typeok, :iduser)');
+                $stmt = $pdo->prepare('INSERT INTO fraie (Intitule, prix, date_frais, id_paiement, Id_Type, Id_Users, file_frais) VALUES (:intitule, :prix, :dateok, "3", :typeok, :iduser, :fileok)');
                 
                 $stmt->bindParam(':intitule', $intitule);
                 $stmt->bindParam(':prix', $prix);
-						    $stmt->bindParam(':dateok', $date);
-						    $stmt->bindParam(':typeok', $type);
-                $stmt->bindParam(':iduser', $_USER_ID);
+                $stmt->bindParam(':dateok', $date);
+                $stmt->bindParam(':typeok', $type);
+                $stmt->bindParam(':iduser', $user);
+                $stmt->bindParam(':fileok', $target_file);
+                
+                
+                $stmt->execute();
+                
+                if ($file_name != ""){
+                  $stmt = $pdo->prepare('SELECT Id_fraie FROM fraie WHERE file_frais = :fileok');
+                  $stmt->bindParam(':fileok', $target_file);
+                  $stmt->execute();
+                  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                  $id_frais = $row['Id_fraie'];
 
-						    $stmt->execute();
+                  //rename file
+                  $new_file_name = $target_file.'_'.$id_frais.'.'.$imageFileType;
+                  rename($target_file, $new_file_name);
+                  //update file name in DB
+                  $stmt = $pdo->prepare('UPDATE fraie SET file_frais = :fileok WHERE Id_fraie = :id_frais');
+                  $stmt->bindParam(':fileok', $new_file_name);
+                  $stmt->bindParam(':id_frais', $id_frais);
+                  $stmt->execute();
+                
+                
+
+                }
               
                 // Affichage d'un message de succès
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-					        <strong>C est nickel</strong> l ajout est OK.
-					        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					        </div>';
-
+            <strong>C est nickel</strong> l ajout est OK.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>';
+              
               //refresh la page js
+              /*
               echo '<script type="text/javascript">
-              setTimeout(function(){window.location = "index.php"}, 4000);
+              setTimeout(function(){window.location = "commercial.php"}, 2000);
               </script>';
+              */
+              
+            }
+            ?>
 
-                }
-                ?>
-
-
-
-
-
-        </div>   
+          
+          
+          
+          
+      </div>   
         
         <p class="h2 text-center mt-5">Ajouter un Type de Frais</p>
 
