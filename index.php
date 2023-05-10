@@ -173,9 +173,10 @@
 
         
 
-
-        <p class="mt-4 h2 text-center">Tableau de Gestion Admin</p>
-
+	<div class="all_center container myTitreDiv">
+        <h2 class="text-center mt-4 myTitre all_center">Tableau de Gestion Admin</h2>
+	</div>
+	
         <div class="row">
           <div class=" mt-5 pt-5"> <!-- Partie gauche avec le tableau-->
             <table id="myTable">
