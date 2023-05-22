@@ -12,3 +12,6 @@
 - Mi Février : Création Des Features Principales
 - Fin Fevrier : Création du design principale
 - Mars : Création des features secondaires
+
+
+© Tous droits réservés.
